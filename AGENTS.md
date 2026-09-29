@@ -79,7 +79,7 @@ sending.
 
 ## Git and GitHub
 
-- Remote: `github.com/kaualimadesouza/GPTI` (private), tracked in the GitHub Project
+- Remote: `github.com/kaualimadesouza/GPTI` (public), tracked in the GitHub Project
   `https://github.com/users/kaualimadesouza/projects/6` (Status field `PVTSSF_lAHOBGuoa84BlAiUzhjvADo`:
   Todo `f75ad846`, In Progress `47fc9ee4`, Done `98236657`; date field Prazo `PVTF_lAHOBGuoa84BlAiUzhjvAFk`).
 - Commit messages in English.
