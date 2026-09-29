@@ -68,11 +68,10 @@ pdftoppm -png -r 70 exercicio1_GPTI_2026.pdf /tmp/page                      # lo
 Render and look at the pages before calling a layout done. At low DPI `R$` renders like `R§`;
 check it with `pdftotext` instead of "fixing" it. Build artifacts are gitignored; commit the PDF.
 
-The EAP figures (`Sistema de Controle de-2026-09-25-010235.png` for Exercício 1, `abcd.png` for
-Exercício 2) are still only on Overleaf. Until they are here, the committed PDFs are built in a
-scratch directory with a red "FIGURA DA EAP PENDENTE" PNG under the same name; never commit that
-stand-in. The group co-edits both exercises on Overleaf. Before editing a tex here, ask whether
-Overleaf has a newer version, and remind the user to carry the change back.
+Each exercise keeps its EAP figure next to the tex, as a Mermaid PNG exported on Overleaf
+(`Sistema de Controle de-2026-09-25-010235.png`, `abcd.png`). The group co-edits both exercises on
+Overleaf. Before editing a tex here, ask whether Overleaf has a newer version, and remind the user
+to carry the change back.
 
 ## Delivering
 

@@ -26,9 +26,8 @@ exercícios, com IA, e se ofereceu para revisar.
 | --- | --- |
 | `enunciado.pdf` | Enunciado da Juliana |
 | `exercicio2_GPTI_2026.tex` | Documento do grupo, cópia do Overleaf (Ex. 2) |
-| [`exercicio2_GPTI_2026.pdf`](exercicio2_GPTI_2026.pdf) | O `.tex` compilado, com um aviso no lugar da figura da EAP |
-
-A figura da EAP (`abcd.png`) ainda está só no Overleaf ([#8](https://github.com/kaualimadesouza/GPTI/issues/8)).
+| [`exercicio2_GPTI_2026.pdf`](exercicio2_GPTI_2026.pdf) | O `.tex` compilado |
+| `abcd.png` | EAP com as atividades no 4º nível (exportada do Overleaf) |
 
 ## Pendências
 

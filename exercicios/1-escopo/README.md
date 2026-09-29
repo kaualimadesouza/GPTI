@@ -6,7 +6,7 @@ do projeto semestral, o Sistema para Controle de Acesso à Universidade.
 | Item | Entrega | Situação |
 | --- | --- | --- |
 | 1. Declaração do escopo (versão final) | Em aula | Feita: seção I do `.tex` |
-| 2. EAP (esboço) | Em aula | Feita: seção II, com a figura no Overleaf |
+| 2. EAP (esboço) | Em aula | Feita: seção II |
 | 2. EAP (versão final) | E-mail, até 01/10 às 12:00 | A fazer ([#1](https://github.com/kaualimadesouza/GPTI/issues/1)) |
 | 3. Dicionário da EAP (versão final) | E-mail, até 01/10 às 12:00 | A fazer ([#2](https://github.com/kaualimadesouza/GPTI/issues/2)) |
 
@@ -25,10 +25,8 @@ ofereceu para revisar.
 | --- | --- |
 | `enunciado.pdf` | Enunciado da Juliana |
 | `exercicio1_GPTI_2026.tex` | Documento do grupo, cópia do Overleaf (Ex. 1) |
-| [`exercicio1_GPTI_2026.pdf`](exercicio1_GPTI_2026.pdf) | O `.tex` compilado, com um aviso no lugar da figura da EAP |
-
-A figura da EAP (`Sistema de Controle de-2026-09-25-010235.png`) ainda está só no Overleaf
-([#8](https://github.com/kaualimadesouza/GPTI/issues/8)).
+| [`exercicio1_GPTI_2026.pdf`](exercicio1_GPTI_2026.pdf) | O `.tex` compilado |
+| `Sistema de Controle de-2026-09-25-010235.png` | Esboço da EAP (Mermaid, exportado do Overleaf) |
 
 ## Pendências
 

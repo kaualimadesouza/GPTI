@@ -39,9 +39,6 @@ pdflatex exercicio1_GPTI_2026.tex
 pdflatex exercicio1_GPTI_2026.tex
 ```
 
-As figuras da EAP ainda estão só no Overleaf. Enquanto não vierem para o repositório, os PDFs
-saem com um aviso vermelho no lugar delas.
-
 ## Integrantes
 
 - Gustavo G. França do Nascimento
