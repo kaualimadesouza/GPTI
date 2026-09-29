@@ -245,12 +245,13 @@ def numbers(plan: Schedule, activities: Sequence[Activity]) -> str:
     development = [a.letter for a in activities if a.code.startswith(("1.4.", "1.5.1.", "1.5.2."))]
     tail_of = {a.letter: a.tail for a in plan.arrows if a.letter}
     head_of = {a.letter: a.head for a in plan.arrows if a.letter}
+    critical = plan.critical_letters()
     macros = {
         "duracaoTotal": plan.total_weeks,
         # an activity that starts after week 9 runs in week 10
         "inicioDesenvolvimento": min(plan.earliest[tail_of[x]] for x in development) + 1,
         "fimTestes": max(plan.earliest[head_of[x]] for x in development),
-        "caminhoCritico": ", ".join(a.letter for a in activities if a.letter in plan.critical_letters()),
+        "caminhoCritico": ", ".join(a.letter for a in activities if a.letter in critical),
     }
     return "".join(f"\\newcommand{{\\{name}}}{{{value}}}\n" for name, value in macros.items())
 

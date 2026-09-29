@@ -113,8 +113,8 @@ def test_numbers_macros_list_the_critical_activities_in_table_order(plan: aoa.Sc
     ]
 
 
-def test_main_writes_the_three_fragments(tmp_path: Path) -> None:
+def test_main_writes_the_three_fragments(tmp_path: Path, plan: aoa.Schedule) -> None:
     aoa.main(tmp_path)
     assert sorted(p.name for p in tmp_path.iterdir()) == ["atividades.tex", "numeros.tex", "rede_aoa.tex"]
-    assert (tmp_path / "rede_aoa.tex").read_text() == aoa.tikz(aoa.schedule(ACTIVITIES), POSITIONS)
+    assert (tmp_path / "rede_aoa.tex").read_text() == aoa.tikz(plan, POSITIONS)
     assert (tmp_path / "numeros.tex").read_text().startswith(r"\newcommand{\duracaoTotal}{26}")
