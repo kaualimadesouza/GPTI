@@ -59,10 +59,11 @@ package, one small table per package reads better.
 ## Drawing the EAP
 
 The esboço is a Mermaid PNG (`flowchart LR`, because top-down overflows A4). The final version in
-`exercicios/1-escopo/exercicio1_GPTI_2026_final.tex` draws it in plain TikZ: the root on top,
-level-2 boxes side by side, and packages listed under each one. Copy that block. `forest` handles
-a plain indented tree, but its folder layout under an org-chart root breaks on the installed
-forest 2.1.5:
+`exercicios/1-escopo/exercicio1_GPTI_2026_final.tex` draws it with one TikZ `\foreach` over
+`{grupo}/{pacote, pacote, ...}`: each group sits to the right of the previous one, its packages
+hang below it, and the root centres itself over the groups. Adding a package means adding a name to
+the list, with no coordinates to recompute. `forest` handles a plain indented tree, but its folder
+layout under an org-chart root breaks on the installed forest 2.1.5:
 
 ```latex
 \usepackage[edges]{forest}
