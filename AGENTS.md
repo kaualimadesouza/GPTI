@@ -15,8 +15,9 @@ Coursework of Group 7 (turma T94) in **ACH2027 - Gestão de Projetos de Tecnolog
 Nascimento, Kauã Lima de Souza, Kevin Rodrigues Nunes, Victor Yodono. Deliverables are in
 Portuguese.
 
-- `exercicios/<n>-<tema>/`: the statement (`enunciado.pdf`), the group's `exercicioN_GPTI_2026.tex`,
-  and its figures.
+- `exercicios/<n>-<tema>/`: the statement (`enunciado.pdf`), the group's `exercicioN_GPTI_2026.tex`
+  with its PDF and figures, and a `README.md` with the items, deadlines, who does what and what
+  is pending.
 - `seminario-scrum/`: the Scrum seminar (theme, presentation rules, slides and research guide).
 - `docs/`: course material (AI policy, slides, semester-project statement, TAP form). Not added yet.
 - `.claude/skills/`: one skill per course topic, shared with Antigravity via `.agents/skills.json`.
@@ -68,9 +69,10 @@ Render and look at the pages before calling a layout done. At low DPI `R$` rende
 check it with `pdftotext` instead of "fixing" it. Build artifacts are gitignored; commit the PDF.
 
 The EAP figures (`Sistema de Controle de-2026-09-25-010235.png` for Exercício 1, `abcd.png` for
-Exercício 2) are still only on Overleaf, so neither tex compiles here yet. The group co-edits both
-exercises on Overleaf. Before editing a tex here, ask whether Overleaf has a newer version, and
-remind the user to carry the change back.
+Exercício 2) are still only on Overleaf. Until they are here, the committed PDFs are built in a
+scratch directory with a red "FIGURA DA EAP PENDENTE" PNG under the same name; never commit that
+stand-in. The group co-edits both exercises on Overleaf. Before editing a tex here, ask whether
+Overleaf has a newer version, and remind the user to carry the change back.
 
 ## Delivering
 
