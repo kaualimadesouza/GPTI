@@ -65,6 +65,10 @@ pdflatex -interaction=nonstopmode -halt-on-error exercicio1_GPTI_2026.tex   # tw
 pdftoppm -png -r 70 exercicio1_GPTI_2026.pdf /tmp/page                      # look at the pages
 ```
 
+A final version never overwrites the first delivery: it goes in `exercicioN_GPTI_2026_final.tex`, built
+from the original, so the group can compare the two. Final versions draw the EAP in plain TikZ and shade
+table headers with the EAP colours (`eapA`, `eapB`, `eapC`); keep new tables in that style.
+
 Render and look at the pages before calling a layout done. At low DPI `R$` renders like `R§`;
 check it with `pdftotext` instead of "fixing" it. Build artifacts are gitignored; commit the PDF.
 

@@ -1,0 +1,474 @@
+\documentclass[a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{left=1.5cm, right=1.5cm, top=2.54cm, bottom=2.54cm}
+\usepackage{graphicx, setspace, amsmath, amssymb, titlesec, fancyhdr, parskip, indentfirst, etoolbox, caption, cite, xcolor}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage[brazil]{babel}
+\usepackage{array, longtable, colortbl, float}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% Floats maiores no topo da página, para a EAP e as tabelas não ficarem em página própria
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{16pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+
+% Cores da EAP, usadas também no cabeçalho das tabelas
+\definecolor{eapA}{HTML}{0B4F7C}
+\definecolor{eapB}{HTML}{1D82C4}
+\definecolor{eapC}{HTML}{E8F2FB}
+
+\addto\captionsbrazil{
+  \renewcommand{\refname}{Referências}
+}
+
+% Title Formatting
+\titleformat{\section}{\centering\large\scshape}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{1em}{}
+
+\setstretch{1.0}
+\setlength{\parskip}{6pt}
+
+\titlespacing{\section}{0pt}{14pt}{6pt}
+\titlespacing{\subsection}{0pt}{6pt}{6pt}
+\titlespacing{\subsubsection}{0pt}{6pt}{6pt}
+
+% Document Title
+\title{
+    \textbf{Grupo 7 - Exercício 1 (versão final)}
+}
+
+\date{}
+
+\captionsetup{labelfont={small,sc}, textfont={small,sc}}
+
+% Section Numbering
+\renewcommand{\thesection}{\Roman{section}.}
+\renewcommand{\thesubsection}{\textit{\Alph{subsection}.}}
+\renewcommand{\thesubsubsection}{\textit{\arabic{subsubsection}.}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\thefigure}{\Roman{figure}}
+
+% Make titles italic as well
+\titleformat{\subsection}
+    {\normalfont\large\itshape}
+    {\thesubsection}
+    {1em}
+    {}
+
+\titleformat{\subsubsection}
+    {\normalfont\itshape}
+    {\thesubsubsection}
+    {1em}
+    {}
+
+\setcounter{page}{1}
+
+% Fancy Header Configuration
+\pagestyle{fancy}
+\fancyhf{}
+
+% First Page Header
+\fancypagestyle{firstpage}{
+    \fancyhead[C]{
+        \centering
+        {\fontsize{14pt}{10pt}\selectfont
+        \textbf{Universidade de São Paulo}\\[0.5em]
+        \textbf{ACH2027 - Gestão de Projetos de Tecnologia da Informação}}\\[0.2em]
+        {\fontsize{8pt}{10pt}\selectfont
+        \textbf{Prof. Doutor:} Edmir Parada Vasques Prado \hspace{1cm}
+        \textbf{Ano:} 2º Semestre/2026}
+    }
+}
+
+% Default Header for Other Pages
+\fancyhead[C]{
+    \textbf{Escola de Artes, Ciências e Humanidades - Universidade de São Paulo}
+}
+
+\begin{document}
+
+\maketitle
+\vspace{-1.5cm}
+\thispagestyle{firstpage}
+
+% =========================================================
+% INTEGRANTES
+% =========================================================
+
+\begin{multicols}{2}
+    \centering
+
+    \textbf{Gustavo G. França do Nascimento}\\
+    15637551\\
+    T94
+    
+    \vspace{0.5cm}
+    
+    \textbf{Kauã Lima de Souza}\\
+    15674702\\
+    T94
+    
+    \vspace{0.5cm}
+
+    \textbf{Kevin Rodrigues Nunes}\\
+    15676030\\
+    T94
+    
+    \vspace{0.5cm}
+    
+    \textbf{Victor Yodono}\\
+    13829040\\
+    T94
+
+\end{multicols}
+
+\vspace{-0.2cm} % Ajuste de espaçamento vertical
+
+% =========================================================
+% CONTEÚDO
+% =========================================================
+
+\singlespacing
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0.5cm}
+
+\section{Declaração de Escopo do Projeto}
+
+De acordo com o \textbf{Guia PMBOK} (Capítulo 5 - Gerenciamento do Escopo do Projeto), a Declaração do Escopo do Projeto descreve detalhadamente as entregas do projeto e o trabalho necessário para criá-las. Ela fornece um entendimento comum do escopo entre as partes interessadas e contém as restrições, premissas e exclusões.
+
+Abaixo está a Declaração de Escopo para o \textbf{Sistema de Controle de Acesso da EACH}.
+
+\subsection{Descrição do Escopo do Produto}
+
+Desenvolvimento e implantação de um sistema (software e equipamentos associados) para gerenciar e controlar a entrada e saída de pessoas e veículos nas dependências da EACH. O sistema automatizará o acesso da comunidade acadêmica (docentes, funcionários, alunos) e terceirizados regulares, além de fornecer um módulo para o cadastro, registro e liberação de visitantes. A solução contará com controle de hierarquia de acesso via senha, módulos especiais para gestão de grandes eventos e um painel para geração de relatórios gerenciais e de controle de frequência.
+
+\subsection{Critérios de Aceitação}
+
+Para que o projeto seja considerado concluído e aceito pela Diretoria da unidade, as seguintes condições devem ser atendidas:
+
+\begin{itemize}
+    \item \textbf{Funcionais:} O sistema deve liberar o acesso automaticamente para usuários cadastrados (via Nº USP ou CPF) e reter visitantes até que o cadastro seja efetuado.
+    \item \textbf{Segurança e Regras:} O acesso ao sistema de gestão deve exigir autenticação por senha e respeitar níveis hierárquicos pré-definidos (ex: administrador, operador de portaria).
+    \item \textbf{Desempenho (Relatórios):} O sistema deve ser capaz de emitir, sem falhas, relatórios exatos de frequência de entrada de pessoas (filtrado por Nº USP e CPF) e veículos (filtrado por categoria).
+    \item \textbf{Operacionais:} As rotinas especiais (como o pré-cadastramento em lote para eventos de grande porte) devem funcionar adequadamente, sem sobrecarregar a portaria.
+    \item \textbf{Cronograma e Custos:} O projeto deve ser totalmente entregue e implantado no prazo máximo de 1 (um) ano, respeitando os limites orçamentários estabelecidos para equipamentos e recursos humanos.
+\end{itemize}
+
+\subsection{Entregas do Projeto (Deliverables)}
+
+\begin{itemize}
+    \item Documento de Requisitos e Arquitetura do Sistema.
+    \item \textbf{Módulo de Controle de Acesso:} Funcionalidades de leitura e liberação de catracas/cancelas para pessoas e veículos.
+    \item \textbf{Módulo de Gestão de Usuários e Visitantes:} Interface para cadastro de perfis (docentes, alunos, funcionários, terceirizados e visitantes) e definição de hierarquias de acesso.
+    \item \textbf{Módulo de Rotinas Especiais:} Área do sistema dedicada ao pré-cadastro rápido/em lote para grandes eventos.
+    \item \textbf{Módulo de Relatórios:} Painel gerador de relatórios de controle e frequência (por Nº USP, CPF e Veículos).
+    \item Equipamentos e materiais de controle de acesso (catracas, cancelas, leitores, etc.) comprados, instalados e configurados.
+    \item Treinamento para a equipe de operação (portaria/segurança) e administração do sistema.
+\end{itemize}
+
+\subsection{Exclusões do Projeto (O que está fora do escopo)}
+
+\begin{itemize}
+    \item Controle de acesso interno de portas de salas de aula, laboratórios e gabinetes (o foco é a entrada principal/perímetro da Universidade).
+    \item Desenvolvimento de módulos de cobrança (tarifação de estacionamento).
+    \item Manutenção e suporte técnico contínuo do sistema após a implantação final e encerramento do projeto.
+    \item Sistemas de câmeras de segurança (CFTV) não integrados diretamente à catraca/cancela.
+\end{itemize}
+
+\subsection{Restrições (Constraints)}
+
+Limitações impostas ao projeto, relativas a tempo, custo, recursos e regulamentos:
+
+\begin{itemize}
+    \item \textbf{Prazo:} A implantação total do sistema não pode ultrapassar 1 (um) ano. O desenvolvimento deve ser finalizado em agosto de 2026.
+    \item \textbf{Orçamento (Equipamentos):} O gasto com aquisição de equipamentos e materiais está limitado à faixa de R\$ 300.000,00 a R\$ 600.000,00.
+    \item \textbf{Orçamento (Bolsas):} O custo com alunos está restrito ao fornecimento de 5 a 8 bolsas de R\$ 2.000,00 mensais cada, pelo período exato de 6 meses.
+    \item \textbf{Recursos Humanos:} O desenvolvimento do sistema é restrito à participação de alunos do último ano de SI (onde a atividade contará como estágio obrigatório) \textbf{OU} à contratação de uma Start-Up da incubadora da EACH.
+    \item A equipe exige a presença de um Líder de Projeto subordinado à Diretoria e um Analista de Sistemas Sênior (graduado em SI).
+\end{itemize}
+
+\subsection{Premissas (Assumptions)}
+
+Fatores considerados verdadeiros, reais ou certos para fins de planejamento:
+
+\begin{itemize}
+    \item A administração da Universidade (USP/EACH) fornecerá acesso seguro e integrado à base de dados atual de docentes, funcionários e alunos (Números USP, CPFs e dados de veículos) para a carga inicial do sistema.
+    \item As instâncias acadêmicas competentes aprovarão a participação dos alunos no projeto para validação dos créditos de estágio de graduação a tempo do início em agosto de 2026.
+    \item Caso a opção escolhida seja o uso de alunos bolsistas, haverá alunos de SI suficientes, capacitados e interessados no último ano letivo para preencher as 5 a 8 vagas.
+    \item A infraestrutura física e de rede da EACH nos pontos de entrada (portarias) suportará a instalação dos novos equipamentos sem necessidade de obras civis complexas e fora do orçamento previsto.
+\end{itemize}
+
+\section{Estrutura Analítica do Projeto (EAP)}
+
+A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica do trabalho necessário para atingir os objetivos do projeto \cite{pmi2017}. A versão final (Figura~\ref{fig:eap}) tem 6 grupos de entregas no segundo nível e 22 pacotes de trabalho no terceiro. Cada pacote é uma entrega, escrita como substantivo; as atividades que produzem cada pacote ficam no cronograma (Exercício 2).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+            raiz/.style={fill=eapA, text=white, font=\sffamily\small\bfseries, inner sep=4pt, rounded corners=1pt},
+            grupo/.style={fill=eapB, text=white, font=\sffamily\scriptsize\bfseries, text width=2.45cm,
+                          minimum height=9mm, align=left, inner sep=3pt, rounded corners=1pt},
+            pacote/.style={draw=eapA, fill=eapC, font=\sffamily\scriptsize, text width=2.2cm,
+                           minimum height=7.5mm, align=left, inner sep=3pt, rounded corners=1pt},
+            every node/.append style={execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+            liga/.style={draw=eapA, semithick}]
+        \node[raiz, anchor=south] (raiz) at (8.71cm, 1.1cm) {1. Sistema de Controle de Acesso à EACH};
+        \draw[liga] (raiz.south) -- (8.71cm, 0.45cm);
+        \draw[liga] (1.33cm, 0.45cm) -- (16.08cm, 0.45cm);
+
+        \node[grupo, anchor=north west] (g1) at (0.00cm, 0) {1.1 Gerenciamento do projeto};
+        \draw[liga] (1.33cm, 0.45cm) -- (g1.north);
+        \node[pacote, anchor=north west] (p11) at ($(g1.south west)+(0.25cm,-2mm)$) {1.1.1 Linha de base do escopo};
+        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p11.west);
+        \node[pacote, anchor=north west] (p12) at ($(p11.south west)+(0,-1.6mm)$) {1.1.2 Cronograma};
+        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p12.west);
+        \node[pacote, anchor=north west] (p13) at ($(p12.south west)+(0,-1.6mm)$) {1.1.3 Orçamento};
+        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p13.west);
+        \node[pacote, anchor=north west] (p14) at ($(p13.south west)+(0,-1.6mm)$) {1.1.4 Equipe do projeto};
+        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p14.west);
+        \node[pacote, anchor=north west] (p15) at ($(p14.south west)+(0,-1.6mm)$) {1.1.5 Relatórios de acompanhamento};
+        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p15.west);
+        \node[pacote, anchor=north west] (p16) at ($(p15.south west)+(0,-1.6mm)$) {1.1.6 Encerramento};
+        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p16.west);
+
+        \node[grupo, anchor=north west] (g2) at (2.95cm, 0) {1.2 Requisitos};
+        \draw[liga] (4.28cm, 0.45cm) -- (g2.north);
+        \node[pacote, anchor=north west] (p21) at ($(g2.south west)+(0.25cm,-2mm)$) {1.2.1 Documento de requisitos};
+        \draw[liga] ($(g2.south west)+(0.12cm,0)$) |- (p21.west);
+        \node[pacote, anchor=north west] (p22) at ($(p21.south west)+(0,-1.6mm)$) {1.2.2 Documento de arquitetura};
+        \draw[liga] ($(g2.south west)+(0.12cm,0)$) |- (p22.west);
+        \node[pacote, anchor=north west] (p23) at ($(p22.south west)+(0,-1.6mm)$) {1.2.3 Protótipos de tela};
+        \draw[liga] ($(g2.south west)+(0.12cm,0)$) |- (p23.west);
+
+        \node[grupo, anchor=north west] (g3) at (5.90cm, 0) {1.3 Infraestrutura};
+        \draw[liga] (7.23cm, 0.45cm) -- (g3.north);
+        \node[pacote, anchor=north west] (p31) at ($(g3.south west)+(0.25cm,-2mm)$) {1.3.1 Equipamentos adquiridos};
+        \draw[liga] ($(g3.south west)+(0.12cm,0)$) |- (p31.west);
+        \node[pacote, anchor=north west] (p32) at ($(p31.south west)+(0,-1.6mm)$) {1.3.2 Equipamentos instalados};
+        \draw[liga] ($(g3.south west)+(0.12cm,0)$) |- (p32.west);
+        \node[pacote, anchor=north west] (p33) at ($(p32.south west)+(0,-1.6mm)$) {1.3.3 Rede das portarias};
+        \draw[liga] ($(g3.south west)+(0.12cm,0)$) |- (p33.west);
+
+        \node[grupo, anchor=north west] (g4) at (8.85cm, 0) {1.4 Desenvolvimento};
+        \draw[liga] (10.18cm, 0.45cm) -- (g4.north);
+        \node[pacote, anchor=north west] (p41) at ($(g4.south west)+(0.25cm,-2mm)$) {1.4.1 Módulo de Controle de Acesso};
+        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p41.west);
+        \node[pacote, anchor=north west] (p42) at ($(p41.south west)+(0,-1.6mm)$) {1.4.2 Módulo de Usuários e Visitantes};
+        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p42.west);
+        \node[pacote, anchor=north west] (p43) at ($(p42.south west)+(0,-1.6mm)$) {1.4.3 Módulo de Rotinas Especiais};
+        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p43.west);
+        \node[pacote, anchor=north west] (p44) at ($(p43.south west)+(0,-1.6mm)$) {1.4.4 Módulo de Relatórios};
+        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p44.west);
+
+        \node[grupo, anchor=north west] (g5) at (11.80cm, 0) {1.5 Testes};
+        \draw[liga] (13.13cm, 0.45cm) -- (g5.north);
+        \node[pacote, anchor=north west] (p51) at ($(g5.south west)+(0.25cm,-2mm)$) {1.5.1 Testes unitários};
+        \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p51.west);
+        \node[pacote, anchor=north west] (p52) at ($(p51.south west)+(0,-1.6mm)$) {1.5.2 Testes de integração};
+        \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p52.west);
+        \node[pacote, anchor=north west] (p53) at ($(p52.south west)+(0,-1.6mm)$) {1.5.3 Homologação};
+        \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p53.west);
+
+        \node[grupo, anchor=north west] (g6) at (14.75cm, 0) {1.6 Implantação};
+        \draw[liga] (16.08cm, 0.45cm) -- (g6.north);
+        \node[pacote, anchor=north west] (p61) at ($(g6.south west)+(0.25cm,-2mm)$) {1.6.1 Carga inicial de dados};
+        \draw[liga] ($(g6.south west)+(0.12cm,0)$) |- (p61.west);
+        \node[pacote, anchor=north west] (p62) at ($(p61.south west)+(0,-1.6mm)$) {1.6.2 Treinamento};
+        \draw[liga] ($(g6.south west)+(0.12cm,0)$) |- (p62.west);
+        \node[pacote, anchor=north west] (p63) at ($(p62.south west)+(0,-1.6mm)$) {1.6.3 Sistema em produção};
+        \draw[liga] ($(g6.south west)+(0.12cm,0)$) |- (p63.west);
+    \end{tikzpicture}
+    \caption{Estrutura Analítica do Projeto (EAP), versão final}
+    \label{fig:eap}
+\end{figure}
+
+\subsection{Mudanças em relação ao esboço}
+
+A revisão aplicou três regras do PMBOK \cite{pmi2017}: a regra dos 100\% (a EAP cobre todo o trabalho do projeto e nada além dele), a orientação a entregas (substantivos, não verbos) e um único responsável por pacote de trabalho. A Tabela~\ref{tab:mudancas} resume o que mudou.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{7.1cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Esboço} & \textbf{Versão final} & \textbf{Motivo} \\
+        \hline
+        1.1.1 Escopo & 1.1.1 Linha de base do escopo & O elemento passa a nomear a entrega, e não o assunto. \\
+        \hline
+        1.1.3 Reuniões & 1.1.5 Relatórios de acompanhamento & Reunião é trabalho contínuo, e a entrega é o relatório. O grupo já tinha decidido tirar as reuniões (Registro 01 do Exercício 2). \\
+        \hline
+        (não havia) & 1.1.3 Orçamento, 1.1.4 Equipe do projeto e 1.1.6 Encerramento & Regra dos 100\%: respeitar o orçamento, contratar a equipe e encerrar o projeto também são trabalho do projeto. \\
+        \hline
+        1.2.1 Especificação, 1.2.2 Arquitetura, 1.2.3 Telas & Documento de requisitos, Documento de arquitetura, Protótipos de tela & Nomes de entregas. \\
+        \hline
+        1.3 Infra/Hardware: Aquisição, Instalação, Rede & 1.3 Infraestrutura: Equipamentos adquiridos, Equipamentos instalados, Rede das portarias & Nomes de entregas. \\
+        \hline
+        1.4.1 Integração, 1.4.2 Usuários, 1.4.3 Eventos, 1.4.4 Relatórios & Módulos com os nomes da declaração de escopo & Cada entrega da declaração aparece com o mesmo nome na EAP. \\
+        \hline
+        1.5.1 Unitários, 1.5.2 Integração & Testes unitários, Testes de integração & Clareza. \\
+        \hline
+        1.6.1 Carga de Dados, 1.6.3 Go-Live & Carga inicial de dados, Sistema em produção & Nome em português e como entrega. \\
+        \hline
+    \end{tabular}
+    \caption{Mudanças da EAP em relação ao esboço.}
+    \label{tab:mudancas}
+\end{table}
+
+% O dicionário começa em página nova, depois da EAP e da tabela de mudanças
+\clearpage
+\section{Dicionário da EAP}
+
+O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da EAP \cite{pmi2017}. Cada pacote tem um único responsável, entre os dois papéis que a declaração de escopo define: o Líder de Projeto e o Analista de Sistemas Sênior. As durações de cada pacote estão no cronograma (Exercício 2), e os custos serão detalhados na gestão de custos.
+
+{\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}p{5.3cm}|>{\raggedright\arraybackslash}p{5.3cm}|>{\raggedright\arraybackslash}p{2.2cm}|}
+    \hline
+    \rowcolor{eapC}
+    \textbf{Pacote de trabalho} & \textbf{Descrição do trabalho} & \textbf{Critério de aceitação} & \textbf{Responsável} \\
+    \hline
+    \endhead
+    \rowcolor{eapC!45}
+    \multicolumn{4}{|l|}{\textbf{1.1 Gerenciamento do projeto}} \\*
+    \hline
+    1.1.1 Linha de base do escopo & Declaração do escopo, EAP e dicionário da EAP. & Aprovada pela Diretoria. Mudanças depois disso passam pelo controle de mudanças. & Líder de Projeto \\
+    \hline
+    1.1.2 Cronograma & Atividades, durações, precedências e rede do projeto. & Aprovado pela Diretoria, com a implantação total em até 1 ano. & Líder de Projeto \\
+    \hline
+    1.1.3 Orçamento & Custos de equipamentos e de bolsas, ou do contrato com a start-up. & Equipamentos entre R\$ 300.000,00 e R\$ 600.000,00; de 5 a 8 bolsas de R\$ 2.000,00 por 6 meses. & Líder de Projeto \\
+    \hline
+    1.1.4 Equipe do projeto & Seleção de 5 a 8 alunos do último ano de SI, com o estágio aprovado, ou contratação de uma start-up da incubadora da EACH. & Equipe formalizada antes do início do desenvolvimento. & Líder de Projeto \\
+    \hline
+    1.1.5 Relatórios de acompanhamento & Relatórios de andamento, custos e riscos para a Diretoria. & Entregues na periodicidade combinada com a Diretoria. & Líder de Projeto \\
+    \hline
+    1.1.6 Encerramento & Termo de encerramento e registro das lições aprendidas. & Termo assinado pela Diretoria depois da entrada em produção. O suporte posterior fica fora do escopo. & Líder de Projeto \\
+    \hline
+    \rowcolor{eapC!45}
+    \multicolumn{4}{|l|}{\textbf{1.2 Requisitos}} \\*
+    \hline
+    1.2.1 Documento de requisitos & Regras de negócio e casos de uso dos quatro módulos, levantados com a Diretoria e a portaria. & Aprovado pelo Líder de Projeto e pela Diretoria. & Analista Sênior \\
+    \hline
+    1.2.2 Documento de arquitetura & Tecnologias, integração com catracas, cancelas e leitores, e acesso à base de dados da USP. & Acesso à base da USP confirmado com a área responsável por ela. & Analista Sênior \\
+    \hline
+    1.2.3 Protótipos de tela & Telas de cadastro, de portaria e de relatórios. & Validados com operadores da portaria antes do desenvolvimento. & Analista Sênior \\
+    \hline
+    \rowcolor{eapC!45}
+    \multicolumn{4}{|l|}{\textbf{1.3 Infraestrutura}} \\*
+    \hline
+    1.3.1 Equipamentos adquiridos & Especificação, cotação e compra de catracas, cancelas e leitores. & Itens recebidos conforme a especificação e dentro da faixa de orçamento. & Líder de Projeto \\
+    \hline
+    1.3.2 Equipamentos instalados & Preparação dos pontos de entrada e fixação dos equipamentos, sem obras civis complexas. & Equipamentos fixados e ligados em todos os pontos de entrada. & Analista Sênior \\
+    \hline
+    1.3.3 Rede das portarias & Cabeamento e configuração da rede entre os equipamentos e o servidor. & Todos os equipamentos se comunicam com o servidor. & Analista Sênior \\
+    \hline
+    \rowcolor{eapC!45}
+    \multicolumn{4}{|l|}{\textbf{1.4 Desenvolvimento}} \\*
+    \hline
+    1.4.1 Módulo de Controle de Acesso & Comunicação com os equipamentos e rotina de liberação para pessoas e veículos. & Libera automaticamente quem está cadastrado (Nº USP ou CPF) e retém o visitante até o cadastro. & Analista Sênior \\
+    \hline
+    1.4.2 Módulo de Usuários e Visitantes & Cadastro de docentes, funcionários, alunos, terceirizados e visitantes, e níveis de acesso ao sistema. & Acesso ao sistema de gestão só com senha, respeitando os níveis (ex.: administrador, operador de portaria). & Analista Sênior \\
+    \hline
+    1.4.3 Módulo de Rotinas Especiais & Pré-cadastro em lote para eventos de grande porte e emissão das credenciais do evento. & Evento de grande porte cadastrado em lote, sem sobrecarregar a portaria. & Analista Sênior \\
+    \hline
+    1.4.4 Módulo de Relatórios & Consultas e painel gerencial de frequência. & Relatórios exatos de frequência de pessoas (por Nº USP e CPF) e de veículos (por categoria). & Analista Sênior \\
+    \hline
+    \rowcolor{eapC!45}
+    \multicolumn{4}{|l|}{\textbf{1.5 Testes}} \\*
+    \hline
+    1.5.1 Testes unitários & Scripts de teste dos quatro módulos e correção dos defeitos encontrados. & Todos os testes passando antes dos testes de integração. & Analista Sênior \\
+    \hline
+    1.5.2 Testes de integração & Passagens simuladas nos equipamentos instalados, inclusive com falha de rede. & Liberação e retenção corretas em todos os pontos de entrada. & Analista Sênior \\
+    \hline
+    1.5.3 Homologação & Validação do sistema pela Diretoria, com os critérios de aceitação da declaração de escopo. & Termo de aceite assinado pela Diretoria. & Líder de Projeto \\
+    \hline
+    \rowcolor{eapC!45}
+    \multicolumn{4}{|l|}{\textbf{1.6 Implantação}} \\*
+    \hline
+    1.6.1 Carga inicial de dados & Extração e importação dos dados de docentes, funcionários, alunos e veículos da base da USP. & Dados importados e conferidos por amostragem. & Analista Sênior \\
+    \hline
+    1.6.2 Treinamento & Manuais e aulas práticas para a portaria, a segurança e os administradores. & Equipe de operação treinada e manuais entregues. & Analista Sênior \\
+    \hline
+    1.6.3 Sistema em produção & Ativação do sistema em todas as portarias. & Sistema operando em todas as portarias, com os dados da carga inicial. & Líder de Projeto \\
+    \hline
+    \caption{Dicionário da EAP.}
+    \label{tab:dicionario}
+\end{longtable}
+}
+
+\section{Registro de Uso de Inteligência Artificial}
+
+Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificial Generativa da disciplina ACH2027, declaramos explicitamente a utilização de IA como suporte ao aprendizado, ideação e estruturação deste documento.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \small
+    \begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Registro de Uso de IA} & \textbf{Registro 01: Declaração de Escopo e LaTeX} & \textbf{Registro 02: Diagramação da EAP (Mermaid)} \\
+        \hline
+        \textbf{Problema / Objetivo} & Elaborar a Declaração de Escopo (PMBOK) a partir do caso semestral da atividade proposta e formatar o conteúdo no template LaTeX do grupo. & Criar o diagrama visual da Estrutura Analítica do Projeto (EAP) e gerar o código exportável para o Overleaf. \\
+        \hline
+        \textbf{Ferramenta de IA} & Gemini 3.1 Pro (Setembro/2026). & Gemini 3.1 Pro (Setembro/2026). \\
+        \hline
+        \textbf{Comandos} & "Com base no projeto a seguir, elabore a declaração de escopo... do PMBOK" e "Formate isso no seguinte latex...". & "faça um esboço da estrutura analítica... precisa ser um diagrama" e "me de um mermaid... ficou muito largo horizontalmente". \\
+        \hline
+        \textbf{Revisão dos resultados} & A primeira versão não abordava detalhes técnicos de software. Perguntamos se era necessário e recebemos um tetalhamento de questões como Open Source e LGPD. Decidimos não incluir, já que a declaração do escopo é uma visão alto nível de gestão. & O formato padrão (Top-Down) do Mermaid extrapolava as margens da página. Ajustamos as instruções para gerar formatos otimizados (Left-Right) adequados ao papel A4 no Overleaf. \\
+        \hline
+        \textbf{Aplicação no trabalho} & Seção de Declaração de Escopo do Projeto. & Seção da Estrutura Analítica do Projeto (EAP). \\
+        \hline
+    \end{tabular}
+    \caption{Registro de Uso de IA Generativa.}
+    \label{tab:uso_ia}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \small
+    \begin{tabular}{|p{3cm}|p{12.4cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Registro de Uso de IA} & \textbf{Registro 03: EAP final e dicionário da EAP} \\
+        \hline
+        \textbf{Problema / Objetivo} & Revisar o esboço da EAP com as boas práticas do PMBOK e produzir a versão final da EAP e o dicionário da EAP. \\
+        \hline
+        \textbf{Ferramenta de IA} & Claude Opus 5.5, via Claude Code (Setembro/2026). \\
+        \hline
+        \textbf{Comandos} & "pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial, para compararmos depois" e "pode refinar o layout dos docs". \\
+        \hline
+        \textbf{Revisão dos resultados} & \textcolor{red}{[PREENCHER: revisão do grupo]} \\
+        \hline
+        \textbf{Aplicação no trabalho} & Seções II (EAP e mudanças em relação ao esboço) e III (dicionário da EAP), e o acabamento visual do documento. \\
+        \hline
+    \end{tabular}
+    \caption{Registro de Uso de IA Generativa (continuação).}
+    \label{tab:uso_ia_final}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{pmi2021}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 7. ed. Pensilvânia: Project Management Institute, 2021.
+
+\bibitem{pmi2017}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+
+\end{thebibliography}
+
+\end{document}
