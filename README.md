@@ -10,7 +10,7 @@ Projeto semestral: **Sistema para Controle de Acesso à Universidade**, aplicado
 | --- | --- | --- | --- |
 | Exercício 1: Gestão de Escopo | [`exercicios/1-escopo`](exercicios/1-escopo) | 01/10, 12:00 | Declaração do escopo e esboço da EAP feitos em aula. Faltam a EAP final e o dicionário |
 | Exercício 2: Gestão do Cronograma | [`exercicios/2-cronograma`](exercicios/2-cronograma) | 06/10, 12:00 | Atividades e esboço das durações feitos em aula. Faltam as precedências, as durações finais e a rede AOA |
-| Seminário: Elementos do Scrum | [`seminario-scrum`](seminario-scrum) | | Slides e registro de IA enviados ao professor |
+| Seminário: Elementos do Scrum | [`seminario-scrum`](seminario-scrum) | | Slides e registro de IA enviados ao professor em 15/09 |
 
 Os exercícios vão por e-mail (o endereço está no enunciado), com o assunto
 `ACH2027 – Turma T94 – Grupo 7 – Exercício N`. Toda entrega leva as referências e o
@@ -29,6 +29,7 @@ e valem para os dois (o Antigravity chega a elas pelo `.agents/skills.json`):
 - `politica-uso-ia`: usada em toda tarefa. Diz como declarar o uso de IA na entrega.
 - `gestao-escopo`: declaração do escopo, EAP e dicionário da EAP.
 - `gestao-cronograma`: atividades, durações, precedências, rede AOA e caminho crítico.
+- `scrum`: Scrum Guide 2020 e o seminário do grupo.
 
 ## Compilar
 

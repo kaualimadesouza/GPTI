@@ -43,10 +43,10 @@ case statement once it is in `docs/`.
 | `politica-uso-ia` | Every task (see above) |
 | `gestao-escopo` | Exercício 1: Declaração do Escopo, EAP, Dicionário da EAP |
 | `gestao-cronograma` | Exercício 2: activities, durations, precedences, AOA network, critical path |
+| `scrum` | Scrum Guide 2020 and the group's seminar (`seminario-scrum/`) |
 
-Add one skill per course topic as its material reaches `docs/`: the TAP form, the Scrum seminar,
-cost, Project Model Canvas, quality and communications. Base each skill on the course material,
-not on memory. Skills live only in `.claude/skills/<name>/SKILL.md`, with `name` and `description`
+Add one skill per course topic as its material reaches `docs/`: the TAP form, cost, Project Model
+Canvas, quality and communications. Base each skill on the course material, not on memory. Skills live only in `.claude/skills/<name>/SKILL.md`, with `name` and `description`
 frontmatter; both agents read that format, so never copy them into `.agents/skills/`. Write the
 description as a `>-` block: Antigravity parses strict YAML, rejects a plain value containing
 `: `, and says so only in its log (`~/.gemini/antigravity-cli/log/`, "Failed to parse skill").
