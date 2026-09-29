@@ -54,24 +54,28 @@ description as a `>-` block: Antigravity parses strict YAML, rejects a plain val
 
 ## LaTeX
 
-The exercise `.tex` files are the model: babel `brazil`, a fancyhdr first-page header (USP /
-ACH2027 / Prof. Edmir), members in two columns with NUSP and turma, Roman small-caps sections,
-the Registro de Uso de IA section, then `thebibliography`. A new deliverable copies that preamble
-and changes only the title and the content.
+`gpti.sty` is the group's model: babel `brazil`, the fancyhdr first-page header (USP / ACH2027 /
+Prof. Edmir), Roman small-caps sections, the EAP colours (`eapA`, `eapB`, `eapC`) and `\capa`, which
+prints the title and the members. Each exercise folder has an identical copy, because Overleaf only
+sees files inside its own project: edit one, copy it to the others, and check with `cmp`. A new
+deliverable is `\usepackage{gpti}`, `\capa` and the content. Quote with `\enquote{}`, never with
+straight quotes: babel `brazil` turns `"` into a closing quote and eats the space after it.
+
+A final version never overwrites the first delivery. It goes in `exercicioN_GPTI_2026_final.tex`, so
+the group can compare the two; corrections to a first delivery go into its final version. The first
+deliveries (the group's Overleaf files) keep their own preamble and Mermaid PNG figures.
 
 ```bash
 cd exercicios/1-escopo
-pdflatex -interaction=nonstopmode -halt-on-error exercicio1_GPTI_2026.tex   # twice, for refs
-pdftoppm -png -r 70 exercicio1_GPTI_2026.pdf /tmp/page                      # look at the pages
+pdflatex -interaction=nonstopmode -halt-on-error exercicio1_GPTI_2026_final.tex   # twice, for refs
+pdftoppm -png -r 70 exercicio1_GPTI_2026_final.pdf /tmp/page                      # look at the pages
 ```
 
 Render and look at the pages before calling a layout done. At low DPI `R$` renders like `R§`;
 check it with `pdftotext` instead of "fixing" it. Build artifacts are gitignored; commit the PDF.
 
-Each exercise keeps its EAP figure next to the tex, as a Mermaid PNG exported on Overleaf
-(`Sistema de Controle de-2026-09-25-010235.png`, `abcd.png`). The group co-edits both exercises on
-Overleaf. Before editing a tex here, ask whether Overleaf has a newer version, and remind the user
-to carry the change back.
+The group co-edits the exercises on Overleaf. Before editing a tex here, ask whether Overleaf has a
+newer version, and remind the user to carry the change back.
 
 ## Delivering
 

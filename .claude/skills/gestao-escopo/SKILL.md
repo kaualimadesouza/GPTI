@@ -52,21 +52,18 @@ restrições, responsável, marcos, atividades associadas, recursos, estimativa 
 requisitos de qualidade, critérios de aceitação, referências técnicas, informações de acordos.
 When a field is unknown, write "a definir" rather than inventing a value.
 
-One compact table per work package reads better than one giant table:
-
-```latex
-\begin{tabular}{|p{4cm}|p{12cm}|}
-  \hline \multicolumn{2}{|l|}{\textbf{1.4.3 Módulo de Rotinas Especiais}} \\ \hline
-  \textbf{Descrição} & ... \\ \hline
-  \textbf{Critérios de aceitação} & ... \\ \hline
-  \textbf{Responsável} & ... \\ \hline
-\end{tabular}
-```
+Exercício 1 uses one `longtable` (pacote, descrição, critério de aceitação, responsável) with a
+shaded row per level-2 group, so it breaks cleanly across pages. With many more fields per
+package, one small table per package reads better.
 
 ## Drawing the EAP
 
-The group exports a Mermaid diagram as a PNG, using `flowchart LR` because top-down overflows
-A4. The vector alternative is `forest`, with an indented tree that fits portrait:
+The esboço is a Mermaid PNG (`flowchart LR`, because top-down overflows A4). The final version in
+`exercicios/1-escopo/exercicio1_GPTI_2026_final.tex` draws it with one TikZ `\foreach` over
+`{grupo}/{pacote, pacote, ...}`: each group sits to the right of the previous one, its packages
+hang below it, and the root centres itself over the groups. Adding a package means adding a name to
+the list, with no coordinates to recompute. `forest` handles a plain indented tree, but its folder
+layout under an org-chart root breaks on the installed forest 2.1.5:
 
 ```latex
 \usepackage[edges]{forest}

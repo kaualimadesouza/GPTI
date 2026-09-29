@@ -25,7 +25,7 @@ gets its own registro entry, in the same table as the group's entries. Add a col
 | --- | --- |
 | Problema / Objetivo | What the group needed, in one sentence |
 | Ferramenta de IA | The tool and model actually used, with month/year: `Claude Opus 5.5 (Setembro/2026)`, `Gemini 3.1 Pro (Setembro/2026)` |
-| Comandos | The user's actual requests, quoted and shortened with `...` |
+| Comandos | The user's actual requests, each in `\enquote{}` and shortened with `...` |
 | Revisão dos resultados | The group's critical review: what was wrong, changed or rejected, and why |
 | Aplicação no trabalho | Which section used the result |
 
@@ -51,8 +51,9 @@ gets its own registro entry, in the same table as the group's entries. Add a col
     \centering
     \renewcommand{\arraystretch}{1.5}
     \small
-    \begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|p{6cm}|p{6cm}|}
         \hline
+        \rowcolor{eapC}
         \textbf{Registro de Uso de IA} & \textbf{Registro 01: ...} & \textbf{Registro 02: ...} \\
         \hline
         \textbf{Problema / Objetivo} & ... & ... \\ \hline
@@ -65,5 +66,6 @@ gets its own registro entry, in the same table as the group's entries. Add a col
 \end{table}
 ```
 
-`[H]` needs `\usepackage{float}` (Exercício 2 loads it, Exercício 1 uses `[htbp]`). Past three
-registros the table no longer fits A4, so start a second table and keep the numbering.
+`gpti.sty` loads what this needs (`float`, `array`, `colortbl`, `csquotes`). Two registros fill the
+A4 width. A third one starts a continuation table with the same rows, and the numbering carries on.
+Straight quotes break under babel `brazil`, so quote the prompts with `\enquote{}`.
