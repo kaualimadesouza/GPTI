@@ -55,23 +55,23 @@ leads to the project end, with no loose ends.
   material for it.
 
 ```latex
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning}
-\begin{tikzpicture}[>=Stealth, node distance=1.6cm and 2.4cm,
-    ev/.style={circle, draw, minimum size=8mm, font=\small},
-    act/.style={->, thick}, dum/.style={->, dashed}]
-  \node[ev] (1) {1};
-  \node[ev, right=of 1] (2) {2};
-  \node[ev, above right=of 2] (3) {3};
-  \node[ev, below right=of 3] (4) {4};
-  \node[ev, right=of 4] (5) {5};
-  \draw[act] (1) -- node[above] {A (1)} (2);
-  \draw[act] (2) -- node[above left] {B (2)} (3);
-  \draw[act] (2) -- node[below] {C (3)} (4);
-  \draw[dum] (3) -- (4);  % B and C both precede D: B cannot also end at 4
-  \draw[act] (4) -- node[above] {D (2)} (5);
+% gpti.sty loads tikz with the babel and quotes libraries: without babel, "A" breaks under brazil
+\begin{tikzpicture}[x=1.26cm, y=1.9cm, >=Stealth,
+    evento/.style={circle, draw, minimum size=6mm, font=\sffamily\scriptsize},
+    ativ/.style={->, semithick}, fantasma/.style={->, dashed},
+    every edge quotes/.style={font=\sffamily\scriptsize, auto, sloped}]
+  \node[evento] (e1) at (0, 0) {1};  \node[evento] (e2) at (1, 0) {2};
+  \node[evento] (e3) at (2, 1) {3};  \node[evento] (e4) at (2, 0) {4};
+  \path (e1) edge[ativ, "A", "1"'] (e2);   % letter above, weeks below
+  \path (e2) edge[ativ, "B", "2"'] (e3);
+  \path (e2) edge[ativ, "C", "3"'] (e4);
+  \path (e3) edge[fantasma] (e4);          % B and C both precede D: B cannot also end at 4
 \end{tikzpicture}
 ```
+
+Exercício 2 does not draw by hand: `exercicios/2-cronograma/rede/aoa.py` builds the network with
+the fewest dummies from its `ACTIVITIES` table, runs the critical path, and writes the table rows,
+the TikZ picture and the numbers the text quotes. Edit the table there and rerun it.
 
 ## 5. Caminho crítico
 
