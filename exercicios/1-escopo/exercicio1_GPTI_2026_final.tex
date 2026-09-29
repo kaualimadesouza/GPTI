@@ -14,6 +14,8 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 
+\hypersetup{hidelinks}
+
 % Floats maiores no topo da página, para a EAP e as tabelas não ficarem em página própria
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\textfraction}{0.1}
@@ -212,7 +214,7 @@ Fatores considerados verdadeiros, reais ou certos para fins de planejamento:
 
 \section{Estrutura Analítica do Projeto (EAP)}
 
-A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica do trabalho necessário para atingir os objetivos do projeto \cite{pmi2017}. A versão final (Figura~\ref{fig:eap}) tem 6 grupos de entregas no segundo nível e 22 pacotes de trabalho no terceiro. Cada pacote é uma entrega, escrita como substantivo; as atividades que produzem cada pacote ficam no cronograma (Exercício 2).
+A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica do trabalho necessário para atingir os objetivos do projeto \cite{pmi2017}. A versão final (Figura~\ref{fig:eap}) tem 6 grupos de entregas no segundo nível e 22 pacotes de trabalho no terceiro. Cada pacote é uma entrega, escrita como substantivo; as atividades que produzem cada pacote serão definidas no cronograma (Exercício 2).
 
 \begin{figure}[htbp]
     \centering
@@ -224,7 +226,7 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
                            minimum height=7.5mm, align=left, inner sep=3pt, rounded corners=1pt},
             every node/.append style={execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
             liga/.style={draw=eapA, semithick}]
-        \node[raiz, anchor=south] (raiz) at (8.71cm, 1.1cm) {1. Sistema de Controle de Acesso à EACH};
+        \node[raiz, anchor=south] (raiz) at (8.71cm, 1.1cm) {1. Sistema de Controle de Acesso da EACH};
         \draw[liga] (raiz.south) -- (8.71cm, 0.45cm);
         \draw[liga] (1.33cm, 0.45cm) -- (16.08cm, 0.45cm);
 
@@ -240,7 +242,7 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
         \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p14.west);
         \node[pacote, anchor=north west] (p15) at ($(p14.south west)+(0,-1.6mm)$) {1.1.5 Relatórios de acompanhamento};
         \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p15.west);
-        \node[pacote, anchor=north west] (p16) at ($(p15.south west)+(0,-1.6mm)$) {1.1.6 Encerramento};
+        \node[pacote, anchor=north west] (p16) at ($(p15.south west)+(0,-1.6mm)$) {1.1.6 Termo de encerramento};
         \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p16.west);
 
         \node[grupo, anchor=north west] (g2) at (2.95cm, 0) {1.2 Requisitos};
@@ -265,7 +267,7 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
         \draw[liga] (10.18cm, 0.45cm) -- (g4.north);
         \node[pacote, anchor=north west] (p41) at ($(g4.south west)+(0.25cm,-2mm)$) {1.4.1 Módulo de Controle de Acesso};
         \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p41.west);
-        \node[pacote, anchor=north west] (p42) at ($(p41.south west)+(0,-1.6mm)$) {1.4.2 Módulo de Usuários e Visitantes};
+        \node[pacote, anchor=north west] (p42) at ($(p41.south west)+(0,-1.6mm)$) {1.4.2 Módulo de Gestão de Usuários e Visitantes};
         \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p42.west);
         \node[pacote, anchor=north west] (p43) at ($(p42.south west)+(0,-1.6mm)$) {1.4.3 Módulo de Rotinas Especiais};
         \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p43.west);
@@ -278,7 +280,7 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
         \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p51.west);
         \node[pacote, anchor=north west] (p52) at ($(p51.south west)+(0,-1.6mm)$) {1.5.2 Testes de integração};
         \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p52.west);
-        \node[pacote, anchor=north west] (p53) at ($(p52.south west)+(0,-1.6mm)$) {1.5.3 Homologação};
+        \node[pacote, anchor=north west] (p53) at ($(p52.south west)+(0,-1.6mm)$) {1.5.3 Termo de aceite};
         \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p53.west);
 
         \node[grupo, anchor=north west] (g6) at (14.75cm, 0) {1.6 Implantação};
@@ -296,7 +298,7 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
 
 \subsection{Mudanças em relação ao esboço}
 
-A revisão aplicou três regras do PMBOK \cite{pmi2017}: a regra dos 100\% (a EAP cobre todo o trabalho do projeto e nada além dele), a orientação a entregas (substantivos, não verbos) e um único responsável por pacote de trabalho. A Tabela~\ref{tab:mudancas} resume o que mudou.
+A revisão aplicou a regra dos 100\% do PMBOK \cite{pmi2017}, segundo a qual a EAP cobre todo o trabalho do projeto e nada além dele, e duas boas práticas: nomear os elementos como entregas (substantivos, não verbos) e dar um único responsável a cada pacote de trabalho. A Tabela~\ref{tab:mudancas} resume o que mudou.
 
 \begin{table}[htbp]
     \centering
@@ -307,11 +309,13 @@ A revisão aplicou três regras do PMBOK \cite{pmi2017}: a regra dos 100\% (a EA
         \rowcolor{eapC}
         \textbf{Esboço} & \textbf{Versão final} & \textbf{Motivo} \\
         \hline
+        1. Sistema de Controle de Acesso; 1.1 Gerenciamento & 1. Sistema de Controle de Acesso da EACH; 1.1 Gerenciamento do projeto & O nome da declaração de escopo e o nome completo do grupo. \\
+        \hline
         1.1.1 Escopo & 1.1.1 Linha de base do escopo & O elemento passa a nomear a entrega, e não o assunto. \\
         \hline
-        1.1.3 Reuniões & 1.1.5 Relatórios de acompanhamento & Reunião é trabalho contínuo, e a entrega é o relatório. O grupo já tinha decidido tirar as reuniões (Registro 01 do Exercício 2). \\
+        1.1.3 Reuniões & 1.1.5 Relatórios de acompanhamento & Reunião é trabalho contínuo, e a entrega é o relatório. O grupo já tinha decidido retirar as reuniões (Registro 01 do Exercício 2). \\
         \hline
-        (não havia) & 1.1.3 Orçamento, 1.1.4 Equipe do projeto e 1.1.6 Encerramento & Regra dos 100\%: respeitar o orçamento, contratar a equipe e encerrar o projeto também são trabalho do projeto. \\
+        (não havia) & 1.1.3 Orçamento, 1.1.4 Equipe do projeto e 1.1.6 Termo de encerramento & Regra dos 100\%: respeitar o orçamento, formar a equipe e encerrar o projeto também são trabalho do projeto. \\
         \hline
         1.2.1 Especificação, 1.2.2 Arquitetura, 1.2.3 Telas & Documento de requisitos, Documento de arquitetura, Protótipos de tela & Nomes de entregas. \\
         \hline
@@ -319,9 +323,9 @@ A revisão aplicou três regras do PMBOK \cite{pmi2017}: a regra dos 100\% (a EA
         \hline
         1.4.1 Integração, 1.4.2 Usuários, 1.4.3 Eventos, 1.4.4 Relatórios & Módulos com os nomes da declaração de escopo & Cada entrega da declaração aparece com o mesmo nome na EAP. \\
         \hline
-        1.5.1 Unitários, 1.5.2 Integração & Testes unitários, Testes de integração & Clareza. \\
+        1.5.1 Unitários, 1.5.2 Integração, 1.5.3 Homologação & Testes unitários, Testes de integração, Termo de aceite & Nome completo de cada teste, e o termo como a entrega da homologação. \\
         \hline
-        1.6.1 Carga de Dados, 1.6.3 Go-Live & Carga inicial de dados, Sistema em produção & Nome em português e como entrega. \\
+        1.6.1 Carga de Dados, 1.6.3 Go-Live & Carga inicial de dados, Sistema em produção & Nomes em português, no formato de entrega. \\
         \hline
     \end{tabular}
     \caption{Mudanças da EAP em relação ao esboço.}
@@ -332,7 +336,7 @@ A revisão aplicou três regras do PMBOK \cite{pmi2017}: a regra dos 100\% (a EA
 \clearpage
 \section{Dicionário da EAP}
 
-O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da EAP \cite{pmi2017}. Cada pacote tem um único responsável, entre os dois papéis que a declaração de escopo define: o Líder de Projeto e o Analista de Sistemas Sênior. As durações de cada pacote estão no cronograma (Exercício 2), e os custos serão detalhados na gestão de custos.
+O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da EAP \cite{pmi2017}. Cada pacote tem um único responsável, entre os dois papéis que a declaração de escopo define: o Líder de Projeto e o Analista de Sistemas Sênior (Analista Sênior'', na tabela). As durações serão detalhadas no cronograma (Exercício 2), e os custos, na gestão de custos.
 
 {\small
 \renewcommand{\arraystretch}{1.3}
@@ -349,20 +353,20 @@ O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da 
     \hline
     1.1.2 Cronograma & Atividades, durações, precedências e rede do projeto. & Aprovado pela Diretoria, com a implantação total em até 1 ano. & Líder de Projeto \\
     \hline
-    1.1.3 Orçamento & Custos de equipamentos e de bolsas, ou do contrato com a start-up. & Equipamentos entre R\$ 300.000,00 e R\$ 600.000,00; de 5 a 8 bolsas de R\$ 2.000,00 por 6 meses. & Líder de Projeto \\
+    1.1.3 Orçamento & Custos de equipamentos e de bolsas, ou do contrato com a Start-Up. & Equipamentos entre R\$~300.000,00 e R\$~600.000,00; de 5 a 8 bolsas mensais de R\$~2.000,00 cada, por 6 meses, ou o valor do contrato com a Start-Up (a definir). & Líder de Projeto \\
     \hline
-    1.1.4 Equipe do projeto & Seleção de 5 a 8 alunos do último ano de SI, com o estágio aprovado, ou contratação de uma start-up da incubadora da EACH. & Equipe formalizada antes do início do desenvolvimento. & Líder de Projeto \\
+    1.1.4 Equipe do projeto & Designação do Líder de Projeto, subordinado à Diretoria, e do Analista de Sistemas Sênior, graduado em SI; seleção de 5 a 8 alunos do último ano de SI, com o estágio aprovado, ou contratação de uma Start-Up da incubadora da EACH. & Líder, Analista e equipe formalizados antes do início do desenvolvimento. & Líder de Projeto \\
     \hline
     1.1.5 Relatórios de acompanhamento & Relatórios de andamento, custos e riscos para a Diretoria. & Entregues na periodicidade combinada com a Diretoria. & Líder de Projeto \\
     \hline
-    1.1.6 Encerramento & Termo de encerramento e registro das lições aprendidas. & Termo assinado pela Diretoria depois da entrada em produção. O suporte posterior fica fora do escopo. & Líder de Projeto \\
+    1.1.6 Termo de encerramento & Termo de encerramento e registro das lições aprendidas. & Termo assinado pela Diretoria depois da entrada em produção. O suporte posterior fica fora do escopo. & Líder de Projeto \\
     \hline
     \rowcolor{eapC!45}
     \multicolumn{4}{|l|}{\textbf{1.2 Requisitos}} \\*
     \hline
     1.2.1 Documento de requisitos & Regras de negócio e casos de uso dos quatro módulos, levantados com a Diretoria e a portaria. & Aprovado pelo Líder de Projeto e pela Diretoria. & Analista Sênior \\
     \hline
-    1.2.2 Documento de arquitetura & Tecnologias, integração com catracas, cancelas e leitores, e acesso à base de dados da USP. & Acesso à base da USP confirmado com a área responsável por ela. & Analista Sênior \\
+    1.2.2 Documento de arquitetura & Tecnologias, integração com catracas, cancelas e leitores, e acesso à base de dados da USP. & Integração com os equipamentos especificada e acesso à base da USP confirmado com a área responsável por ela. & Analista Sênior \\
     \hline
     1.2.3 Protótipos de tela & Telas de cadastro, de portaria e de relatórios. & Validados com operadores da portaria antes do desenvolvimento. & Analista Sênior \\
     \hline
@@ -380,7 +384,7 @@ O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da 
     \hline
     1.4.1 Módulo de Controle de Acesso & Comunicação com os equipamentos e rotina de liberação para pessoas e veículos. & Libera automaticamente quem está cadastrado (Nº USP ou CPF) e retém o visitante até o cadastro. & Analista Sênior \\
     \hline
-    1.4.2 Módulo de Usuários e Visitantes & Cadastro de docentes, funcionários, alunos, terceirizados e visitantes, e níveis de acesso ao sistema. & Acesso ao sistema de gestão só com senha, respeitando os níveis (ex.: administrador, operador de portaria). & Analista Sênior \\
+    1.4.2 Módulo de Gestão de Usuários e Visitantes & Cadastro de docentes, funcionários, alunos, terceirizados e visitantes, e níveis de acesso ao sistema. & Acesso ao sistema de gestão só com senha, respeitando os níveis (ex.: administrador, operador de portaria). & Analista Sênior \\
     \hline
     1.4.3 Módulo de Rotinas Especiais & Pré-cadastro em lote para eventos de grande porte e emissão das credenciais do evento. & Evento de grande porte cadastrado em lote, sem sobrecarregar a portaria. & Analista Sênior \\
     \hline
@@ -393,14 +397,14 @@ O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da 
     \hline
     1.5.2 Testes de integração & Passagens simuladas nos equipamentos instalados, inclusive com falha de rede. & Liberação e retenção corretas em todos os pontos de entrada. & Analista Sênior \\
     \hline
-    1.5.3 Homologação & Validação do sistema pela Diretoria, com os critérios de aceitação da declaração de escopo. & Termo de aceite assinado pela Diretoria. & Líder de Projeto \\
+    1.5.3 Termo de aceite & Validação do sistema pela Diretoria, com os critérios de aceitação da declaração de escopo. & Termo de aceite assinado pela Diretoria. & Líder de Projeto \\
     \hline
     \rowcolor{eapC!45}
     \multicolumn{4}{|l|}{\textbf{1.6 Implantação}} \\*
     \hline
     1.6.1 Carga inicial de dados & Extração e importação dos dados de docentes, funcionários, alunos e veículos da base da USP. & Dados importados e conferidos por amostragem. & Analista Sênior \\
     \hline
-    1.6.2 Treinamento & Manuais e aulas práticas para a portaria, a segurança e os administradores. & Equipe de operação treinada e manuais entregues. & Analista Sênior \\
+    1.6.2 Treinamento & Manuais e aulas práticas para a portaria, a segurança e os administradores. & Operadores da portaria e da segurança e administradores treinados, com lista de presença, e manuais entregues. & Analista Sênior \\
     \hline
     1.6.3 Sistema em produção & Ativação do sistema em todas as portarias. & Sistema operando em todas as portarias, com os dados da carga inicial. & Líder de Projeto \\
     \hline
@@ -417,7 +421,7 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
     \centering
     \renewcommand{\arraystretch}{1.5}
     \small
-    \begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|p{6cm}|p{6cm}|}
         \hline
         \rowcolor{eapC}
         \textbf{Registro de Uso de IA} & \textbf{Registro 01: Declaração de Escopo e LaTeX} & \textbf{Registro 02: Diagramação da EAP (Mermaid)} \\
@@ -441,7 +445,7 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
     \centering
     \renewcommand{\arraystretch}{1.5}
     \small
-    \begin{tabular}{|p{3cm}|p{12.4cm}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|p{12.4cm}|}
         \hline
         \rowcolor{eapC}
         \textbf{Registro de Uso de IA} & \textbf{Registro 03: EAP final e dicionário da EAP} \\
@@ -450,7 +454,7 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
         \hline
         \textbf{Ferramenta de IA} & Claude Opus 5.5, via Claude Code (Setembro/2026). \\
         \hline
-        \textbf{Comandos} & "pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial, para compararmos depois" e "pode refinar o layout dos docs". \\
+        \textbf{Comandos} & "pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial, para compararmos depois" e "pode refinar o layout dos docs com /design". \\
         \hline
         \textbf{Revisão dos resultados} & \textcolor{red}{[PREENCHER: revisão do grupo]} \\
         \hline
