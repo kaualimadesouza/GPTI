@@ -41,7 +41,7 @@ As durações estão em semanas e foram estimadas por analogia e opinião especi
 Quatro precedências pedem explicação:
 
 \begin{itemize}
-    \item O orçamento (F) é aprovado antes das cotações (P), pelas faixas da declaração do escopo: equipamentos de R\$~300.000,00 a R\$~600.000,00 e de 5 a 8 bolsas. A compra (Q) espera a aprovação e as cotações.
+    \item O orçamento (F) não espera as cotações (P): é aprovado pelas faixas da declaração do escopo, equipamentos de R\$~300.000,00 a R\$~600.000,00 e de 5 a 8 bolsas. Só a compra (Q) espera os dois.
     \item O desenvolvimento começa de uma vez (V e X), com a equipe formalizada (H), os protótipos validados (N) e os equipamentos especificados (O), porque a API de comunicação depende do modelo dos equipamentos.
     \item A rotina de liberação (W) usa a API (V) e o cadastro (X), porque só libera quem está cadastrado.
     \item As consultas de frequência (AB) partem da rotina de liberação (W), que registra as passagens.
@@ -72,7 +72,7 @@ Quatro precedências pedem explicação:
 
 Na rede AOA (atividade na seta), os nós são eventos numerados e as setas são atividades, com a letra acima e a duração em semanas abaixo (Figura~\ref{fig:aoa}). As setas tracejadas são atividades fantasma: têm duração zero e só representam uma dependência. A numeração dos eventos cresce no sentido das setas.
 
-As atividades com folga zero formam o caminho crítico, em vermelho: \caminhoCritico. Elas saem do método do caminho crítico, com uma passagem de ida e uma de volta pela rede \cite{pmi2017}. Até o início do desenvolvimento há duas cadeias críticas em paralelo, a do gerenciamento (C a H) e a dos requisitos (I a L e O), que terminam juntas.
+As atividades com folga zero formam o caminho crítico, em vermelho: \caminhoCritico. Elas saem do método do caminho crítico, com uma passagem de ida e uma de volta pela rede \cite{pmi2017}.
 
 A duração total é de \duracaoTotal{} semanas, dentro do limite de 1 ano da declaração do escopo. O desenvolvimento e os testes (V a AG) vão da semana \inicioDesenvolvimento{} à semana \fimTestes{}, e a equipe de desenvolvimento fica até o encerramento, na semana \duracaoTotal{}. A declaração prevê as bolsas pelo período exato de 6 meses. \textcolor{red}{[CONFERIR com o grupo: o período das bolsas diante das semanas \inicioDesenvolvimento{} a \duracaoTotal{}.]}
 
