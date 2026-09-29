@@ -7,6 +7,13 @@
 *.fls
 *.fdb_latexmk
 
+# Python (Exercise 2 network generator)
+__pycache__/
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
 # OS noise
 .DS_Store
 *:Zone.Identifier

@@ -1,0 +1,114 @@
+\documentclass[a4paper]{article}
+\usepackage{gpti}
+\usepackage{afterpage}
+% Gerados por rede/aoa.py a partir da tabela de atividades: não edite à mão
+\input{rede/numeros}
+% \input primitivo: é expansível, então as linhas geradas podem entrar no meio da longtable
+\makeatletter
+\let\linhasgeradas\@@input
+\makeatother
+
+\title{\textbf{Grupo 7 - Exercício 2 (versão final)}}
+
+\begin{document}
+
+\capa
+
+\section{Atividades a partir dos pacotes de trabalho}
+
+As atividades partem dos 22 pacotes de trabalho da EAP final (Exercício 1). Cada atividade é escrita como verbo e objeto e pertence a um único pacote, e o código da atividade estende o código do pacote: o pacote 1.4.1 gera as atividades 1.4.1.1 e 1.4.1.2 \cite{pmi2017}.
+
+Dois trabalhos da EAP ficam fora da rede. O pacote 1.1.5 (Relatórios de acompanhamento) é um esforço contínuo, que acompanha o projeto do início ao fim, assim como as reuniões semanais que o grupo retirou do esboço. E a designação do Líder de Projeto e do Analista de Sistemas Sênior (pacote 1.1.4) acontece na abertura do projeto, antes da atividade A, porque são eles que conduzem o planejamento; as atividades G e H formam só a equipe de desenvolvimento, de bolsistas ou da Start-Up.
+
+\section{Duração e precedências das atividades}
+
+As durações estão em semanas e foram estimadas por analogia e opinião especializada, partindo do esboço feito em aula \cite{pmi2017}. Todas as precedências são do tipo término-início: uma atividade só começa quando todas as suas predecessoras terminam \cite{pmi2017}. A letra de cada atividade (Tabela~\ref{tab:atividades}) é o rótulo usado na rede.
+
+{\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|c|l|>{\raggedright\arraybackslash}p{8.8cm}|c|>{\raggedright\arraybackslash}p{2.4cm}|}
+    \hline
+    \rowcolor{eapC}
+    \textbf{Ativ.} & \textbf{Código} & \textbf{Atividade} & \textbf{Duração (sem.)} & \textbf{Predecessoras} \\
+    \hline
+    \endhead
+    \linhasgeradas{rede/atividades}
+    \caption{Atividades, durações e precedências.}
+    \label{tab:atividades}
+\end{longtable}
+}
+
+Quatro precedências pedem explicação:
+
+\begin{itemize}
+    \item O orçamento (F) é aprovado antes das cotações (P), pelas faixas da declaração do escopo: equipamentos de R\$~300.000,00 a R\$~600.000,00 e de 5 a 8 bolsas. A compra (Q) espera a aprovação e as cotações.
+    \item O desenvolvimento começa de uma vez (V e X), com a equipe formalizada (H), os protótipos validados (N) e os equipamentos especificados (O), porque a API de comunicação depende do modelo dos equipamentos.
+    \item A rotina de liberação (W) usa a API (V) e o cadastro (X), porque só libera quem está cadastrado.
+    \item As consultas de frequência (AB) partem da rotina de liberação (W), que registra as passagens.
+\end{itemize}
+
+\subsection{Mudanças em relação ao esboço}
+
+\begin{itemize}
+    \item Saiu a atividade Reuniões semanais (código 1.1.3.1 no esboço, 24 semanas), como o grupo decidiu no Registro 01.
+    \item Entraram as atividades dos pacotes novos da EAP final: E e F (orçamento), G e H (equipe do projeto) e AN (termo de encerramento).
+    \item \enquote{Fechar linha de base} virou D, \enquote{Estimar as durações e aprovar o cronograma}, e \enquote{Termo de aceite} virou AJ, \enquote{Homologar com a Diretoria e assinar o termo de aceite}.
+    \item As durações do esboço foram mantidas, e as atividades novas usam a mesma escala.
+\end{itemize}
+
+\section{Rede de atividades do tipo AOA}
+
+% A rede vai na página seguinte, deitada, e o texto continua enchendo a página atual
+\afterpage{
+\begin{landscape}
+    \begin{figure}[p]
+        \centering
+        \input{rede/rede_aoa}
+        \caption{Rede de atividades do tipo AOA. Em vermelho, as atividades com folga zero (caminho crítico); tracejadas, as atividades fantasma.}
+        \label{fig:aoa}
+    \end{figure}
+\end{landscape}
+}
+
+Na rede AOA (atividade na seta), os nós são eventos numerados e as setas são atividades, com a letra acima e a duração em semanas abaixo (Figura~\ref{fig:aoa}). As setas tracejadas são atividades fantasma: têm duração zero e só representam uma dependência. A numeração dos eventos cresce no sentido das setas.
+
+As atividades com folga zero formam o caminho crítico, em vermelho: \caminhoCritico. Elas saem do método do caminho crítico, com uma passagem de ida e uma de volta pela rede \cite{pmi2017}. Até o início do desenvolvimento há duas cadeias críticas em paralelo, a do gerenciamento (C a H) e a dos requisitos (I a L e O), que terminam juntas.
+
+A duração total é de \duracaoTotal{} semanas, dentro do limite de 1 ano da declaração do escopo. O desenvolvimento e os testes (V a AG) vão da semana \inicioDesenvolvimento{} à semana \fimTestes{}, e a equipe de desenvolvimento fica até o encerramento, na semana \duracaoTotal{}. A declaração prevê as bolsas pelo período exato de 6 meses. \textcolor{red}{[CONFERIR com o grupo: o período das bolsas diante das semanas \inicioDesenvolvimento{} a \duracaoTotal{}.]}
+
+\section{Registro de Uso de Inteligência Artificial}
+
+Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificial Generativa da disciplina ACH2027, declaramos explicitamente a utilização de IA como suporte ao aprendizado, ideação e estruturação deste documento. O quadro a seguir detalha os comandos utilizados, a ferramenta e a avaliação crítica dos resultados.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \small
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|p{6cm}|p{6cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Registro de Uso de IA} & \textbf{Registro 01: Diagramação da EAP} & \textbf{Registro 02: Cronograma final e rede AOA} \\
+        \hline
+        \textbf{Problema / Objetivo} & Criar o diagrama visual da Estrutura Analítica do Projeto (EAP) e fazer um esboço da duração das atividades. & Refazer as atividades a partir da EAP final, fechar as durações e as precedências, desenhar a rede AOA com o caminho crítico e revisar o resultado com agentes de IA independentes. \\
+        \hline
+        \textbf{Ferramenta de IA} & Gemini (Setembro/2026). & Claude Opus 5.5, via Claude Code, com agentes revisores (Setembro/2026). \\
+        \hline
+        \textbf{Comandos} & \enquote{faça um esboço da estrutura analítica... precisa ser um diagrama} & \enquote{pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial... coloque em um PR cada um}, \enquote{pode refinar o layout dos docs...} e \enquote{use o thermo nuclear... para revisar, e lance outro agente... para revisar sem o contexto}. \\
+        \hline
+        \textbf{Revisão dos resultados} & Analisamos que o esboço da duração foi feito a partir do esboço do EAP original, que estava simplificado e não possuía todas as atividades. Pedimos para gerar as atividades e recalcular. Além disso, foi gerado de forma muito detalhada, incluindo reuniões diárias no EAP e estimando em 24 semanas. O grupo decidiu remover isso na próxima entrega. & \textcolor{red}{[PREENCHER: revisão do grupo]} \\
+        \hline
+        \textbf{Aplicação no trabalho} & Seção da Estrutura Analítica do Projeto (EAP). & Seções I a III (atividades, durações, precedências e rede AOA), o programa que gera a tabela e a rede, e o acabamento visual do documento. \\
+        \hline
+    \end{tabular}
+    \caption{Registro de Uso de IA Generativa.}
+    \label{tab:uso_ia}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{pmi2017}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+
+\end{thebibliography}
+
+\end{document}
