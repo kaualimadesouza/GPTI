@@ -1,150 +1,11 @@
 \documentclass[a4paper]{article}
+\usepackage{gpti}
 
-% Packages
-\usepackage[utf8]{inputenc}
-\usepackage{geometry}
-\geometry{left=1.5cm, right=1.5cm, top=2.54cm, bottom=2.54cm}
-\usepackage{graphicx, setspace, amsmath, amssymb, titlesec, fancyhdr, parskip, indentfirst, etoolbox, caption, cite, xcolor}
-\usepackage{listings}
-\usepackage{url}
-\usepackage{hyperref}
-\usepackage{multicol}
-\usepackage[brazil]{babel}
-\usepackage{array, longtable, colortbl, float}
-\usepackage{tikz}
-\usetikzlibrary{calc}
-
-\hypersetup{hidelinks}
-
-% Floats maiores no topo da página, para a EAP e as tabelas não ficarem em página própria
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\textfraction}{0.1}
-\renewcommand{\floatpagefraction}{0.8}
-\makeatletter
-\setlength{\@fptop}{0pt}
-\setlength{\@fpsep}{16pt}
-\setlength{\@fpbot}{0pt plus 1fil}
-\makeatother
-
-% Cores da EAP, usadas também no cabeçalho das tabelas
-\definecolor{eapA}{HTML}{0B4F7C}
-\definecolor{eapB}{HTML}{1D82C4}
-\definecolor{eapC}{HTML}{E8F2FB}
-
-\addto\captionsbrazil{
-  \renewcommand{\refname}{Referências}
-}
-
-% Title Formatting
-\titleformat{\section}{\centering\large\scshape}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{1em}{}
-
-\setstretch{1.0}
-\setlength{\parskip}{6pt}
-
-\titlespacing{\section}{0pt}{14pt}{6pt}
-\titlespacing{\subsection}{0pt}{6pt}{6pt}
-\titlespacing{\subsubsection}{0pt}{6pt}{6pt}
-
-% Document Title
-\title{
-    \textbf{Grupo 7 - Exercício 1 (versão final)}
-}
-
-\date{}
-
-\captionsetup{labelfont={small,sc}, textfont={small,sc}}
-
-% Section Numbering
-\renewcommand{\thesection}{\Roman{section}.}
-\renewcommand{\thesubsection}{\textit{\Alph{subsection}.}}
-\renewcommand{\thesubsubsection}{\textit{\arabic{subsubsection}.}}
-\renewcommand{\thetable}{\Roman{table}}
-\renewcommand{\thefigure}{\Roman{figure}}
-
-% Make titles italic as well
-\titleformat{\subsection}
-    {\normalfont\large\itshape}
-    {\thesubsection}
-    {1em}
-    {}
-
-\titleformat{\subsubsection}
-    {\normalfont\itshape}
-    {\thesubsubsection}
-    {1em}
-    {}
-
-\setcounter{page}{1}
-
-% Fancy Header Configuration
-\pagestyle{fancy}
-\fancyhf{}
-
-% First Page Header
-\fancypagestyle{firstpage}{
-    \fancyhead[C]{
-        \centering
-        {\fontsize{14pt}{10pt}\selectfont
-        \textbf{Universidade de São Paulo}\\[0.5em]
-        \textbf{ACH2027 - Gestão de Projetos de Tecnologia da Informação}}\\[0.2em]
-        {\fontsize{8pt}{10pt}\selectfont
-        \textbf{Prof. Doutor:} Edmir Parada Vasques Prado \hspace{1cm}
-        \textbf{Ano:} 2º Semestre/2026}
-    }
-}
-
-% Default Header for Other Pages
-\fancyhead[C]{
-    \textbf{Escola de Artes, Ciências e Humanidades - Universidade de São Paulo}
-}
+\title{\textbf{Grupo 7 - Exercício 1 (versão final)}}
 
 \begin{document}
 
-\maketitle
-\vspace{-1.5cm}
-\thispagestyle{firstpage}
-
-% =========================================================
-% INTEGRANTES
-% =========================================================
-
-\begin{multicols}{2}
-    \centering
-
-    \textbf{Gustavo G. França do Nascimento}\\
-    15637551\\
-    T94
-    
-    \vspace{0.5cm}
-    
-    \textbf{Kauã Lima de Souza}\\
-    15674702\\
-    T94
-    
-    \vspace{0.5cm}
-
-    \textbf{Kevin Rodrigues Nunes}\\
-    15676030\\
-    T94
-    
-    \vspace{0.5cm}
-    
-    \textbf{Victor Yodono}\\
-    13829040\\
-    T94
-
-\end{multicols}
-
-\vspace{-0.2cm} % Ajuste de espaçamento vertical
-
-% =========================================================
-% CONTEÚDO
-% =========================================================
-
-\singlespacing
-\setlength{\parskip}{6pt}
-\setlength{\parindent}{0.5cm}
+\capa
 
 \section{Declaração de Escopo do Projeto}
 
@@ -216,9 +77,10 @@ Fatores considerados verdadeiros, reais ou certos para fins de planejamento:
 
 A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica do trabalho necessário para atingir os objetivos do projeto \cite{pmi2017}. A versão final (Figura~\ref{fig:eap}) tem 6 grupos de entregas no segundo nível e 22 pacotes de trabalho no terceiro. Cada pacote é uma entrega, escrita como substantivo; as atividades que produzem cada pacote serão definidas no cronograma (Exercício 2).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}[
+            node distance=3mm,
             raiz/.style={fill=eapA, text=white, font=\sffamily\small\bfseries, inner sep=4pt, rounded corners=1pt},
             grupo/.style={fill=eapB, text=white, font=\sffamily\scriptsize\bfseries, text width=2.45cm,
                           minimum height=9mm, align=left, inner sep=3pt, rounded corners=1pt},
@@ -226,71 +88,33 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
                            minimum height=7.5mm, align=left, inner sep=3pt, rounded corners=1pt},
             every node/.append style={execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
             liga/.style={draw=eapA, semithick}]
-        \node[raiz, anchor=south] (raiz) at (8.71cm, 1.1cm) {1. Sistema de Controle de Acesso da EACH};
-        \draw[liga] (raiz.south) -- (8.71cm, 0.45cm);
-        \draw[liga] (1.33cm, 0.45cm) -- (16.08cm, 0.45cm);
-
-        \node[grupo, anchor=north west] (g1) at (0.00cm, 0) {1.1 Gerenciamento do projeto};
-        \draw[liga] (1.33cm, 0.45cm) -- (g1.north);
-        \node[pacote, anchor=north west] (p11) at ($(g1.south west)+(0.25cm,-2mm)$) {1.1.1 Linha de base do escopo};
-        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p11.west);
-        \node[pacote, anchor=north west] (p12) at ($(p11.south west)+(0,-1.6mm)$) {1.1.2 Cronograma};
-        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p12.west);
-        \node[pacote, anchor=north west] (p13) at ($(p12.south west)+(0,-1.6mm)$) {1.1.3 Orçamento};
-        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p13.west);
-        \node[pacote, anchor=north west] (p14) at ($(p13.south west)+(0,-1.6mm)$) {1.1.4 Equipe do projeto};
-        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p14.west);
-        \node[pacote, anchor=north west] (p15) at ($(p14.south west)+(0,-1.6mm)$) {1.1.5 Relatórios de acompanhamento};
-        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p15.west);
-        \node[pacote, anchor=north west] (p16) at ($(p15.south west)+(0,-1.6mm)$) {1.1.6 Termo de encerramento};
-        \draw[liga] ($(g1.south west)+(0.12cm,0)$) |- (p16.west);
-
-        \node[grupo, anchor=north west] (g2) at (2.95cm, 0) {1.2 Requisitos};
-        \draw[liga] (4.28cm, 0.45cm) -- (g2.north);
-        \node[pacote, anchor=north west] (p21) at ($(g2.south west)+(0.25cm,-2mm)$) {1.2.1 Documento de requisitos};
-        \draw[liga] ($(g2.south west)+(0.12cm,0)$) |- (p21.west);
-        \node[pacote, anchor=north west] (p22) at ($(p21.south west)+(0,-1.6mm)$) {1.2.2 Documento de arquitetura};
-        \draw[liga] ($(g2.south west)+(0.12cm,0)$) |- (p22.west);
-        \node[pacote, anchor=north west] (p23) at ($(p22.south west)+(0,-1.6mm)$) {1.2.3 Protótipos de tela};
-        \draw[liga] ($(g2.south west)+(0.12cm,0)$) |- (p23.west);
-
-        \node[grupo, anchor=north west] (g3) at (5.90cm, 0) {1.3 Infraestrutura};
-        \draw[liga] (7.23cm, 0.45cm) -- (g3.north);
-        \node[pacote, anchor=north west] (p31) at ($(g3.south west)+(0.25cm,-2mm)$) {1.3.1 Equipamentos adquiridos};
-        \draw[liga] ($(g3.south west)+(0.12cm,0)$) |- (p31.west);
-        \node[pacote, anchor=north west] (p32) at ($(p31.south west)+(0,-1.6mm)$) {1.3.2 Equipamentos instalados};
-        \draw[liga] ($(g3.south west)+(0.12cm,0)$) |- (p32.west);
-        \node[pacote, anchor=north west] (p33) at ($(p32.south west)+(0,-1.6mm)$) {1.3.3 Rede das portarias};
-        \draw[liga] ($(g3.south west)+(0.12cm,0)$) |- (p33.west);
-
-        \node[grupo, anchor=north west] (g4) at (8.85cm, 0) {1.4 Desenvolvimento};
-        \draw[liga] (10.18cm, 0.45cm) -- (g4.north);
-        \node[pacote, anchor=north west] (p41) at ($(g4.south west)+(0.25cm,-2mm)$) {1.4.1 Módulo de Controle de Acesso};
-        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p41.west);
-        \node[pacote, anchor=north west] (p42) at ($(p41.south west)+(0,-1.6mm)$) {1.4.2 Módulo de Gestão de Usuários e Visitantes};
-        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p42.west);
-        \node[pacote, anchor=north west] (p43) at ($(p42.south west)+(0,-1.6mm)$) {1.4.3 Módulo de Rotinas Especiais};
-        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p43.west);
-        \node[pacote, anchor=north west] (p44) at ($(p43.south west)+(0,-1.6mm)$) {1.4.4 Módulo de Relatórios};
-        \draw[liga] ($(g4.south west)+(0.12cm,0)$) |- (p44.west);
-
-        \node[grupo, anchor=north west] (g5) at (11.80cm, 0) {1.5 Testes};
-        \draw[liga] (13.13cm, 0.45cm) -- (g5.north);
-        \node[pacote, anchor=north west] (p51) at ($(g5.south west)+(0.25cm,-2mm)$) {1.5.1 Testes unitários};
-        \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p51.west);
-        \node[pacote, anchor=north west] (p52) at ($(p51.south west)+(0,-1.6mm)$) {1.5.2 Testes de integração};
-        \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p52.west);
-        \node[pacote, anchor=north west] (p53) at ($(p52.south west)+(0,-1.6mm)$) {1.5.3 Termo de aceite};
-        \draw[liga] ($(g5.south west)+(0.12cm,0)$) |- (p53.west);
-
-        \node[grupo, anchor=north west] (g6) at (14.75cm, 0) {1.6 Implantação};
-        \draw[liga] (16.08cm, 0.45cm) -- (g6.north);
-        \node[pacote, anchor=north west] (p61) at ($(g6.south west)+(0.25cm,-2mm)$) {1.6.1 Carga inicial de dados};
-        \draw[liga] ($(g6.south west)+(0.12cm,0)$) |- (p61.west);
-        \node[pacote, anchor=north west] (p62) at ($(p61.south west)+(0,-1.6mm)$) {1.6.2 Treinamento};
-        \draw[liga] ($(g6.south west)+(0.12cm,0)$) |- (p62.west);
-        \node[pacote, anchor=north west] (p63) at ($(p62.south west)+(0,-1.6mm)$) {1.6.3 Sistema em produção};
-        \draw[liga] ($(g6.south west)+(0.12cm,0)$) |- (p63.west);
+        % Cada grupo fica à direita do anterior, com os pacotes em lista logo abaixo
+        \foreach \grupo/\pacotes [count=\i, remember=\i as \anterior (initially 0)] in {
+                {1.1 Gerenciamento do projeto}/{1.1.1 Linha de base do escopo, 1.1.2 Cronograma, 1.1.3 Orçamento,
+                    1.1.4 Equipe do projeto, 1.1.5 Relatórios de acompanhamento, 1.1.6 Termo de encerramento},
+                {1.2 Requisitos}/{1.2.1 Documento de requisitos, 1.2.2 Documento de arquitetura, 1.2.3 Protótipos de tela},
+                {1.3 Infraestrutura}/{1.3.1 Equipamentos adquiridos, 1.3.2 Equipamentos instalados, 1.3.3 Rede das portarias},
+                {1.4 Desenvolvimento}/{1.4.1 Módulo de Controle de Acesso, 1.4.2 Módulo de Gestão de Usuários e Visitantes,
+                    1.4.3 Módulo de Rotinas Especiais, 1.4.4 Módulo de Relatórios},
+                {1.5 Testes}/{1.5.1 Testes unitários, 1.5.2 Testes de integração, 1.5.3 Termo de aceite},
+                {1.6 Implantação}/{1.6.1 Carga inicial de dados, 1.6.2 Treinamento, 1.6.3 Sistema em produção}} {
+            \ifnum\i=1
+                \node[grupo] (g1) {\grupo};
+            \else
+                \node[grupo, right=of g\anterior.north east, anchor=north west] (g\i) {\grupo};
+            \fi
+            \coordinate (ultimo) at ($(g\i.south west)+(0.25, -0.04)$);
+            \foreach \pacote in \pacotes {
+                \node[pacote, anchor=north west] (p) at ($(ultimo)+(0, -0.16)$) {\pacote};
+                \draw[liga] ($(g\i.south west)+(0.12, 0)$) |- (p.west);
+                \coordinate (ultimo) at (p.south west);
+            }
+            \xdef\ultimogrupo{\i}
+        }
+        \node[raiz, anchor=south] (raiz) at ($(g1.north)!0.5!(g\ultimogrupo.north)+(0, 0.65)$)
+            {1. Sistema de Controle de Acesso da EACH};
+        \foreach \i in {1,...,\ultimogrupo}
+            \draw[liga] (raiz.south) -- ++(0, -0.325) -| (g\i.north);
     \end{tikzpicture}
     \caption{Estrutura Analítica do Projeto (EAP), versão final}
     \label{fig:eap}
@@ -300,7 +124,7 @@ A Estrutura Analítica do Projeto (EAP) apresenta a decomposição hierárquica 
 
 A revisão aplicou a regra dos 100\% do PMBOK \cite{pmi2017}, segundo a qual a EAP cobre todo o trabalho do projeto e nada além dele, e duas boas práticas: nomear os elementos como entregas (substantivos, não verbos) e dar um único responsável a cada pacote de trabalho. A Tabela~\ref{tab:mudancas} resume o que mudou.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \small
     \renewcommand{\arraystretch}{1.3}
@@ -336,7 +160,7 @@ A revisão aplicou a regra dos 100\% do PMBOK \cite{pmi2017}, segundo a qual a E
 \clearpage
 \section{Dicionário da EAP}
 
-O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da EAP \cite{pmi2017}. Cada pacote tem um único responsável, entre os dois papéis que a declaração de escopo define: o Líder de Projeto e o Analista de Sistemas Sênior (Analista Sênior'', na tabela). As durações serão detalhadas no cronograma (Exercício 2), e os custos, na gestão de custos.
+O dicionário (Tabela~\ref{tab:dicionario}) descreve cada pacote de trabalho da EAP \cite{pmi2017}. Cada pacote tem um único responsável, entre os dois papéis que a declaração de escopo define: o Líder de Projeto e o Analista de Sistemas Sênior (\enquote{Analista Sênior}, na tabela). As durações serão detalhadas no cronograma (Exercício 2), e os custos, na gestão de custos.
 
 {\small
 \renewcommand{\arraystretch}{1.3}
@@ -430,7 +254,7 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
         \hline
         \textbf{Ferramenta de IA} & Gemini 3.1 Pro (Setembro/2026). & Gemini 3.1 Pro (Setembro/2026). \\
         \hline
-        \textbf{Comandos} & "Com base no projeto a seguir, elabore a declaração de escopo... do PMBOK" e "Formate isso no seguinte latex...". & "faça um esboço da estrutura analítica... precisa ser um diagrama" e "me de um mermaid... ficou muito largo horizontalmente". \\
+        \textbf{Comandos} & \enquote{Com base no projeto a seguir, elabore a declaração de escopo... do PMBOK} e \enquote{Formate isso no seguinte latex...}. & \enquote{faça um esboço da estrutura analítica... precisa ser um diagrama} e \enquote{me de um mermaid... ficou muito largo horizontalmente}. \\
         \hline
         \textbf{Revisão dos resultados} & A primeira versão não abordava detalhes técnicos de software. Perguntamos se era necessário e recebemos um tetalhamento de questões como Open Source e LGPD. Decidimos não incluir, já que a declaração do escopo é uma visão alto nível de gestão. & O formato padrão (Top-Down) do Mermaid extrapolava as margens da página. Ajustamos as instruções para gerar formatos otimizados (Left-Right) adequados ao papel A4 no Overleaf. \\
         \hline
@@ -450,11 +274,11 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
         \rowcolor{eapC}
         \textbf{Registro de Uso de IA} & \textbf{Registro 03: EAP final e dicionário da EAP} \\
         \hline
-        \textbf{Problema / Objetivo} & Revisar o esboço da EAP com as boas práticas do PMBOK e produzir a versão final da EAP e o dicionário da EAP. \\
+        \textbf{Problema / Objetivo} & Revisar o esboço da EAP com as boas práticas do PMBOK, produzir a versão final da EAP e o dicionário da EAP, e revisar o resultado com agentes de IA independentes. \\
         \hline
-        \textbf{Ferramenta de IA} & Claude Opus 5.5, via Claude Code (Setembro/2026). \\
+        \textbf{Ferramenta de IA} & Claude Opus 5.5, via Claude Code, com agentes revisores (Setembro/2026). \\
         \hline
-        \textbf{Comandos} & "pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial, para compararmos depois" e "pode refinar o layout dos docs com /design". \\
+        \textbf{Comandos} & \enquote{pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial, para compararmos depois}, \enquote{pode refinar o layout dos docs...} e \enquote{use o thermo nuclear... para revisar, e lance outro agente... para revisar sem o contexto}. \\
         \hline
         \textbf{Revisão dos resultados} & \textcolor{red}{[PREENCHER: revisão do grupo]} \\
         \hline
@@ -466,9 +290,6 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
 \end{table}
 
 \begin{thebibliography}{99}
-
-\bibitem{pmi2021}
-PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 7. ed. Pensilvânia: Project Management Institute, 2021.
 
 \bibitem{pmi2017}
 PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
