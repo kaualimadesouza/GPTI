@@ -1,0 +1,421 @@
+\documentclass[a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{left=1.5cm, right=1.5cm, top=2.54cm, bottom=2.54cm}
+\usepackage{graphicx, setspace, amsmath, amssymb, titlesec, fancyhdr, parskip, indentfirst, etoolbox, caption, cite, xcolor}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{float} % PACOTE ADICIONADO AQUI
+\usepackage[brazil]{babel}
+\usepackage{array, longtable, colortbl, pdflscape}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\hypersetup{hidelinks}
+
+% Floats maiores no topo da página, para as tabelas não ficarem em página própria
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
+
+% Cores da EAP (Exercício 1), usadas na rede e no cabeçalho das tabelas
+\definecolor{eapA}{HTML}{0B4F7C}
+\definecolor{eapC}{HTML}{E8F2FB}
+
+\addto\captionsbrazil{
+  \renewcommand{\refname}{Referências}
+}
+
+% Title Formatting
+\titleformat{\section}{\centering\large\scshape}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{1em}{}
+
+\setstretch{1.0}
+\setlength{\parskip}{6pt}
+
+\titlespacing{\section}{0pt}{14pt}{6pt}
+\titlespacing{\subsection}{0pt}{6pt}{6pt}
+\titlespacing{\subsubsection}{0pt}{6pt}{6pt}
+
+% Document Title
+\title{
+    \textbf{Grupo 7 - Exercício 2 (versão final)}
+}
+
+\date{}
+
+\captionsetup{labelfont={small,sc}, textfont={small,sc}}
+
+% Section Numbering
+\renewcommand{\thesection}{\Roman{section}.}
+\renewcommand{\thesubsection}{\textit{\Alph{subsection}.}}
+\renewcommand{\thesubsubsection}{\textit{\arabic{subsubsection}.}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\thefigure}{\Roman{figure}}
+
+% Make titles italic as well
+\titleformat{\subsection}
+    {\normalfont\large\itshape}
+    {\thesubsection}
+    {1em}
+    {}
+
+\titleformat{\subsubsection}
+    {\normalfont\itshape}
+    {\thesubsubsection}
+    {1em}
+    {}
+
+\setcounter{page}{1}
+
+% Fancy Header Configuration
+\pagestyle{fancy}
+\fancyhf{}
+
+% First Page Header
+\fancypagestyle{firstpage}{
+    \fancyhead[C]{
+        \centering
+        {\fontsize{14pt}{10pt}\selectfont
+        \textbf{Universidade de São Paulo}\\[0.5em]
+        \textbf{ACH2027 - Gestão de Projetos de Tecnologia da Informação}}\\[0.2em]
+        {\fontsize{8pt}{10pt}\selectfont
+        \textbf{Prof. Doutor:} Edmir Parada Vasques Prado \hspace{1cm}
+        \textbf{Ano:} 2º Semestre/2026}
+    }
+}
+
+% Default Header for Other Pages
+\fancyhead[C]{
+    \textbf{Escola de Artes, Ciências e Humanidades - Universidade de São Paulo}
+}
+
+\begin{document}
+
+\maketitle
+\vspace{-1.5cm}
+\thispagestyle{firstpage}
+
+% =========================================================
+% INTEGRANTES
+% =========================================================
+
+\begin{multicols}{2}
+    \centering
+
+    \textbf{Gustavo G. França do Nascimento}\\
+    15637551\\
+    T94
+    
+    \vspace{0.5cm}
+    
+    \textbf{Kauã Lima de Souza}\\
+    15674702\\
+    T94
+    
+    \vspace{0.5cm}
+
+    \textbf{Kevin Rodrigues Nunes}\\
+    15676030\\
+    T94
+    
+    \vspace{0.5cm}
+    
+    \textbf{Victor Yodono}\\
+    13829040\\
+    T94
+
+\end{multicols}
+
+\vspace{-0.2cm} % Ajuste de espaçamento vertical
+
+% =========================================================
+% CONTEÚDO
+% =========================================================
+
+\singlespacing
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0.5cm}
+
+\section{Atividades a partir dos pacotes de trabalho}
+
+As atividades partem dos 22 pacotes de trabalho da EAP final (Exercício 1). Cada atividade é escrita como verbo e objeto e pertence a um único pacote, e o código da atividade estende o código do pacote: o pacote 1.4.1 gera as atividades 1.4.1.1 e 1.4.1.2 \cite{pmi2017}. O pacote 1.1.5 (Relatórios de acompanhamento) é um esforço contínuo, que acompanha o projeto do início ao fim; por isso não entra na rede, assim como as reuniões semanais que o grupo retirou do esboço.
+
+\section{Duração e precedências das atividades}
+
+As durações estão em semanas e foram estimadas por analogia e opinião especializada, partindo do esboço feito em aula \cite{pmi2017}. Todas as precedências são do tipo término-início, o único que a rede AOA representa. A letra de cada atividade (Tabela~\ref{tab:atividades}) é o rótulo usado na rede.
+
+{\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|c|l|>{\raggedright\arraybackslash}p{9cm}|c|>{\raggedright\arraybackslash}p{2.2cm}|}
+    \hline
+    \rowcolor{eapC}
+    \textbf{Ativ.} & \textbf{Código} & \textbf{Atividade} & \textbf{Duração (sem.)} & \textbf{Predecessoras} \\
+    \hline
+    \endhead
+    A & 1.1.1.1 & Coletar os requisitos com a Diretoria e a portaria & 1 & - \\
+    \hline
+    B & 1.1.1.2 & Elaborar a declaração do escopo, a EAP e o dicionário & 1 & A \\
+    \hline
+    C & 1.1.2.1 & Definir e sequenciar as atividades & 1 & B \\
+    \hline
+    D & 1.1.2.2 & Estimar as durações e aprovar o cronograma & 1 & C \\
+    \hline
+    E & 1.1.3.1 & Estimar os custos & 1 & C \\
+    \hline
+    F & 1.1.3.2 & Aprovar o orçamento com a Diretoria & 1 & D, E \\
+    \hline
+    G & 1.1.4.1 & Selecionar os bolsistas ou a start-up & 3 & F \\
+    \hline
+    H & 1.1.4.2 & Formalizar os estágios ou o contrato & 1 & G \\
+    \hline
+    I & 1.2.1.1 & Levantar as regras de negócio & 1 & B \\
+    \hline
+    J & 1.2.1.2 & Escrever os casos de uso & 2 & I \\
+    \hline
+    K & 1.2.2.1 & Definir a stack tecnológica & 1 & J \\
+    \hline
+    L & 1.2.2.2 & Projetar a integração com os equipamentos e a base da USP & 2 & K \\
+    \hline
+    M & 1.2.3.1 & Prototipar as telas & 1 & J \\
+    \hline
+    N & 1.2.3.2 & Validar os protótipos com a portaria & 1 & M \\
+    \hline
+    O & 1.3.1.1 & Especificar os equipamentos & 1 & L \\
+    \hline
+    P & 1.3.1.2 & Cotar os equipamentos & 2 & O \\
+    \hline
+    Q & 1.3.1.3 & Comprar e receber os equipamentos & 4 & P, F \\
+    \hline
+    R & 1.3.2.1 & Preparar os pontos de entrada & 1 & O \\
+    \hline
+    S & 1.3.2.2 & Fixar os equipamentos & 2 & Q, R \\
+    \hline
+    T & 1.3.3.1 & Passar o cabeamento & 1 & R \\
+    \hline
+    U & 1.3.3.2 & Configurar a rede & 1 & S, T \\
+    \hline
+    V & 1.4.1.1 & Desenvolver a API de comunicação com os equipamentos & 3 & H, L \\
+    \hline
+    W & 1.4.1.2 & Implementar a rotina de liberação & 2 & V \\
+    \hline
+    X & 1.4.2.1 & Implementar o cadastro e os níveis de acesso & 3 & H, L, N \\
+    \hline
+    Y & 1.4.2.2 & Implementar o cadastro de visitantes & 2 & X \\
+    \hline
+    Z & 1.4.3.1 & Implementar a importação em lote & 2 & X \\
+    \hline
+    AA & 1.4.3.2 & Emitir as credenciais de evento & 1 & Z \\
+    \hline
+    AB & 1.4.4.1 & Escrever as consultas de frequência & 1 & W, X \\
+    \hline
+    AC & 1.4.4.2 & Construir o painel gerencial & 2 & AB \\
+    \hline
+    AD & 1.5.1.1 & Escrever e rodar os testes unitários & 2 & W, Y, AA, AC \\
+    \hline
+    AE & 1.5.1.2 & Corrigir os defeitos & 1 & AD \\
+    \hline
+    AF & 1.5.2.1 & Simular passagens nos equipamentos & 1 & AE, U \\
+    \hline
+    AG & 1.5.2.2 & Testar a resiliência a falhas de rede & 1 & AF \\
+    \hline
+    AH & 1.6.1.1 & Extrair os dados da base da USP & 1 & L \\
+    \hline
+    AI & 1.6.1.2 & Importar e conferir a carga inicial & 1 & AH, AG \\
+    \hline
+    AJ & 1.5.3.1 & Homologar com a Diretoria e assinar o termo de aceite & 1 & AI \\
+    \hline
+    AK & 1.6.2.1 & Escrever os manuais & 1 & AE \\
+    \hline
+    AL & 1.6.2.2 & Dar as aulas práticas & 1 & AK, AG \\
+    \hline
+    AM & 1.6.3.1 & Ativar o sistema em todas as portarias & 1 & AJ, AL \\
+    \hline
+    AN & 1.1.6.1 & Registrar as lições aprendidas e encerrar o projeto & 1 & AM \\
+    \hline
+    \caption{Atividades, durações e precedências.}
+    \label{tab:atividades}
+\end{longtable}
+}
+
+\subsection{Mudanças em relação ao esboço}
+
+\begin{itemize}
+    \item Saiu a atividade 1.1.3.1 Reuniões semanais (24 semanas), como o grupo decidiu no Registro 01.
+    \item Entraram as atividades dos pacotes novos da EAP final: E e F (orçamento), G e H (equipe do projeto) e AN (termo de encerramento).
+    \item Fechar linha de base'' virou D, Estimar as durações e aprovar o cronograma'', e Termo de aceite'' virou AJ, Homologar com a Diretoria e assinar o termo de aceite''.
+    \item As durações do esboço foram mantidas, e as atividades novas usam a mesma escala.
+\end{itemize}
+
+\section{Rede de atividades do tipo AOA}
+
+Na rede AOA (atividade na seta), os nós são eventos numerados e as setas são atividades, com a letra acima e a duração em semanas abaixo (Figura~\ref{fig:aoa}). As setas tracejadas são atividades fantasma: têm duração zero e só representam uma dependência. A rede tem 37 eventos, 40 atividades e 9 atividades fantasma, e a numeração dos eventos cresce no sentido das setas.
+
+O caminho crítico, em vermelho, é A, B, C, D e E (paralelas), F, G, H, V, W, AB, AC, AD, AE, AF, AG, AI, AJ, AM e AN, calculado pelo método do caminho crítico \cite{pmi2017}. A duração total é de 26 semanas, dentro do limite de 1 ano da declaração de escopo. O desenvolvimento e os testes (V a AG) vão da semana 9 à semana 22, dentro dos 6 meses de bolsas.
+
+\begin{landscape}
+    \begin{figure}[p]
+        \centering
+        \begin{tikzpicture}[>=Stealth,
+                evento/.style={circle, draw=eapA, fill=white, minimum size=6mm, inner sep=0pt, font=\sffamily\scriptsize},
+                ativ/.style={->, draw=eapA, semithick}, fantasma/.style={->, draw=eapA, dashed},
+                critica/.style={draw=red!75!black, very thick},
+                rotulo/.style={font=\sffamily\scriptsize, inner sep=1.5pt}]
+            \node[evento, draw=red!75!black, very thick] (e1) at (0.00, 0.00) {1};
+            \node[evento, draw=red!75!black, very thick] (e2) at (1.26, 0.00) {2};
+            \node[evento, draw=red!75!black, very thick] (e3) at (2.52, 0.00) {3};
+            \node[evento, draw=red!75!black, very thick] (e4) at (3.78, 0.00) {4};
+            \node[evento] (e5) at (3.78, -2.85) {5};
+            \node[evento, draw=red!75!black, very thick] (e6) at (5.04, 2.09) {6};
+            \node[evento] (e7) at (5.04, -2.85) {7};
+            \node[evento, draw=red!75!black, very thick] (e8) at (5.04, 0.00) {8};
+            \node[evento] (e9) at (6.30, -2.85) {9};
+            \node[evento] (e10) at (6.30, 2.85) {10};
+            \node[evento, draw=red!75!black, very thick] (e11) at (6.30, 0.00) {11};
+            \node[evento] (e12) at (7.56, -2.85) {12};
+            \node[evento, draw=red!75!black, very thick] (e13) at (7.56, 0.00) {13};
+            \node[evento] (e14) at (8.82, -5.70) {14};
+            \node[evento, draw=red!75!black, very thick] (e15) at (8.82, 0.00) {15};
+            \node[evento] (e16) at (10.08, -5.70) {16};
+            \node[evento] (e17) at (10.08, -7.79) {17};
+            \node[evento] (e18) at (8.82, 2.85) {18};
+            \node[evento, draw=red!75!black, very thick] (e19) at (10.08, 0.00) {19};
+            \node[evento] (e20) at (11.34, -5.70) {20};
+            \node[evento] (e21) at (10.08, 2.85) {21};
+            \node[evento] (e22) at (12.60, -5.70) {22};
+            \node[evento, draw=red!75!black, very thick] (e23) at (11.34, 0.00) {23};
+            \node[evento] (e24) at (11.34, 4.94) {24};
+            \node[evento, draw=red!75!black, very thick] (e25) at (12.60, 0.00) {25};
+            \node[evento, draw=red!75!black, very thick] (e26) at (13.86, 0.00) {26};
+            \node[evento, draw=red!75!black, very thick] (e27) at (15.12, 0.00) {27};
+            \node[evento, draw=red!75!black, very thick] (e28) at (16.38, 0.00) {28};
+            \node[evento, draw=red!75!black, very thick] (e29) at (16.38, -1.90) {29};
+            \node[evento, draw=red!75!black, very thick] (e30) at (17.64, 0.00) {30};
+            \node[evento, draw=red!75!black, very thick] (e31) at (18.90, 0.00) {31};
+            \node[evento, draw=red!75!black, very thick] (e32) at (18.90, -2.85) {32};
+            \node[evento] (e33) at (18.90, 2.28) {33};
+            \node[evento, draw=red!75!black, very thick] (e34) at (20.16, 0.00) {34};
+            \node[evento, draw=red!75!black, very thick] (e35) at (21.42, 0.00) {35};
+            \node[evento, draw=red!75!black, very thick] (e36) at (22.68, 0.00) {36};
+            \node[evento, draw=red!75!black, very thick] (e37) at (23.94, 0.00) {37};
+            \draw[ativ, critica] (e1) -- node[rotulo, above, sloped, pos=0.5] {A} node[rotulo, below, sloped, pos=0.5] {1} (e2);
+            \draw[ativ, critica] (e2) -- node[rotulo, above, sloped, pos=0.5] {B} node[rotulo, below, sloped, pos=0.5] {1} (e3);
+            \draw[ativ, critica] (e3) -- node[rotulo, above, sloped, pos=0.5] {C} node[rotulo, below, sloped, pos=0.5] {1} (e4);
+            \draw[ativ] (e3) -- node[rotulo, above, sloped, pos=0.5] {I} node[rotulo, below, sloped, pos=0.5] {1} (e5);
+            \draw[ativ, critica] (e4) -- node[rotulo, above, sloped, pos=0.5] {E} node[rotulo, below, sloped, pos=0.5] {1} (e6);
+            \draw[ativ, critica] (e4) -- node[rotulo, above, sloped, pos=0.5] {D} node[rotulo, below, sloped, pos=0.5] {1} (e8);
+            \draw[ativ] (e5) -- node[rotulo, above, sloped, pos=0.5] {J} node[rotulo, below, sloped, pos=0.5] {2} (e7);
+            \draw[fantasma, critica] (e6) -- (e8);
+            \draw[ativ] (e7) -- node[rotulo, above, sloped, pos=0.5] {K} node[rotulo, below, sloped, pos=0.5] {1} (e9);
+            \draw[ativ] (e7) -- node[rotulo, above, sloped, pos=0.8] {M} node[rotulo, below, sloped, pos=0.8] {1} (e10);
+            \draw[ativ, critica] (e8) -- node[rotulo, above, sloped, pos=0.5] {F} node[rotulo, below, sloped, pos=0.5] {1} (e11);
+            \draw[ativ] (e9) -- node[rotulo, above, sloped, pos=0.5] {L} node[rotulo, below, sloped, pos=0.5] {2} (e12);
+            \draw[ativ] (e10) -- node[rotulo, above, sloped, pos=0.5] {N} node[rotulo, below, sloped, pos=0.5] {1} (e18);
+            \draw[ativ, critica] (e11) -- node[rotulo, above, sloped, pos=0.5] {G} node[rotulo, below, sloped, pos=0.5] {3} (e13);
+            \draw[fantasma] (e11) -- (e16);
+            \draw[ativ] (e12) -- node[rotulo, above, sloped, pos=0.5] {O} node[rotulo, below, sloped, pos=0.5] {1} (e14);
+            \draw[fantasma] (e12) -- (e15);
+            \draw[ativ] (e12) -- node[rotulo, above, sloped, pos=0.5] {AH} node[rotulo, below, sloped, pos=0.5] {1} (e32);
+            \draw[ativ, critica] (e13) -- node[rotulo, above, sloped, pos=0.5] {H} node[rotulo, below, sloped, pos=0.5] {1} (e15);
+            \draw[ativ] (e14) -- node[rotulo, above, sloped, pos=0.5] {P} node[rotulo, below, sloped, pos=0.5] {2} (e16);
+            \draw[ativ] (e14) -- node[rotulo, above, sloped, pos=0.5] {R} node[rotulo, below, sloped, pos=0.5] {1} (e17);
+            \draw[fantasma] (e15) -- (e18);
+            \draw[ativ, critica] (e15) -- node[rotulo, above, sloped, pos=0.5] {V} node[rotulo, below, sloped, pos=0.5] {3} (e19);
+            \draw[ativ] (e16) -- node[rotulo, above, sloped, pos=0.5] {Q} node[rotulo, below, sloped, pos=0.5] {4} (e20);
+            \draw[fantasma] (e17) -- (e20);
+            \draw[ativ] (e17) -- node[rotulo, above, sloped, pos=0.5] {T} node[rotulo, below, sloped, pos=0.5] {1} (e22);
+            \draw[ativ] (e18) -- node[rotulo, above, sloped, pos=0.5] {X} node[rotulo, below, sloped, pos=0.5] {3} (e21);
+            \draw[ativ, critica] (e19) -- node[rotulo, above, sloped, pos=0.5] {W} node[rotulo, below, sloped, pos=0.5] {2} (e23);
+            \draw[ativ] (e20) -- node[rotulo, above, sloped, pos=0.5] {S} node[rotulo, below, sloped, pos=0.5] {2} (e22);
+            \draw[fantasma] (e21) -- (e23);
+            \draw[ativ] (e21) -- node[rotulo, above, sloped, pos=0.5] {Z} node[rotulo, below, sloped, pos=0.5] {2} (e24);
+            \draw[ativ] (e21) -- node[rotulo, above, sloped, pos=0.5] {Y} node[rotulo, below, sloped, pos=0.5] {2} (e26);
+            \draw[ativ] (e22) -- node[rotulo, above, sloped, pos=0.5] {U} node[rotulo, below, sloped, pos=0.5] {1} (e29);
+            \draw[ativ, critica] (e23) -- node[rotulo, above, sloped, pos=0.5] {AB} node[rotulo, below, sloped, pos=0.5] {1} (e25);
+            \draw[ativ] (e24) -- node[rotulo, above, sloped, pos=0.5] {AA} node[rotulo, below, sloped, pos=0.5] {1} (e26);
+            \draw[ativ, critica] (e25) -- node[rotulo, above, sloped, pos=0.5] {AC} node[rotulo, below, sloped, pos=0.5] {2} (e26);
+            \draw[ativ, critica] (e26) -- node[rotulo, above, sloped, pos=0.5] {AD} node[rotulo, below, sloped, pos=0.5] {2} (e27);
+            \draw[ativ, critica] (e27) -- node[rotulo, above, sloped, pos=0.5] {AE} node[rotulo, below, sloped, pos=0.5] {1} (e28);
+            \draw[fantasma, critica] (e28) -- (e29);
+            \draw[ativ] (e28) -- node[rotulo, above, sloped, pos=0.5] {AK} node[rotulo, below, sloped, pos=0.5] {1} (e33);
+            \draw[ativ, critica] (e29) -- node[rotulo, above, sloped, pos=0.5] {AF} node[rotulo, below, sloped, pos=0.5] {1} (e30);
+            \draw[ativ, critica] (e30) -- node[rotulo, above, sloped, pos=0.5] {AG} node[rotulo, below, sloped, pos=0.5] {1} (e31);
+            \draw[fantasma, critica] (e31) -- (e32);
+            \draw[fantasma] (e31) -- (e33);
+            \draw[ativ, critica] (e32) -- node[rotulo, above, sloped, pos=0.5] {AI} node[rotulo, below, sloped, pos=0.5] {1} (e34);
+            \draw[ativ] (e33) -- node[rotulo, above, sloped, pos=0.5] {AL} node[rotulo, below, sloped, pos=0.5] {1} (e35);
+            \draw[ativ, critica] (e34) -- node[rotulo, above, sloped, pos=0.5] {AJ} node[rotulo, below, sloped, pos=0.5] {1} (e35);
+            \draw[ativ, critica] (e35) -- node[rotulo, above, sloped, pos=0.5] {AM} node[rotulo, below, sloped, pos=0.5] {1} (e36);
+            \draw[ativ, critica] (e36) -- node[rotulo, above, sloped, pos=0.5] {AN} node[rotulo, below, sloped, pos=0.5] {1} (e37);
+        \end{tikzpicture}
+        \caption{Rede de atividades do tipo AOA. Em vermelho, o caminho crítico; tracejadas, as atividades fantasma.}
+        \label{fig:aoa}
+    \end{figure}
+\end{landscape}
+
+\section{Registro de Uso de Inteligência Artificial}
+
+Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificial Generativa da disciplina ACH2027, declaramos explicitamente a utilização de IA como suporte ao aprendizado, ideação e estruturação deste documento. O quadro a seguir detalha os comandos utilizados, a ferramenta e a avaliação crítica dos resultados.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \small 
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{4cm}|p{11cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Registro de Uso de IA} & \textbf{Registro 01: Diagramação da EAP} \\
+        \hline
+        \textbf{Problema / Objetivo} & Criar o diagrama visual da Estrutura Analítica do Projeto (EAP) e fazer um esboço da duração das atividades. \\
+        \hline
+        \textbf{Ferramenta de IA} & Gemini (Setembro/2026). \\
+        \hline
+        \textbf{Comandos} & "faça um esboço da estrutura analítica... precisa ser um diagrama" \\
+        \hline
+        \textbf{Revisão dos resultados} & Analisamos que o esboço da duração foi feito a partir do esboço do EAP original, que estava simplificado e não possuía todas as atividades. Pedimos para gerar as atividades e recalcular. Além disso, foi gerado de forma muito detalhada, incluindo reuniões diárias no EAP e estimando em 24 semanas. O grupo decidiu remover isso na próxima entrega. \\
+        \hline
+        \textbf{Aplicação no trabalho} & Seção da Estrutura Analítica do Projeto (EAP). \\
+        \hline
+    \end{tabular}
+    \caption{Registro de Uso de IA Generativa.}
+    \label{tab:uso_ia}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \small
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{4cm}|p{11cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Registro de Uso de IA} & \textbf{Registro 02: Cronograma final e rede AOA} \\
+        \hline
+        \textbf{Problema / Objetivo} & Refazer as atividades a partir da EAP final, fechar as durações e as precedências e desenhar a rede AOA com o caminho crítico. \\
+        \hline
+        \textbf{Ferramenta de IA} & Claude Opus 5.5, via Claude Code (Setembro/2026). \\
+        \hline
+        \textbf{Comandos} & "pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial, para compararmos depois, faça cada exercicio e coloque em um PR cada um" e "pode refinar o layout dos docs com /design". \\
+        \hline
+        \textbf{Revisão dos resultados} & \textcolor{red}{[PREENCHER: revisão do grupo]} \\
+        \hline
+        \textbf{Aplicação no trabalho} & Seções I a III (atividades, durações, precedências e rede AOA) e o acabamento visual do documento. \\
+        \hline
+    \end{tabular}
+    \caption{Registro de Uso de IA Generativa (continuação).}
+    \label{tab:uso_ia_final}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{pmi2021}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 7. ed. Pensilvânia: Project Management Institute, 2021.
+
+\bibitem{pmi2017}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+
+\end{thebibliography}
+
+\end{document}
