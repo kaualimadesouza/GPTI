@@ -17,6 +17,7 @@ Portuguese.
 
 - `exercicios/<n>-<tema>/`: the statement (`enunciado.pdf`), the group's `exercicioN_GPTI_2026.tex`,
   and its figures.
+- `seminario-scrum/`: the Scrum seminar (theme, presentation rules, slides and research guide).
 - `docs/`: course material (AI policy, slides, semester-project statement, TAP form). Not added yet.
 - `.claude/skills/`: one skill per course topic, shared with Antigravity via `.agents/skills.json`.
 
