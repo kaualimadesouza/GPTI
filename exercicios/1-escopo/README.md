@@ -27,7 +27,7 @@ entregas finais dos dois exercícios, com IA, e se ofereceu para revisar.
 | `enunciado.pdf` | Enunciado da Juliana |
 | `exercicio1_GPTI_2026.tex` / [`.pdf`](exercicio1_GPTI_2026.pdf) | Entrega inicial, cópia do Overleaf (Ex. 1). Fica como está, para comparar |
 | `Sistema de Controle de-2026-09-25-010235.png` | Esboço da EAP (Mermaid, exportado do Overleaf) |
-| `exercicio1_GPTI_2026_final.tex` / [`.pdf`](exercicio1_GPTI_2026_final.pdf) | Versão final: a declaração sem mudanças, a EAP final, o dicionário e o Registro 03 de uso de IA |
+| `exercicio1_GPTI_2026_final.tex` / [`.pdf`](exercicio1_GPTI_2026_final.pdf) | Versão final: a declaração com o prazo do desenvolvimento corrigido (issue #3), a EAP final, o dicionário e o Registro 03 de uso de IA |
 | `gpti.sty` | Estilo do grupo usado pela versão final. No Overleaf, suba junto com o `.tex` |
 
 Correções na declaração (issue #3) entram no `_final.tex`, porque a entrega inicial fica como está.
