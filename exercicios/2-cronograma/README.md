@@ -40,7 +40,7 @@ mudam junto.
 ## Mudar uma atividade
 
 A tabela `ACTIVITIES` do `rede/aoa.py` é a única fonte das atividades, durações e precedências. O
-programa monta a rede com o mínimo de atividades fantasma, calcula o caminho crítico e escreve
+programa monta a rede sem atividade fantasma desnecessária, calcula o caminho crítico e escreve
 `rede/atividades.tex` (linhas da tabela), `rede/rede_aoa.tex` (a figura) e `rede/numeros.tex`
 (duração total, semanas do desenvolvimento e atividades com folga zero).
 

@@ -51,7 +51,7 @@ ACTIVITIES = (
     Activity("D", "1.1.2.2", "Estimar as durações e aprovar o cronograma", 1, ("C",)),
     Activity("E", "1.1.3.1", "Estimar os custos", 1, ("C",)),
     Activity("F", "1.1.3.2", "Aprovar o orçamento com a Diretoria", 1, ("D", "E")),
-    Activity("G", "1.1.4.1", "Selecionar os bolsistas ou a start-up", 3, ("F",)),
+    Activity("G", "1.1.4.1", "Selecionar os bolsistas ou a Start-Up", 3, ("F",)),
     Activity("H", "1.1.4.2", "Formalizar os estágios ou o contrato", 1, ("G",)),
     Activity("I", "1.2.1.1", "Levantar as regras de negócio", 1, ("B",)),
     Activity("J", "1.2.1.2", "Escrever os casos de uso", 2, ("I",)),
@@ -212,9 +212,10 @@ def schedule(activities: Sequence[Activity]) -> Schedule:
 
 
 def tikz(plan: Schedule, positions: Mapping[int, tuple[float, float]]) -> str:
-    missing = set(plan.earliest) - set(positions)
-    if missing:
-        raise ValueError(f"events without a position: {sorted(missing)}")
+    # an extra position means the events were renumbered and the layout no longer fits the network
+    if set(positions) != set(plan.earliest):
+        raise ValueError(f"positions do not match the events: missing {sorted(set(plan.earliest) - set(positions))}, "
+                         f"extra {sorted(set(positions) - set(plan.earliest))}")
     lines = [f"\\begin{{tikzpicture}}[x={COLUMN_CM}cm, y={LANE_CM}cm, >=Stealth,",
              r"        evento/.style={circle, draw=eapA, fill=white, minimum size=6mm, inner sep=0pt, font=\sffamily\scriptsize},",
              r"        ativ/.style={->, draw=eapA, semithick}, fantasma/.style={->, draw=eapA, dashed},",
@@ -241,7 +242,7 @@ def table_rows(activities: Sequence[Activity]) -> str:
 
 
 def numbers(plan: Schedule, activities: Sequence[Activity]) -> str:
-    """Macros for every figure the text quotes, so the prose cannot drift from the network."""
+    """Macros for the figures the text quotes, so they follow the network when the table changes."""
     development = [a.letter for a in activities if a.code.startswith(("1.4.", "1.5.1.", "1.5.2."))]
     tail_of = {a.letter: a.tail for a in plan.arrows if a.letter}
     head_of = {a.letter: a.head for a in plan.arrows if a.letter}

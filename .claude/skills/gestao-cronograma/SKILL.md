@@ -65,12 +65,12 @@ leads to the project end, with no loose ends.
   \path (e1) edge[ativ, "A", "1"'] (e2);   % letter above, weeks below
   \path (e2) edge[ativ, "B", "2"'] (e3);
   \path (e2) edge[ativ, "C", "3"'] (e4);
-  \path (e3) edge[fantasma] (e4);          % B and C both precede D: B cannot also end at 4
+  \path (e3) edge[fantasma] (e4);          % without it, B and C would both run from 2 to 4
 \end{tikzpicture}
 ```
 
 Exercício 2 does not draw by hand: `exercicios/2-cronograma/rede/aoa.py` builds the network with
-the fewest dummies from its `ACTIVITIES` table, runs the critical path, and writes the table rows,
+no unneeded dummy from its `ACTIVITIES` table, runs the critical path, and writes the table rows,
 the TikZ picture and the numbers the text quotes. Edit the table there and rerun it.
 
 ## 5. Caminho crítico

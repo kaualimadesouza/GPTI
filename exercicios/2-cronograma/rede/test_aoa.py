@@ -90,9 +90,19 @@ def test_tikz_styles_critical_arrows_and_events_dummies_and_routes(plan: aoa.Sch
     assert r"""\path (e12) edge[ativ, out=-90, in=-90, looseness=0.85, "AH", "1"'] (e31);""" in drawing
 
 
-def test_tikz_needs_a_position_for_every_event(plan: aoa.Schedule) -> None:
-    with pytest.raises(ValueError, match=r"\[36\]"):
+def test_tikz_needs_exactly_one_position_per_event(plan: aoa.Schedule) -> None:
+    with pytest.raises(ValueError, match=r"missing \[36\], extra \[\]"):
         aoa.tikz(plan, {e: p for e, p in POSITIONS.items() if e != 36})
+    with pytest.raises(ValueError, match=r"missing \[\], extra \[37\]"):
+        aoa.tikz(plan, {**POSITIONS, 37: (20, 0)})
+
+
+def test_committed_fragments_are_up_to_date(plan: aoa.Schedule) -> None:
+    """Fails when ACTIVITIES changed and aoa.py was not rerun, or a fragment was edited by hand."""
+    here = Path(aoa.__file__).parent
+    assert (here / "rede_aoa.tex").read_text() == aoa.tikz(plan, POSITIONS)
+    assert (here / "atividades.tex").read_text() == aoa.table_rows(ACTIVITIES)
+    assert (here / "numeros.tex").read_text() == aoa.numbers(plan, ACTIVITIES)
 
 
 def test_table_rows() -> None:
