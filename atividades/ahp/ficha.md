@@ -4,10 +4,11 @@ ACH2027, Turma T94, Grupo 7. Leitura antes dos 30 julgamentos par a par.
 
 ## 1. Para que serve esta ficha
 
-Reúne o método, a escala e fatos sobre as quatro alternativas. Informa, não decide: os julgamentos
-ficam com o grupo, e a ficha não ordena, não pontua nem aponta vencedor. Cada fato traz a fonte lida em
-12/10/2026; o que não deu para verificar ficou de fora (fim da seção 6). Os fatos foram reunidos com
-ajuda de IA: confira a fonte antes de usar um deles no documento.
+Reúne o método, a escala e fatos sobre as quatro alternativas. Informa, não decide: a ficha não ordena,
+não pontua nem aponta vencedor (os 30 julgamentos estão no `ahp.py`, propostos com IA a pedido do Kauã,
+e o grupo revisa). Cada fato traz a fonte lida em 12/10/2026; o que não deu para verificar ficou de fora
+(fim da seção 6). Os fatos foram reunidos com ajuda de IA: confira a fonte antes de usar um deles no
+documento.
 
 ## 2. Premissas
 
@@ -33,7 +34,7 @@ ajuda de IA: confira a fonte antes de usar um deles no documento.
 
 A ISO/IEC 25010:2023 define *maintainability* como "Capability of a product to be modified by the
 intended maintainers with effectiveness and efficiency" (reproduzida em quality.arc42.org). O tempo
-de suporte das versões é acréscimo do grupo, não faz parte da norma.
+de suporte das versões é acréscimo deste trabalho, não faz parte da norma.
 
 ## 4. A escala de Saaty
 
@@ -84,7 +85,7 @@ As linhas seguem a ordem do professor, não uma ordem de preferência.
 | Alternativa | Fatos |
 | --- | --- |
 | Java / Spring Boot | OpenJDK: GPLv2 com *Classpath Exception* ([openjdk.org](https://openjdk.org/legal/gplv2+ce.html)); Spring Boot: Apache 2.0 ([GitHub](https://github.com/spring-projects/spring-boot)). Eclipse IDE: gratuito, EPL 2.0, suporta Java ([eclipseide.org](https://eclipseide.org/)). |
-| C# / ASP.NET Core | .NET e ASP.NET Core: MIT ([runtime](https://github.com/dotnet/runtime/blob/main/LICENSE.TXT), [aspnetcore](https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt)); roda em Linux e Windows ([dotnet.microsoft.com](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet)). Visual Studio Community: grátis, mas em organização *enterprise* (mais de 250 PCs ou US$ 1 milhão de receita anual) só para código aberto, pesquisa acadêmica e sala de aula ([visualstudio.microsoft.com](https://visualstudio.microsoft.com/vs/community/)); o C# Dev Kit do VS Code segue o mesmo modelo ([Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)). Se o projeto cabe nessas exceções é questão a avaliar. |
+| C# / ASP.NET Core | .NET e ASP.NET Core: MIT ([runtime](https://github.com/dotnet/runtime/blob/main/LICENSE.TXT), [aspnetcore](https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt)); roda em Linux e Windows ([dotnet.microsoft.com](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet)). Visual Studio Community: grátis, mas em organização *enterprise* (mais de 250 PCs ou US$ 1 milhão de receita anual) só para código aberto, pesquisa acadêmica e sala de aula ([visualstudio.microsoft.com](https://visualstudio.microsoft.com/vs/community/)); o C# Dev Kit do VS Code segue o mesmo modelo ([Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)). A USP passa desse porte: receita prevista de R$ 9,41 bilhões em 2026 ([CODAGE](https://sites.usp.br/codage/wp-content/uploads/sites/264/2026/01/2026_Diretrizes-Orcamentarias.pdf)). A extensão C# do VS Code funciona sem o Dev Kit; o código é MIT e os termos da Microsoft só pedem que ela seja usada com VS Code ou Visual Studio, sem limite de porte ([Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp), [termos](https://github.com/dotnet/vscode-csharp/blob/main/RuntimeLicenses/license.txt)). O Dev Kit acrescenta a visão de projeto e o explorador de testes e vem nas assinaturas do Visual Studio Professional e Enterprise. |
 | Python / Django | Python: *PSF License Version 2*, código aberto ([docs.python.org](https://docs.python.org/3/license.html)); Django: licença estilo BSD de 3 cláusulas ([GitHub](https://github.com/django/django/blob/main/LICENSE)). |
 | Go / Gin | Go: licença estilo BSD ([go.dev](https://go.dev/LICENSE)); Gin: MIT ([GitHub](https://github.com/gin-gonic/gin/blob/master/LICENSE)). Extensão Go do VS Code em golang/vscode-go, com o gopls mantido pelo time do Go ([code.visualstudio.com](https://code.visualstudio.com/docs/languages/go)). |
 
@@ -123,13 +124,15 @@ três ementas foram abertas. Você conhece a grade e os colegas melhor que esta 
 
 | Alternativa | Fatos |
 | --- | --- |
-| Java / Spring Boot | ACH2003 Computação Orientada a Objetos: o programa não nomeia linguagem; a bibliografia é de Java (Sestoft, Bloch, Deitel) ([JupiterWeb](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2003)). Stack Overflow 2025: Java 29,6%, Spring Boot 15,6%. |
+| Java / Spring Boot | ACH2003 Computação Orientada a Objetos: o programa não nomeia linguagem; a bibliografia é de Java (Sestoft, Bloch, Deitel) ([JupiterWeb](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2003)). Obrigatória no 3º semestre da grade de SI com início em 2027 ([grade](https://uspdigital.usp.br/jupiterweb/listarGradeCurricular?codcg=86&codcur=86200&codhab=202&tipo=N)); a grade anterior, a dos bolsistas de hoje, não foi aberta. Stack Overflow 2025: Java 29,6%, Spring Boot 15,6%. |
 | C# / ASP.NET Core | Stack Overflow 2025: C# 29,9%, ASP.NET Core 21,3%. |
 | Python / Django | Stack Overflow 2025: Python 54,8%, Django 11,7% (outros frameworks Python: FastAPI 15,1%, Flask 13,2%). |
 | Go / Gin | Stack Overflow 2025: Go 17,4%; Gin não está na lista. JetBrains: 48% de quem tem Go como linguagem principal usava Gin em 2025 (41% em 2020) ([blog.jetbrains.com](https://blog.jetbrains.com/go/2025/11/10/go-language-trends-ecosystem-2025/); resumo da JetBrains, relatório original não aberto). |
 
 Ressalva: o Stack Overflow ([survey.stackoverflow.co](https://survey.stackoverflow.co/2025/technology/),
 desenvolvedores profissionais) e a JetBrains medem desenvolvedores do mundo todo, não alunos da EACH.
+Entre profissionais, Python é a 4ª linguagem mais usada, atrás de JavaScript (68,8%), HTML/CSS (63%)
+e SQL (61,3%): é a primeira só entre as quatro alternativas.
 
 **Não verificado, ficou de fora:** preço de hospedagem por linguagem; IDEs da JetBrains e os termos
 completos do Visual Studio (páginas não carregaram); painel admin no Spring e no ASP.NET Core além das
@@ -142,18 +145,21 @@ Acessadas em 12/10/2026.
 
 - Método: https://www.isahp-org.creativedecisions.net/uploads/1-how-to-make-a-decision-the-analytic-hierarchy-process-t-l-saaty.pdf;
   https://ricardo-vargas.com/articles/analytic-hierarchy-process/; https://quality.arc42.org/qualities/maintainability
-- EACH: https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2001 (também `ACH2003` e `ACH2016`)
+- EACH: https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2001 (também `ACH2003` e `ACH2016`);
+  https://uspdigital.usp.br/jupiterweb/listarGradeCurricular?codcg=86&codcur=86200&codhab=202&tipo=N; https://sites.usp.br/codage/wp-content/uploads/sites/264/2026/01/2026_Diretrizes-Orcamentarias.pdf
 - Pesquisas: https://survey.stackoverflow.co/2025/technology/; https://blog.jetbrains.com/go/2025/11/10/go-language-trends-ecosystem-2025/
 - Licenças: https://openjdk.org/legal/gplv2+ce.html; https://github.com/spring-projects/spring-boot;
   https://github.com/dotnet/runtime/blob/main/LICENSE.TXT; https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt;
   https://docs.python.org/3/license.html; https://github.com/django/django/blob/main/LICENSE; https://go.dev/LICENSE;
   https://github.com/gin-gonic/gin/blob/master/LICENSE
 - Ferramentas: https://eclipseide.org/; https://visualstudio.microsoft.com/vs/community/;
-  https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit; https://code.visualstudio.com/docs/supporting/faq;
+  https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit; https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp;
+  https://github.com/dotnet/vscode-csharp/blob/main/RuntimeLicenses/license.txt; https://code.visualstudio.com/docs/supporting/faq;
   https://code.visualstudio.com/docs/languages/go; https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet;
   https://www.controlid.com.br/docs/access-api-pt/
 - Frameworks: https://docs.spring.io/spring-security/reference/index.html; https://spring.io/projects/spring-data-jpa;
-  https://docs.spring.io/spring-boot/how-to/data-initialization.html; https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity;
+  https://docs.spring.io/spring-boot/how-to/data-initialization.html; https://docs.spring.io/spring-data/jpa/reference/;
+  https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity;
   https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/; https://docs.djangoproject.com/en/stable/ref/contrib/admin/;
   https://docs.djangoproject.com/en/stable/topics/auth/; https://docs.djangoproject.com/en/stable/topics/db/models/;
   https://docs.djangoproject.com/en/stable/topics/migrations/; https://gin-gonic.com/en/docs/introduction/

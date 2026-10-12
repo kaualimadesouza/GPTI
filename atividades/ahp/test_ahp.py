@@ -272,3 +272,13 @@ def test_the_real_judgments_are_consistent_and_put_java_first_by_a_small_margin(
     scores = ahp.rank(criteria, alternatives)
     assert [(s.alternative, round(100 * s.total, 1)) for s in scores] == [
         ("Java", 34.3), ("Python", 33.6), ("C#", 21.3), ("Go", 10.8)]
+
+
+def test_python_passes_java_when_the_deadline_weighs_a_little_more_than_the_workforce() -> None:
+    # pins the sensitivity sentence of section VI, which quotes these two totals by hand
+    pair = ("Prazo de entrega", "Facilidade de mão de obra")
+    judgments = tuple(Judgment(*pair, 2) if (j.preferred, j.over) == pair else j for j in CRITERIA_JUDGMENTS.judgments)
+    criteria = ahp.evaluate(Comparison("Criterios", "Critérios", CRITERIA_JUDGMENTS.elements, judgments))
+    assert criteria.consistent
+    scores = ahp.rank(criteria, [ahp.evaluate(c) for c in ALTERNATIVE_JUDGMENTS])
+    assert [(s.alternative, round(100 * s.total, 1)) for s in scores[:2]] == [("Python", 35.4), ("Java", 32.5)]

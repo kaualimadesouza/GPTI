@@ -47,5 +47,10 @@ O script recusa par faltando, repetido, nome fora da matriz e intensidade fora d
 for menor que 0,10, ele não escreve nada e mostra os julgamentos que mais destoam dos pesos: revise esses
 primeiro. Depois compile o documento duas vezes com `pdflatex`.
 
+Dois trechos do texto não vêm do `ahp.py`: a sensibilidade da seção VI (com o prazo valendo 2 diante da
+mão de obra, Python passa a 35,4% e Java cai a 32,5%) e as semanas de bolsa da seção IV, copiadas do
+Exercício 2. O último teste fixa os dois totais da sensibilidade: se ele quebrar depois de mudar um
+julgamento, atualize a frase.
+
 No Overleaf, suba `gpti.sty` e a pasta `tabelas/`. O Overleaf não roda o `ahp.py`: se o grupo mudar
 um julgamento lá, a mudança precisa voltar para o `ahp.py`, senão as tabelas e o texto divergem.

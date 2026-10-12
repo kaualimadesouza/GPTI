@@ -16,7 +16,7 @@ class Judgment:
     preferred: str
     over: str
     intensity: int
-    reason: str = ""  # read by the group, who write each matrix's justification paragraph from it
+    reason: str = ""  # the fact behind the number; each matrix's paragraph in the document expands on it
 
 
 @dataclass(frozen=True)
@@ -67,13 +67,13 @@ ALTERNATIVES = ("Java", "C#", "Python", "Go")
 # To favour Y, swap the names; 1 means equal. Each matrix takes its 6 pairs.
 CRITERIA_JUDGMENTS = Comparison("Criterios", "Critérios", CRITERIA, (
     Judgment("Prazo de entrega", "Custo de desenvolvimento", 5,
-             "o caminho crítico não tem folga, e as licenças são gratuitas nas quatro"),
+             "o time só existe nas 26 semanas de bolsa; as licenças são gratuitas nas quatro"),
     Judgment("Facilidade de manutenção", "Custo de desenvolvimento", 3,
              "o sistema vive anos depois da implantação; o custo quase não muda entre as linguagens"),
     Judgment("Facilidade de mão de obra", "Custo de desenvolvimento", 5,
              "sem bolsistas que saibam a linguagem não há time; o custo quase não muda"),
     Judgment("Prazo de entrega", "Facilidade de manutenção", 2,
-             "o prazo de 1 ano é restrição do projeto; a manutenção ficou fora do escopo"),
+             "as bolsas deixam só 9 semanas de reserva; a manutenção ficou fora do escopo"),
     Judgment("Prazo de entrega", "Facilidade de mão de obra", 1,
              "os dois limitam a entrega nos 6 meses de bolsa"),
     Judgment("Facilidade de mão de obra", "Facilidade de manutenção", 2,
@@ -92,7 +92,7 @@ ALTERNATIVE_JUDGMENTS = (
     Comparison("Prazo", "Prazo de entrega", ALTERNATIVES, (
         Judgment("Python", "Java", 3, "Django traz o admin pronto para os cadastros, além de login e permissões"),
         Judgment("Python", "C#", 3, "Django traz o admin pronto para os cadastros, além de login e papéis"),
-        Judgment("Python", "Go", 7, "Gin não traz ORM, migrações, usuários e papéis nem admin"),
+        Judgment("Python", "Go", 7, "a documentação do Gin não cobre ORM, migrações, usuários e papéis nem admin"),
         Judgment("Java", "C#", 1, "Spring Security e Data JPA equivalem a Identity e EF Core; nenhum traz admin"),
         Judgment("Java", "Go", 5, "Spring traz autenticação, ORM e migrações que no Gin seriam feitos à mão"),
         Judgment("C#", "Go", 5, "Identity e EF Core trazem o que no Gin seria feito à mão"),
@@ -100,15 +100,15 @@ ALTERNATIVE_JUDGMENTS = (
     Comparison("Manutencao", "Facilidade de manutenção", ALTERNATIVES, (
         Judgment("Java", "C#", 1, "tipagem estática e versões LTS nas duas"),
         Judgment("Java", "Python", 3, "o compilador pega erros de tipo; no Python as anotações são opcionais"),
-        Judgment("Java", "Go", 2, "LTS de anos e convenções do Spring; o Gin deixa a estrutura para o time"),
+        Judgment("Java", "Go", 2, "LTS de pelo menos 4 anos; cada versão do Go vale até saírem duas mais novas"),
         Judgment("C#", "Python", 3, "o compilador pega erros de tipo; no Python as anotações são opcionais"),
-        Judgment("C#", "Go", 2, "LTS de 3 anos e convenções do ASP.NET; o Gin deixa a estrutura para o time"),
-        Judgment("Go", "Python", 2, "tipagem estática e a promessa de compatibilidade do Go 1"),
+        Judgment("C#", "Go", 2, "LTS de 3 anos no .NET; cada versão do Go vale até saírem duas mais novas"),
+        Judgment("Go", "Python", 2, "a tipagem estática do Go pesa mais que o suporte mais longo do Python"),
     )),
     Comparison("MaoDeObra", "Facilidade de mão de obra", ALTERNATIVES, (
-        Judgment("Java", "C#", 3, "todo aluno de SI da EACH estuda Java em ACH2003"),
-        Judgment("Java", "Python", 2, "Java está na grade (ACH2003); Python é a linguagem mais usada na pesquisa"),
-        Judgment("Java", "Go", 5, "Java está na grade; Go não aparece na grade e tem 17,4% na pesquisa"),
+        Judgment("Java", "C#", 3, "a ACH2003, obrigatória em SI, ensina Java"),
+        Judgment("Java", "Python", 2, "ACH2003 é obrigatória em SI; Python é a mais usada das quatro na pesquisa"),
+        Judgment("Java", "Go", 5, "ACH2003 é obrigatória em SI; Go tem 17,4% na pesquisa"),
         Judgment("Python", "C#", 2, "Python tem 54,8% na pesquisa, contra 29,9% do C#"),
         Judgment("Python", "Go", 3, "Python tem 54,8% na pesquisa, contra 17,4% do Go"),
         Judgment("C#", "Go", 2, "C# tem 29,9% na pesquisa, contra 17,4% do Go"),
