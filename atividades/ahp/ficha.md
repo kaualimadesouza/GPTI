@@ -28,8 +28,8 @@ ajuda de IA: confira a fonte antes de usar um deles no documento.
 | --- | --- |
 | Custo de desenvolvimento | Gastos em R$ que mudam com a linguagem: licenças, ferramentas, hospedagem, integração com catracas e cancelas. As bolsas são fixas e ficam de fora. |
 | Prazo de entrega | O que o framework traz pronto para entregar os 4 módulos (controle de acesso, gestão de usuários e visitantes, rotinas especiais, relatórios), supondo um time que já sabe a linguagem. |
-| Facilidade de mão de obra | Durante o projeto: achar bolsistas de SI da EACH que já sabem a linguagem, curva de aprendizado de quem não sabe, repor quem sair. |
 | Facilidade de manutenção | Depois da implantação (a manutenção ficou fora do escopo do projeto): quão fácil é, para quem herdar o código, corrigir, evoluir e adaptar. |
+| Facilidade de mão de obra | Durante o projeto: achar bolsistas de SI da EACH que já sabem a linguagem, curva de aprendizado de quem não sabe, repor quem sair. |
 
 A ISO/IEC 25010:2023 define *maintainability* como "Capability of a product to be modified by the
 intended maintainers with effectiveness and efficiency" (reproduzida em quality.arc42.org). O tempo
@@ -50,8 +50,8 @@ Saaty, "How to Make a Decision: The Analytic Hierarchy Process", Tabela 1, p. 8 
 | Recíprocos | Se i recebe um desses números contra j, j recebe o recíproco contra i. | |
 
 Nota: no PDF, a explicação do 3 repete a do 5 ("strongly favor"); o rótulo do 3 é "moderada", e
-Vargas (2010) o chama de "Moderately preferred". Vargas observa que é comum usar só os ímpares e
-deixar os pares para um meio-termo.
+Vargas (2010) o chama de "Moderately preferred". Vargas observa que normalmente se usam os ímpares;
+os pares servem de meio-termo negociado quando os avaliadores não chegam a um consenso.
 
 ## 5. Como escrever um julgamento
 
@@ -89,8 +89,8 @@ As linhas seguem a ordem do professor, não uma ordem de preferência.
 | Go / Gin | Go: licença estilo BSD ([go.dev](https://go.dev/LICENSE)); Gin: MIT ([GitHub](https://github.com/gin-gonic/gin/blob/master/LICENSE)). Extensão Go do VS Code em golang/vscode-go, com o gopls mantido pelo time do Go ([code.visualstudio.com](https://code.visualstudio.com/docs/languages/go)). |
 
 Para todas: o VS Code é "free for private or commercial use" ([FAQ](https://code.visualstudio.com/docs/supporting/faq)).
-A API de acesso da Control iD é REST sobre TCP/IP (Ethernet), com login e sessão; a página não cita
-SDK oficial e aponta exemplos em C#, Delphi, Java, NodeJS e Python, sem Go
+Exemplo de um fabricante, não escolhido (o Ex. 1 deixa a compra dos equipamentos para depois): a API
+de acesso da Control iD é REST sobre TCP/IP (Ethernet), com login e sessão
 ([controlid.com.br](https://www.controlid.com.br/docs/access-api-pt/)).
 
 ### 6.2 Prazo de entrega
@@ -99,7 +99,7 @@ SDK oficial e aponta exemplos em C#, Delphi, Java, NodeJS e Python, sem Go
 | --- | --- |
 | Java / Spring Boot | Spring Security: autenticação, autorização e proteção contra ataques comuns ([docs.spring.io](https://docs.spring.io/spring-security/reference/index.html)). Spring Data JPA: repositórios com paginação, consultas dinâmicas e auditoria ([spring.io](https://spring.io/projects/spring-data-jpa)). Migrações via Flyway ou Liquibase ([docs.spring.io](https://docs.spring.io/spring-boot/how-to/data-initialization.html)). |
 | C# / ASP.NET Core | Identity: login, usuários, senhas, perfil, papéis (*roles*), *claims*, tokens, confirmação de e-mail ([learn.microsoft.com](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity)). EF Core: migrações que mudam o esquema aos poucos, preservando os dados ([learn.microsoft.com](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/)). |
-| Python / Django | Admin automático a partir dos *models*, recomendado só como ferramenta interna ([admin](https://docs.djangoproject.com/en/stable/ref/contrib/admin/)). Usuários, permissões, grupos e telas de login; sem limite de tentativas de login, OAuth nem permissão por objeto, que ficam para pacotes de terceiros ([auth](https://docs.djangoproject.com/en/stable/topics/auth/)). ORM e migrações ([models](https://docs.djangoproject.com/en/stable/topics/db/models/), [migrations](https://docs.djangoproject.com/en/stable/topics/migrations/)). |
+| Python / Django | Admin automático a partir dos *models*, pensado para uso interno da organização ([admin](https://docs.djangoproject.com/en/stable/ref/contrib/admin/)). Usuários, permissões, grupos e telas de login ([auth](https://docs.djangoproject.com/en/stable/topics/auth/)). ORM e migrações ([models](https://docs.djangoproject.com/en/stable/topics/db/models/), [migrations](https://docs.djangoproject.com/en/stable/topics/migrations/)). |
 | Go / Gin | Roteamento, middleware em cadeia, validação de JSON, grupos de rotas, renderização JSON/XML/HTML. A introdução não cita ORM, migrações, usuários e papéis nem painel admin; o menu tem páginas sobre banco, sessões e middleware BasicAuth ([gin-gonic.com](https://gin-gonic.com/en/docs/introduction/)). |
 
 As páginas lidas do Spring e do ASP.NET Core não falam de painel administrativo.
@@ -118,7 +118,8 @@ As páginas lidas do Spring e do ASP.NET Core não falam de painel administrativ
 Para todas: na EACH, ACH2001 Introdução à Programação usa bibliografia em C (Paes; Schildt)
 ([JupiterWeb](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2001)); ACH2016
 Inteligência Artificial não nomeia linguagem ([JupiterWeb](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2016)).
-Nenhuma disciplina de SI com Python, C# ou Go foi verificada, o que não prova que não exista.
+Nenhuma disciplina de SI com Python, C# ou Go foi verificada, o que não prova que não exista: só
+três ementas foram abertas. Você conhece a grade e os colegas melhor que esta busca.
 
 | Alternativa | Fatos |
 | --- | --- |

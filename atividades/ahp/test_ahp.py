@@ -141,7 +141,7 @@ def test_numbers_are_written_with_a_decimal_comma_outside_math_mode() -> None:
 
 def test_matrix_table_shows_the_fractions_and_the_priorities() -> None:
     table = ahp.matrix_table(ahp.evaluate(comparison(*CONSISTENT)))
-    assert table.startswith(r"\begin{tabular}{|>{\raggedright\arraybackslash}p{3.2cm}|")
+    assert table.startswith(r"\begin{tabular}{|>{\raggedright\arraybackslash\nohyphens}p{2.7cm}|")
     assert r" & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{Prioridade} \\" in table
     assert r"\textbf{A} & 1 & 2 & 4 & 4 & 50,0\% \\" in table
     assert r"\textbf{D} & 1/4 & 1/2 & 1 & 1 & 12,5\% \\" in table

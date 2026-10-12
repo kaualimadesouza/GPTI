@@ -184,8 +184,9 @@ def escape(name: str) -> str:
 
 def matrix_table(result: Result) -> str:
     names = [escape(e) for e in result.comparison.elements]
-    lines = [(r"\begin{tabular}{|>{\raggedright\arraybackslash}p{3.2cm}|*{4}{>{\centering\arraybackslash}p{2.35cm}|}"
-              r">{\centering\arraybackslash}p{1.9cm}|}"),
+    # \nohyphens is defined by the document; 2.7cm fits "desenvolvimento" in bold without breaking it
+    lines = [(r"\begin{tabular}{|>{\raggedright\arraybackslash\nohyphens}p{2.7cm}|"
+              r"*{4}{>{\centering\arraybackslash\nohyphens}p{2.7cm}|}>{\centering\arraybackslash}p{1.8cm}|}"),
              r"\hline", r"\rowcolor{eapC}",
              " & " + " & ".join(rf"\textbf{{{n}}}" for n in names) + r" & \textbf{Prioridade} \\", r"\hline"]
     for name, row, weight in zip(names, result.matrix, result.weights):
@@ -197,7 +198,7 @@ def matrix_table(result: Result) -> str:
 def ranking_table(criteria: Result, scores: Sequence[Score]) -> str:
     headers = [rf"\textbf{{{escape(c)}}} ({percent(w)})"
                for c, w in zip(criteria.comparison.elements, criteria.weights)]
-    lines = [r"\begin{tabular}{|c|l|*{4}{>{\centering\arraybackslash}p{2.6cm}|}c|}", r"\hline", r"\rowcolor{eapC}",
+    lines = [r"\begin{tabular}{|c|l|*{4}{>{\centering\arraybackslash\nohyphens}p{2.7cm}|}c|}", r"\hline", r"\rowcolor{eapC}",
              r"\textbf{Posição} & \textbf{Alternativa} & " + " & ".join(headers) + r" & \textbf{Total} \\", r"\hline"]
     for place, s in enumerate(scores, start=1):
         cells = [f"{place}º", escape(s.alternative), *(percent(x) for x in s.by_criterion), percent(s.total)]
