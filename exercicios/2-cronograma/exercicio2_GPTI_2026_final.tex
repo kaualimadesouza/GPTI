@@ -70,11 +70,13 @@ Quatro precedências pedem explicação:
 \end{landscape}
 }
 
+% A página da rede entra no meio do texto: estes parágrafos não se partem em volta dela
+{\interlinepenalty=10000
 Na rede AOA (atividade na seta), os nós são eventos numerados e as setas são atividades, com a letra acima e a duração em semanas abaixo (Figura~\ref{fig:aoa}). As setas tracejadas são atividades fantasma: têm duração zero e só representam uma dependência. A numeração dos eventos cresce no sentido das setas.
 
 As atividades com folga zero formam o caminho crítico, em vermelho: \caminhoCritico. Elas saem do método do caminho crítico, com uma passagem de ida e uma de volta pela rede \cite{pmi2017}.
 
-A duração total é de \duracaoTotal{} semanas, dentro do limite de 1 ano da declaração do escopo. O desenvolvimento e os testes (V a AG) vão da semana \inicioDesenvolvimento{} à semana \fimTestes{}, e a equipe de desenvolvimento fica até o encerramento, na semana \duracaoTotal{}. A declaração prevê as bolsas pelo período exato de 6 meses. \textcolor{red}{[CONFERIR com o grupo: o período das bolsas diante das semanas \inicioDesenvolvimento{} a \duracaoTotal{}.]}
+A duração total é de \duracaoTotal{} semanas, dentro do limite de 1 ano da declaração do escopo. O desenvolvimento e os testes (V a AG) vão da semana \inicioDesenvolvimento{} à semana \fimTestes{}, e a equipe de desenvolvimento fica até o encerramento, na semana \duracaoTotal{}. A declaração fixa as bolsas em exatamente 6 meses, cerca de 26 semanas, contadas a partir da formalização da equipe (H): da semana \inicioDesenvolvimento{} à semana \the\numexpr\inicioDesenvolvimento+25\relax. A equipe trabalha \the\numexpr\duracaoTotal-\inicioDesenvolvimento+1\relax{} dessas semanas no cronograma, e as \the\numexpr\inicioDesenvolvimento+25-\duracaoTotal\relax{} restantes ficam como reserva para atrasos, porque o caminho crítico não tem folga \cite{pmi2017}. Mesmo consumindo toda a reserva, o projeto termina dentro do limite de 1 ano.\par}
 
 \section{Registro de Uso de Inteligência Artificial}
 
@@ -93,9 +95,9 @@ Em conformidade com a Política de Uso de Ferramentas de Inteligência Artificia
         \hline
         \textbf{Ferramenta de IA} & Gemini (Setembro/2026). & Claude Opus 5.5, via Claude Code, com agentes revisores (Setembro/2026). \\
         \hline
-        \textbf{Comandos} & \enquote{faça um esboço da estrutura analítica... precisa ser um diagrama} & \enquote{pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial... coloque em um PR cada um}, \enquote{pode refinar o layout dos docs...} e \enquote{use o thermo nuclear... para revisar, e lance outro agente... para revisar sem o contexto}. \\
+        \textbf{Comandos} & \enquote{faça um esboço da estrutura analítica... precisa ser um diagrama} & \enquote{pode fazer a EAP final e o dicionário, mas crie um arquivo novo a partir da entrega inicial... coloque em um PR cada um}, \enquote{pode refinar o layout dos docs...}, \enquote{use o thermo nuclear... para revisar, e lance outro agente... para revisar sem o contexto} e \enquote{revise o diagrama final sem contexto... para ver se faz sentido}. \\
         \hline
-        \textbf{Revisão dos resultados} & Analisamos que o esboço da duração foi feito a partir do esboço do EAP original, que estava simplificado e não possuía todas as atividades. Pedimos para gerar as atividades e recalcular. Além disso, foi gerado de forma muito detalhada, incluindo reuniões diárias no EAP e estimando em 24 semanas. O grupo decidiu remover isso na próxima entrega. & \textcolor{red}{[PREENCHER: revisão do grupo]} \\
+        \textbf{Revisão dos resultados} & Analisamos que o esboço da duração foi feito a partir do esboço do EAP original, que estava simplificado e não possuía todas as atividades. Pedimos para gerar as atividades e recalcular. Além disso, foi gerado de forma muito detalhada, incluindo reuniões diárias no EAP e estimando em 24 semanas. O grupo decidiu remover isso na próxima entrega. & Pedimos revisões independentes, uma delas sem o contexto do projeto, para ver se o diagrama final fazia sentido. Elas apontaram precedências erradas ou redundantes, que corrigimos: a API (V) passou a esperar a especificação dos equipamentos (O), a rotina de liberação (W) passou a esperar o cadastro (X), e saíram AB depois de X e AD depois de W. Para a tabela, a rede e os números do texto não divergirem, passamos a gerá-los de uma única tabela de atividades. Decidimos contar as bolsas a partir da formalização da equipe, com as semanas que sobram como reserva. \\
         \hline
         \textbf{Aplicação no trabalho} & Seção da Estrutura Analítica do Projeto (EAP). & Seções I a III (atividades, durações, precedências e rede AOA), o programa que gera a tabela e a rede, e o acabamento visual do documento. \\
         \hline
