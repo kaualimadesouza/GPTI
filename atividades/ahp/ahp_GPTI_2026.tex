@@ -1,0 +1,250 @@
+\documentclass[a4paper]{article}
+\usepackage{gpti}
+
+% Tabelas e números gerados por ahp.py em tabelas/: não edite à mão.
+% Sem eles, o documento compila com marcas de pendência no lugar.
+\newcommand{\pendente}{\textcolor{red}{[PENDENTE]}}
+\IfFileExists{tabelas/numeros.tex}{\input{tabelas/numeros}}{
+    \newcommand{\crCriterios}{\pendente}
+    \newcommand{\crCusto}{\pendente}
+    \newcommand{\crPrazo}{\pendente}
+    \newcommand{\crManutencao}{\pendente}
+    \newcommand{\crMaoDeObra}{\pendente}
+    \newcommand{\pesoCusto}{\pendente}
+    \newcommand{\pesoPrazo}{\pendente}
+    \newcommand{\pesoManutencao}{\pendente}
+    \newcommand{\pesoMaoDeObra}{\pendente}
+    \newcommand{\primeiroLugar}{\pendente}
+    \newcommand{\pontuacaoPrimeiro}{\pendente}
+    \newcommand{\segundoLugar}{\pendente}
+    \newcommand{\pontuacaoSegundo}{\pendente}
+}
+\newcommand{\tabelagerada}[1]{\IfFileExists{tabelas/#1.tex}{\input{tabelas/#1}}{\textcolor{red}{[PENDENTE: rodar ahp.py]}}}
+
+\title{\textbf{Grupo 7 - AHP: escolha da ferramenta do trabalho semestral}}
+
+\begin{document}
+
+\capa
+
+\section{Objetivo e hierarquia}
+
+O objetivo é escolher, com o AHP (Analytic Hierarchy Process), a ferramenta para implementar o trabalho semestral: o Sistema de Controle de Acesso da EACH, que controla a entrada e a saída de pessoas e veículos, libera automaticamente a comunidade pelo Nº USP ou CPF, cadastra visitantes, tem hierarquia de acesso por senha, faz o pré-cadastro em lote para grandes eventos, emite relatórios de frequência e se integra às catracas e cancelas. A escolha é o trabalho da atividade K, \enquote{Definir a stack tecnológica} (EAP 1.2.2.1, no pacote Documento de arquitetura), do cronograma do grupo (Exercício 2).
+
+O AHP organiza a decisão em uma hierarquia, com o objetivo no topo, os critérios no meio e as alternativas na base (Figura~\ref{fig:hierarquia}) \cite{saaty, vargas2010}. É um caso da análise multicritério ponderada, que o PMBOK lista entre os métodos para priorizar alternativas \cite[p.~181]{pmi2021}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            objetivo/.style={fill=eapA, text=white, font=\sffamily\small\bfseries, inner sep=5pt, rounded corners=1pt},
+            criterio/.style={fill=eapB, text=white, font=\sffamily\scriptsize\bfseries, text width=3cm,
+                             minimum height=9mm, align=center, inner sep=3pt, rounded corners=1pt},
+            alternativa/.style={draw=eapA, fill=eapC, font=\sffamily\scriptsize, text width=3cm,
+                                minimum height=8mm, align=center, inner sep=3pt, rounded corners=1pt},
+            nivel/.style={font=\sffamily\scriptsize\itshape, text=eapA, anchor=east},
+            liga/.style={draw=eapA, semithick}]
+        \foreach \nome [count=\i] in {Custo de desenvolvimento, Prazo de entrega, Facilidade de manutenção,
+                                      Facilidade de mão de obra}
+            \node[criterio] (c\i) at ({3.8*(\i-1)}, 0) {\nome};
+        \foreach \nome [count=\i] in {Java / Spring Boot, C\# / ASP.NET Core, Python / Django, Go / Gin}
+            \node[alternativa] (a\i) at ({3.8*(\i-1)}, -2.3) {\nome};
+        \node[objetivo] (obj) at (5.7, 1.6) {Escolher a ferramenta do Sistema de Controle de Acesso da EACH};
+        \foreach \i in {1,...,4}
+            \draw[liga] (obj.south) -- ++(0, -0.4) -| (c\i.north);
+        % Uma faixa no lugar das 16 ligações: todas as alternativas passam por todos os critérios
+        \node[draw=eapA, dashed, rounded corners=1pt, minimum width=14.6cm, minimum height=5mm,
+              font=\sffamily\scriptsize\itshape, text=eapA] (faixa) at (5.7, -1.15)
+            {cada alternativa é comparada com as outras sob cada um dos critérios};
+        \foreach \i in {1,...,4} {
+            \draw[liga] (c\i.south) -- (c\i.south |- faixa.north);
+            \draw[liga] (a\i.north |- faixa.south) -- (a\i.north);
+        }
+        \node[nivel] at ($(c1.west |- obj)+(-0.3, 0)$) {Objetivo};
+        \node[nivel] at ($(c1.west)+(-0.3, 0)$) {Critérios};
+        \node[nivel] at ($(a1.west)+(-0.3, 0)$) {Alternativas};
+    \end{tikzpicture}
+    \caption{Hierarquia da decisão.}
+    \label{fig:hierarquia}
+\end{figure}
+
+\section{Premissas e critérios}
+
+\begin{itemize}
+    \item A equipe é a de bolsistas: 5 a 8 alunos do último ano de SI, com o Analista de Sistemas Sênior. Os Exercícios 1 e 2 deixaram a equipe em aberto (\enquote{bolsistas ou start-up}), e o resultado vale para essa equipe.
+    \item Cada alternativa é a linguagem com o seu principal framework web: Java/Spring Boot, C\#/ASP.NET Core, Python/Django e Go/Gin.
+\end{itemize}
+
+A Tabela~\ref{tab:definicoes} define os critérios. Cada fator entra em um único critério, para não ser contado duas vezes: a curva de aprendizado, por exemplo, só pesa na mão de obra, porque o prazo já supõe um time que sabe a linguagem.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{9.6cm}|>{\raggedright\arraybackslash}p{3.8cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Critério} & \textbf{O que mede} & \textbf{Base} \\
+        \hline
+        \textbf{Custo de desenvolvimento} & Gastos em R\$ que mudam com a linguagem: licenças, ferramentas, hospedagem e integração com catracas e cancelas. As bolsas são fixas e ficam de fora. & PMBOK 6ª ed., cap. 7 \cite{pmi2017} \\
+        \hline
+        \textbf{Prazo de entrega} & O que o framework traz pronto para entregar os quatro módulos, supondo um time que já sabe a linguagem. & PMBOK 6ª ed., cap. 6 \cite{pmi2017} \\
+        \hline
+        \textbf{Facilidade de manutenção} & Depois da implantação, que fica fora do escopo do projeto (Exercício 1), quão fácil é para quem herdar o código corrigir, evoluir e adaptar o sistema. A norma define a manutenibilidade como \enquote{Capability of a product to be modified by the intended maintainers with effectiveness and efficiency}. O tempo de suporte de longo prazo (LTS) da versão é um acréscimo do grupo, não da norma. & ISO/IEC 25010:2023 \cite{arc42iso} \\
+        \hline
+        \textbf{Facilidade de mão de obra} & Durante o projeto, achar bolsistas de SI que já sabem a linguagem, a curva de aprendizado de quem não sabe e a reposição de quem sair. & PMBOK 6ª ed., 9.3 Adquirir Recursos: critérios de seleção como disponibilidade, experiência e conhecimento \cite{pmi2017} \\
+        \hline
+    \end{tabular}
+    \caption{Definição dos critérios.}
+    \label{tab:definicoes}
+\end{table}
+
+\section{Método}
+
+Em cada matriz, o elemento da linha é comparado ao da coluna pela escala fundamental de Saaty (Tabela~\ref{tab:escala}) \cite{saaty}. A comparação inversa recebe o recíproco: se Java vale 3 diante de Go, Go vale 1/3 diante de Java.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{|>{\centering\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{9cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Valor} & \textbf{Significado} \\
+        \hline
+        1 & Igual importância \\
+        \hline
+        3 & Importância moderada \\
+        \hline
+        5 & Importância forte \\
+        \hline
+        7 & Importância muito forte \\
+        \hline
+        9 & Importância extrema \\
+        \hline
+        2, 4, 6, 8 & Valores intermediários entre dois julgamentos vizinhos \\
+        \hline
+        1/2 a 1/9 & Recíprocos, para a comparação inversa \\
+        \hline
+    \end{tabular}
+    \caption{Escala fundamental de Saaty.}
+    \label{tab:escala}
+\end{table}
+
+O vetor de prioridades de cada matriz é o seu autovetor principal \cite{saaty}. A ideia do cálculo aparece na aproximação usada por Vargas \cite{vargas2010}: dividir cada valor pela soma da sua coluna e tirar a média de cada linha. A média é a prioridade do elemento, e as prioridades somam 100\%.
+
+Os julgamentos podem se contradizer: se Java vence C\# e C\# vence Go, Go não deveria vencer Java. A consistência é medida pelo autovalor principal $\lambda_{\max}$, que é igual a $n$, o número de elementos comparados, quando a matriz é perfeitamente consistente \cite{saaty}:
+\[
+    \mathrm{CI} = \frac{\lambda_{\max} - n}{n - 1}
+    \qquad\qquad
+    \mathrm{CR} = \frac{\mathrm{CI}}{\mathrm{RI}}
+\]
+O CI é o índice de consistência, e o CR (Consistency Ratio) o compara ao índice aleatório RI, que vale 0,90 para $n = 4$. A matriz é consistente quando CR $<$ 0,10 \cite{vargas2010}.
+
+A pontuação global de cada alternativa $a$ soma, sobre os critérios $c$, o peso do critério vezes a prioridade da alternativa naquele critério \cite{vargas2010}:
+\[
+    G(a) = \sum_{c} w_c \, p_c(a)
+\]
+em que $w_c$ é o peso do critério $c$ e $p_c(a)$ é a prioridade de $a$ sob $c$.
+
+\section{Pesos dos critérios}
+
+A Tabela~\ref{tab:criterios} compara os critérios dois a dois quanto à importância para o objetivo. Os pesos ficam em \pesoCusto{} para custo de desenvolvimento, \pesoPrazo{} para prazo de entrega, \pesoManutencao{} para facilidade de manutenção e \pesoMaoDeObra{} para facilidade de mão de obra, com CR de \crCriterios. \textcolor{red}{[PREENCHER: justificativa dos pesos dos critérios]}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_criterios}
+    \caption{Comparação dos critérios e pesos.}
+    \label{tab:criterios}
+\end{table}
+
+\section{Alternativas em cada critério}
+
+Em cada critério, as quatro alternativas são comparadas duas a duas, sempre para a equipe da Seção II. O PMBOK lembra que decisões como a escolha da ferramenta ganham com a participação do grupo, que aumenta o compromisso com o resultado \cite[p.~27--28]{pmi2021}: os julgamentos foram escritos por um integrante e revisados pelo grupo. \textcolor{red}{[CONFERIR depois da revisão do grupo]}
+
+\subsection{Custo de desenvolvimento}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_custo}
+    \caption{Alternativas sob o critério custo de desenvolvimento.}
+    \label{tab:custo}
+\end{table}
+
+A Tabela~\ref{tab:custo} tem CR de \crCusto. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+
+\subsection{Prazo de entrega}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_prazo}
+    \caption{Alternativas sob o critério prazo de entrega.}
+    \label{tab:prazo}
+\end{table}
+
+A Tabela~\ref{tab:prazo} tem CR de \crPrazo. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+
+\subsection{Facilidade de manutenção}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_manutencao}
+    \caption{Alternativas sob o critério facilidade de manutenção.}
+    \label{tab:manutencao}
+\end{table}
+
+A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+
+\subsection{Facilidade de mão de obra}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_maodeobra}
+    \caption{Alternativas sob o critério facilidade de mão de obra.}
+    \label{tab:maodeobra}
+\end{table}
+
+A Tabela~\ref{tab:maodeobra} tem CR de \crMaoDeObra. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+
+\section{Ranking global}
+
+Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da alternativa naquele critério, e o total é a soma ponderada pelos pesos do cabeçalho. Os percentuais têm uma casa decimal e podem não somar exatamente 100\%. A ferramenta escolhida é \primeiroLugar, com pontuação global de \pontuacaoPrimeiro, à frente de \segundoLugar, com \pontuacaoSegundo.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{ranking}
+    \caption{Ranking global das alternativas.}
+    \label{tab:ranking}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{arc42iso}
+ARC42. \textbf{Maintainability}. Disponível em: \url{https://quality.arc42.org/qualities/maintainability}. Acesso em: 12 out. 2026. Reproduz a definição da ISO/IEC 25010:2023.
+
+\bibitem{pmi2017}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+
+\bibitem{pmi2021}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{A Guide to the Project Management Body of Knowledge (PMBOK Guide)} and The Standard for Project Management. 7. ed. Newtown Square: Project Management Institute, 2021.
+
+\bibitem{saaty}
+SAATY, T. L. \textbf{How to Make a Decision: The Analytic Hierarchy Process}. Pittsburgh: University of Pittsburgh, [s.d.]. Disponível em: \url{https://www.isahp-org.creativedecisions.net/uploads/1-how-to-make-a-decision-the-analytic-hierarchy-process-t-l-saaty.pdf}. Acesso em: 12 out. 2026.
+
+\bibitem{vargas2010}
+VARGAS, R. V. Using the Analytic Hierarchy Process (AHP) to Select and Prioritize Projects in a Portfolio. In: PMI GLOBAL CONGRESS 2010 - NORTH AMERICA, Washington, DC. \textbf{Anais}. Newtown Square: Project Management Institute, 2010. Disponível em: \url{https://ricardo-vargas.com/articles/analytic-hierarchy-process/}. Acesso em: 12 out. 2026.
+
+\end{thebibliography}
+
+\end{document}

@@ -10,6 +10,7 @@ Projeto semestral: **Sistema para Controle de Acesso à Universidade**, aplicado
 | --- | --- | --- |
 | Exercício 1: Gestão de Escopo | [`exercicios/1-escopo`](exercicios/1-escopo) | 01/10, 12:00 |
 | Exercício 2: Gestão do Cronograma | [`exercicios/2-cronograma`](exercicios/2-cronograma) | 06/10, 12:00 |
+| Atividade: AHP do trabalho semestral | [`atividades/ahp`](atividades/ahp) | 15/10, 14:00 |
 | Seminário: Elementos do Scrum | [`seminario-scrum`](seminario-scrum) | Slides enviados em 15/09 |
 
 Os exercícios vão por e-mail (o endereço está no enunciado), com o assunto
