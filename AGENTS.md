@@ -5,8 +5,8 @@ it through `CLAUDE.md`.
 
 ## First, always
 
-Load the `politica-uso-ia` skill before any task here. Any deliverable text you produce has to be
-declared in that deliverable's Registro de Uso de IA.
+Load the `politica-uso-ia` skill before any task here. Nothing goes into a deliverable's Registro de
+Uso de IA without Kauã's explicit permission: list what you made with AI and let him decide.
 
 ## What this repository is
 
