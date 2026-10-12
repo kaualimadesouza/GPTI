@@ -1,0 +1,393 @@
+\documentclass[a4paper]{article}
+\usepackage{gpti}
+\usepackage{xurl}
+
+% Tabelas e números gerados por ahp.py em tabelas/: não edite à mão.
+% Sem eles, o documento compila com marcas de pendência no lugar.
+\newcommand{\pendente}{\textcolor{red}{[PENDENTE]}}
+\IfFileExists{tabelas/numeros.tex}{\input{tabelas/numeros}}{
+    \newcommand{\crCriterios}{\pendente}
+    \newcommand{\crCusto}{\pendente}
+    \newcommand{\crPrazo}{\pendente}
+    \newcommand{\crManutencao}{\pendente}
+    \newcommand{\crMaoDeObra}{\pendente}
+    \newcommand{\pesoCusto}{\pendente}
+    \newcommand{\pesoPrazo}{\pendente}
+    \newcommand{\pesoManutencao}{\pendente}
+    \newcommand{\pesoMaoDeObra}{\pendente}
+    \newcommand{\primeiroLugar}{\pendente}
+    \newcommand{\pontuacaoPrimeiro}{\pendente}
+    \newcommand{\segundoLugar}{\pendente}
+    \newcommand{\pontuacaoSegundo}{\pendente}
+    \newcommand{\mudancasTestadas}{\pendente}
+    \newcommand{\mudancasQueTrocam}{\pendente}
+}
+% Cabeçalhos das tabelas geradas quebram entre palavras, nunca no meio de uma
+\newcommand{\nohyphens}{\hyphenpenalty=10000\exhyphenpenalty=10000}
+\newcommand{\tabelagerada}[1]{\IfFileExists{tabelas/#1.tex}{\input{tabelas/#1}}{\textcolor{red}{[PENDENTE: rodar ahp.py]}}}
+
+\hyphenation{Know-ledge}
+
+\title{\textbf{Grupo 7 - AHP: escolha da ferramenta do trabalho semestral}}
+
+\begin{document}
+
+\capa
+
+\section{Objetivo e hierarquia}
+
+O objetivo é escolher, com o AHP (Analytic Hierarchy Process), a ferramenta para implementar o trabalho semestral: o Sistema de Controle de Acesso da EACH, que controla a entrada e a saída de pessoas e veículos, libera automaticamente a comunidade pelo Nº USP ou CPF, cadastra visitantes, tem hierarquia de acesso por senha, faz o pré-cadastro em lote para grandes eventos, emite relatórios de frequência e se integra às catracas e cancelas. A escolha é o trabalho da atividade K, \enquote{Definir a stack tecnológica} (EAP 1.2.2.1, no pacote Documento de arquitetura), do cronograma do grupo (Exercício 2). As quatro alternativas e os quatro critérios foram definidos pelo professor, por e-mail, em 5 de outubro de 2026.
+
+O AHP organiza a decisão em uma hierarquia, com o objetivo no topo, os critérios no meio e as alternativas na base (Figura~\ref{fig:hierarquia}) \cite{saaty, vargas2010}. É um caso de análise multicritério ponderada, que o PMBOK cita como exemplo de esquema de priorização \cite[p.~181]{pmi2021}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            objetivo/.style={fill=eapA, text=white, font=\sffamily\small\bfseries, inner sep=5pt, rounded corners=1pt},
+            criterio/.style={fill=eapB, text=white, font=\sffamily\scriptsize\bfseries, text width=3cm,
+                             minimum height=9mm, align=center, inner sep=3pt, rounded corners=1pt},
+            alternativa/.style={draw=eapA, fill=eapC, font=\sffamily\scriptsize, text width=3cm,
+                                minimum height=8mm, align=center, inner sep=3pt, rounded corners=1pt},
+            nivel/.style={font=\sffamily\scriptsize\itshape, text=eapA, anchor=east},
+            liga/.style={draw=eapA, semithick}]
+        \foreach \nome [count=\i] in {Custo de desenvolvimento, Prazo de entrega, Facilidade de manutenção,
+                                      Facilidade de mão de obra}
+            \node[criterio] (c\i) at ({3.8*(\i-1)}, 0) {\nome};
+        \foreach \nome [count=\i] in {Java / Spring Boot, C\# / ASP.NET Core, Python / Django, Go / Gin}
+            \node[alternativa] (a\i) at ({3.8*(\i-1)}, -2.3) {\nome};
+        \node[objetivo] (obj) at (5.7, 1.6) {Escolher a ferramenta do Sistema de Controle de Acesso da EACH};
+        \foreach \i in {1,...,4}
+            \draw[liga] (obj.south) -- ++(0, -0.4) -| (c\i.north);
+        % Uma faixa no lugar das 16 ligações: todas as alternativas passam por todos os critérios
+        \node[draw=eapA, dashed, rounded corners=1pt, minimum width=14.6cm, minimum height=5mm,
+              font=\sffamily\scriptsize\itshape, text=eapA] (faixa) at (5.7, -1.15)
+            {cada alternativa é comparada com as outras sob cada um dos critérios};
+        \foreach \i in {1,...,4} {
+            \draw[liga] (c\i.south) -- (c\i.south |- faixa.north);
+            \draw[liga] (a\i.north |- faixa.south) -- (a\i.north);
+        }
+        \node[nivel] at ($(c1.west |- obj)+(-0.3, 0)$) {Objetivo};
+        \node[nivel] at ($(c1.west)+(-0.3, 0)$) {Critérios};
+        \node[nivel] at ($(a1.west)+(-0.3, 0)$) {Alternativas};
+    \end{tikzpicture}
+    \caption{Hierarquia da decisão.}
+    \label{fig:hierarquia}
+\end{figure}
+
+\section{Premissas e critérios}
+
+\begin{itemize}
+    \item A equipe é a de bolsistas: 5 a 8 alunos do último ano de SI, com o Analista de Sistemas Sênior. Os Exercícios 1 e 2 deixaram em aberto a escolha entre bolsistas e uma start-up, e o resultado vale para a equipe de bolsistas.
+    \item Cada alternativa é a linguagem com o seu principal framework web: Java/Spring Boot, C\#/ASP.NET Core, Python/Django e Go/Gin.
+\end{itemize}
+
+A Tabela~\ref{tab:definicoes} define os critérios. Cada fator entra em um único critério, para não ser contado duas vezes: a curva de aprendizado, por exemplo, só pesa na mão de obra, porque o prazo já supõe um time que sabe a linguagem.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{9.6cm}|>{\raggedright\arraybackslash}p{3.8cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Critério} & \textbf{O que mede} & \textbf{Base} \\
+        \hline
+        \textbf{Custo de desenvolvimento} & Gastos em R\$ que mudam com a linguagem: licenças, ferramentas, hospedagem e integração com catracas e cancelas. As bolsas são fixas e ficam de fora. & PMBOK 6ª ed., cap. 7 \cite{pmi2017} \\
+        \hline
+        \textbf{Prazo de entrega} & O que o framework traz pronto para entregar os quatro módulos (controle de acesso, gestão de usuários e visitantes, rotinas especiais e relatórios), supondo um time que já sabe a linguagem. & PMBOK 6ª ed., cap. 6 \cite{pmi2017} \\
+        \hline
+        \textbf{Facilidade de manutenção} & Depois da implantação (a manutenção ficou fora do escopo do projeto, Exercício 1), quão fácil é para quem herdar o código corrigir, evoluir e adaptar o sistema. A norma define a manutenibilidade como \enquote{Capability of a product to be modified by the intended maintainers with effectiveness and efficiency}. A norma inclui aí a instalação de atualizações (\enquote{Maintainability includes installation of updates and upgrades}), e por isso o tempo de suporte das versões entra neste critério. & ISO/IEC 25010:2023 \cite{arc42iso} \\
+        \hline
+        \textbf{Facilidade de mão de obra} & Durante o projeto, achar bolsistas de SI que já sabem a linguagem, a curva de aprendizado de quem não sabe e a reposição de quem sair. & PMBOK 6ª ed., 9.3 Adquirir Recursos: critérios de seleção como disponibilidade, experiência e conhecimento \cite{pmi2017} \\
+        \hline
+    \end{tabular}
+    \caption{Definição dos critérios.}
+    \label{tab:definicoes}
+\end{table}
+
+\section{Método}
+
+Em cada matriz, o elemento da linha é comparado ao da coluna pela escala fundamental de Saaty (Tabela~\ref{tab:escala}) \cite{saaty}. A comparação inversa recebe o recíproco: se Java vale 3 diante de Go, Go vale 1/3 diante de Java.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{|>{\centering\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{9cm}|}
+        \hline
+        \rowcolor{eapC}
+        \textbf{Valor} & \textbf{Significado} \\
+        \hline
+        1 & Igual importância \\
+        \hline
+        3 & Importância moderada \\
+        \hline
+        5 & Importância essencial ou forte \\
+        \hline
+        7 & Importância muito forte \\
+        \hline
+        9 & Importância extrema \\
+        \hline
+        2, 4, 6, 8 & Valores intermediários entre dois julgamentos vizinhos \\
+        \hline
+        1/2 a 1/9 & Recíprocos, para a comparação inversa \\
+        \hline
+    \end{tabular}
+    \caption{Escala fundamental de Saaty.}
+    \label{tab:escala}
+\end{table}
+
+O vetor de prioridades de cada matriz é o seu autovetor principal \cite{saaty}. A ideia do cálculo aparece na aproximação usada por Vargas \cite{vargas2010}: dividir cada valor pela soma da sua coluna e tirar a média de cada linha. Essa média aproxima a prioridade de cada elemento; as tabelas trazem o autovetor exato, calculado por programa, e as prioridades de cada matriz somam 100\%.
+
+Os julgamentos podem se contradizer: se Java vence C\# e C\# vence Go, Go não deveria vencer Java. A consistência é medida pelo autovalor principal $\lambda_{\max}$, que é igual a $n$, o número de elementos comparados, quando a matriz é perfeitamente consistente \cite{saaty}:
+\[
+    \mathrm{CI} = \frac{\lambda_{\max} - n}{n - 1}
+    \qquad\qquad
+    \mathrm{CR} = \frac{\mathrm{CI}}{\mathrm{RI}}
+\]
+O CI é o índice de consistência, e o CR (Consistency Ratio) o compara ao índice aleatório RI, que vale 0,90 para $n = 4$. A matriz é consistente quando CR $<$ 0,10 \cite{vargas2010}.
+
+A pontuação global de cada alternativa $a$ soma, sobre os critérios $c$, o peso do critério vezes a prioridade da alternativa naquele critério \cite{vargas2010}:
+\[
+    G(a) = \sum_{c} w_c \, p_c(a)
+\]
+em que $w_c$ é o peso do critério $c$ e $p_c(a)$ é a prioridade de $a$ sob $c$.
+
+\section{Pesos dos critérios}
+
+A Tabela~\ref{tab:criterios} compara os critérios dois a dois quanto à importância para o objetivo. Os pesos ficam em \pesoCusto{} para custo de desenvolvimento, \pesoPrazo{} para prazo de entrega, \pesoManutencao{} para facilidade de manutenção e \pesoMaoDeObra{} para facilidade de mão de obra, com CR de \crCriterios.
+
+Prazo de entrega e facilidade de mão de obra empatam como os critérios mais pesados, porque a equipe só existe enquanto duram as bolsas. No cronograma do Exercício 2, as bolsas cobrem cerca de 26 semanas a partir da formalização da equipe, da semana 10 à 35; o projeto termina na semana 26, e as 9 semanas restantes são a única reserva para atrasos. Uma ferramenta que atrase a entrega consome essa reserva, e uma equipe que não conheça a linguagem gasta parte dessas mesmas semanas aprendendo. A facilidade de manutenção vem em seguida: a manutenção ficou fora do escopo, mas o sistema continua em uso depois da implantação. O custo pesa pouco, porque as quatro linguagens e seus frameworks têm licenças de código aberto (Tabela~\ref{tab:custo}) e as bolsas são fixas.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_criterios}
+    \caption{Matriz de comparação dos critérios e vetor de pesos (CR~=~\crCriterios).}
+    \label{tab:criterios}
+\end{table}
+
+\section{Alternativas em cada critério}
+
+Em cada critério, as quatro alternativas são comparadas duas a duas, sempre para a equipe de bolsistas descrita nas premissas. O PMBOK põe a escolha da ferramenta entre as decisões de grande impacto de um projeto e lembra que decidir em grupo aproveita o conhecimento de mais pessoas e aumenta o compromisso com o resultado \cite[p.~27--28]{pmi2021}. Por isso cada matriz vem com o motivo dos seus julgamentos e a fonte de cada fato, para que qualquer membro possa conferir e contestar um número.
+
+\subsection{Custo de desenvolvimento}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_custo}
+    \caption{Matriz de comparação e vetor de prioridades sob o critério custo de desenvolvimento (CR~=~\crCusto).}
+    \label{tab:custo}
+\end{table}
+
+A Tabela~\ref{tab:custo} tem CR de \crCusto. As quatro linguagens e seus frameworks têm licenças de código aberto: GPL com \textit{Classpath Exception} no OpenJDK, Apache 2.0 no Spring Boot, MIT no .NET, no ASP.NET Core e no Gin, a licença da PSF no Python e licenças no estilo BSD no Django e no Go \cite{openjdklicense, springbootlicense, dotnetlicense, aspnetlicense, ginlicense, pythonlicense, djangolicense, golicense}. A única ressalva está nas ferramentas do C\#. Em organizações com mais de 250 computadores ou mais de US\$~1 milhão de receita anual, o Visual Studio Community e o C\# Dev Kit só podem ser usados em projetos de código aberto, pesquisa acadêmica e sala de aula \cite{vscommunity, csdevkit}, e a USP, com receita prevista de R\$~10,58 bilhões em 2026 \cite{uspdiretrizes}, passa desse porte. Mesmo assim, a extensão C\# do VS Code pode ser usada sozinha \cite{csharpext}, e os seus termos não limitam o porte da organização \cite{csharplicense}; o VS Code é gratuito também para uso comercial \cite{vscodefaq}. Sem o Dev Kit, perdem-se a visão de projeto e o explorador de testes, que vêm com as assinaturas pagas do Visual Studio \cite{csdevkit}; este trabalho supõe que o time trabalhe sem eles. As fontes consultadas não diferenciam as quatro na hospedagem nem na integração com catracas e cancelas, e esses itens ficaram iguais. Por isso as quatro empatam neste critério.
+
+\subsection{Prazo de entrega}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_prazo}
+    \caption{Matriz de comparação e vetor de prioridades sob o critério prazo de entrega (CR~=~\crPrazo).}
+    \label{tab:prazo}
+\end{table}
+
+A Tabela~\ref{tab:prazo} tem CR de \crPrazo. O Django gera um painel administrativo a partir dos modelos, pensado para uso interno, e traz usuários, permissões, grupos e telas de login \cite{djangoadmin, djangoauth}: isso cobre boa parte dos cadastros e da hierarquia de acesso. O ASP.NET Core Identity cuida de usuários, senhas, papéis e confirmação de e-mail e traz telas de login prontas \cite{aspnetidentity}. O Spring Security traz autenticação, autorização por papéis e uma API para gerenciar usuários \cite{springsecurity, springauthz, springjdbc}, mas não as telas. Os dois fazem o acesso ao banco pelo Spring Data JPA e pelo EF Core, com migrações do esquema \cite{springdatajpa, springbootdb, efcoremigrations}, e nenhum traz o painel. A documentação do Gin cobre rotas, middleware, validação e renderização \cite{gin} e mostra o banco com o GORM, que também faz as migrações \cite{gindatabase}; para usuários, o Gin só oferece um middleware de autenticação básica \cite{ginbasicauth} e sessões por uma biblioteca à parte \cite{ginsessions}, sem papéis, e o cadastro e a hierarquia de acesso ficariam com o time. A ordem fica Python, pelo painel; C\#, pelas telas de login; Java; e Go, pela falta de usuários e papéis.
+
+\subsection{Facilidade de manutenção}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_manutencao}
+    \caption{Matriz de comparação e vetor de prioridades sob o critério facilidade de manutenção (CR~=~\crManutencao).}
+    \label{tab:manutencao}
+\end{table}
+
+A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. Dois fatores separam as alternativas. O primeiro é a tipagem: Java, C\# e Go têm tipagem estática \cite{jls, csharptypes, gospec}, e o compilador pega os erros de tipo antes de o código rodar \cite{jls, csharptypes}; no Python, as anotações de tipo são opcionais e o interpretador não as verifica \cite{pythontyping}, e, sem um verificador externo, esses erros só aparecem na execução. O segundo é o tempo de suporte das versões, que entra na manutenção porque a norma inclui nela a instalação de atualizações \cite{arc42iso}. O .NET tem versões LTS de três anos, que valem também para o ASP.NET Core \cite{dotnetsupport}; o Django tem versões LTS de três anos \cite{djangodownload}, e o Python mantém cada versão por cinco \cite{pythonversions}. No Java, o JDK tem versões LTS gratuitas de pelo menos quatro anos \cite{adoptium}, mas cada versão menor do Spring Boot tem pelo menos 13 meses de suporte gratuito \cite{springsupport}; no Go, cada versão só recebe correções até saírem duas mais novas \cite{gorelease}, ainda que a promessa de compatibilidade do Go~1 torne a troca mais simples \cite{go1compat}. O C\# vai bem nos dois fatores e fica à frente. Java e Go empatam, com tipagem estática e atualizações do framework ou da linguagem a cada ano, mais ou menos. O Python tem o suporte mais longo, mas fica atrás, porque a tipagem pesou mais que o suporte.
+
+\subsection{Facilidade de mão de obra}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{matriz_maodeobra}
+    \caption{Matriz de comparação e vetor de prioridades sob o critério facilidade de mão de obra (CR~=~\crMaoDeObra).}
+    \label{tab:maodeobra}
+\end{table}
+
+A Tabela~\ref{tab:maodeobra} tem CR de \crMaoDeObra. A ACH2003 (Computação Orientada a Objetos), cuja bibliografia é de Java \cite{ach2003}, é obrigatória no 3º semestre da grade de SI publicada no JupiterWeb, que vale a partir de 2027; nas ementas dessa grade, o Python só aparece em duas optativas de computação sônica, e C\# e Go não aparecem \cite{gradesi}. A versão atual da ACH2003 vale desde 2021 \cite{ach2003}, mas a grade em que entraram os bolsistas de hoje não foi consultada. Fora da EACH, a pesquisa do Stack Overflow de 2025 põe o Python à frente das outras três, tanto entre desenvolvedores profissionais (54,8\%, contra 29,9\% do C\#, 29,6\% do Java e 17,4\% do Go) quanto entre quem está aprendendo a programar (71,8\%, contra 40,8\% do Java, 23,1\% do C\# e 13,1\% do Go) \cite{so2025}. A pesquisa mede o mundo todo, não os alunos da EACH, e as intensidades entre Python, C\# e Go seguem a aba de profissionais, onde as diferenças são menores. O Java fica à frente pela disciplina obrigatória, e o Python, em segundo, pela pesquisa. As fontes não medem a curva de aprendizado de cada linguagem, e a reposição de quem sair depende do mesmo fator: achar quem já conhece a linguagem.
+
+\section{Ranking global}
+
+Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da alternativa naquele critério, e o total é a soma ponderada pelos pesos do cabeçalho. Os percentuais têm uma casa decimal e podem não somar exatamente 100\%. A ferramenta escolhida é \primeiroLugar, com pontuação global de \pontuacaoPrimeiro, à frente de \segundoLugar, com \pontuacaoSegundo. O Python vence pelo prazo, graças ao Django, e o Java fica em segundo pela mão de obra; o C\#, à frente na manutenção, fica atrás do Python no prazo e dos dois na mão de obra.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{ranking}
+    \caption{Ranking global: prioridade de cada alternativa em cada critério e pontuação global.}
+    \label{tab:ranking}
+\end{table}
+
+Para medir a firmeza do resultado, cada um dos 30 julgamentos foi movido um ponto na escala, um de cada vez e para cada lado: um 3 vira 2 ou 4, e um 1 vira 2 a favor de um ou do outro elemento. O primeiro lugar muda em \mudancasQueTrocam{} das \mudancasTestadas{} mudanças (Tabela~\ref{tab:sensibilidade}). O valor é o da célula linha $\times$ coluna, como nas matrizes: 1/2 quer dizer que a coluna passa a valer um pouco mais que a linha.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \tabelagerada{sensibilidade}
+    \caption{Mudanças de um ponto, em um único julgamento, que trocam o primeiro lugar.}
+    \label{tab:sensibilidade}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{arc42iso}
+ARC42. \textbf{Maintainability}. Disponível em: \url{https://quality.arc42.org/qualities/maintainability}. Acesso em: 12 out. 2026. Reproduz a definição da ISO/IEC 25010:2023.
+
+\bibitem{djangolicense}
+DJANGO SOFTWARE FOUNDATION. \textbf{django/LICENSE}. GitHub. Disponível em: \url{https://github.com/django/django/blob/main/LICENSE}. Acesso em: 12 out. 2026.
+
+\bibitem{djangodownload}
+DJANGO SOFTWARE FOUNDATION. \textbf{Download Django}. Disponível em: \url{https://www.djangoproject.com/download/}. Acesso em: 12 out. 2026.
+
+\bibitem{djangoadmin}
+DJANGO SOFTWARE FOUNDATION. \textbf{The Django admin site}. Disponível em: \url{https://docs.djangoproject.com/en/stable/ref/contrib/admin/}. Acesso em: 12 out. 2026.
+
+\bibitem{djangoauth}
+DJANGO SOFTWARE FOUNDATION. \textbf{User authentication in Django}. Disponível em: \url{https://docs.djangoproject.com/en/stable/topics/auth/}. Acesso em: 12 out. 2026.
+
+\bibitem{adoptium}
+ECLIPSE FOUNDATION. \textbf{Temurin Support}. Adoptium. Disponível em: \url{https://adoptium.net/support/}. Acesso em: 12 out. 2026.
+
+\bibitem{gindatabase}
+GIN. \textbf{Database Integration}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/server-config/database/}. Acesso em: 12 out. 2026.
+
+\bibitem{ginlicense}
+GIN. \textbf{gin/LICENSE}. GitHub. Disponível em: \url{https://github.com/gin-gonic/gin/blob/master/LICENSE}. Acesso em: 12 out. 2026.
+
+\bibitem{gin}
+GIN. \textbf{Introduction}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/introduction/}. Acesso em: 12 out. 2026.
+
+\bibitem{ginsessions}
+GIN. \textbf{Session Management}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/middleware/session-management/}. Acesso em: 12 out. 2026.
+
+\bibitem{ginbasicauth}
+GIN. \textbf{Using BasicAuth middleware}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/middleware/using-basicauth-middleware/}. Acesso em: 12 out. 2026.
+
+\bibitem{jls}
+GOSLING, J. \textit{et al.} \textbf{The Java Language Specification}: Java SE 25 Edition. Cap. 4, Types, Values, and Variables. Oracle. Disponível em: \url{https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html}. Acesso em: 12 out. 2026.
+
+\bibitem{dotnetsupport}
+MICROSOFT. \textbf{.NET and .NET Core support policy}. Disponível em: \url{https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core}. Acesso em: 12 out. 2026.
+
+\bibitem{aspnetlicense}
+MICROSOFT. \textbf{aspnetcore/LICENSE.txt}. GitHub. Disponível em: \url{https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt}. Acesso em: 12 out. 2026.
+
+\bibitem{csharpext}
+MICROSOFT. \textbf{C\#}. Extensão para o Visual Studio Code. Visual Studio Marketplace. Disponível em: \url{https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp}. Acesso em: 12 out. 2026.
+
+\bibitem{csdevkit}
+MICROSOFT. \textbf{C\# Dev Kit}. Visual Studio Marketplace. Disponível em: \url{https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit}. Acesso em: 12 out. 2026.
+
+\bibitem{csharplicense}
+MICROSOFT. \textbf{C\# Extension for Visual Studio Code}: license terms. GitHub. Disponível em: \url{https://github.com/dotnet/vscode-csharp/blob/main/RuntimeLicenses/license.txt}. Acesso em: 12 out. 2026.
+
+\bibitem{aspnetidentity}
+MICROSOFT. \textbf{Introduction to Identity on ASP.NET Core}. Disponível em: \url{https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity}. Acesso em: 12 out. 2026.
+
+\bibitem{efcoremigrations}
+MICROSOFT. \textbf{Migrations Overview}. Entity Framework Core. Disponível em: \url{https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/}. Acesso em: 12 out. 2026.
+
+\bibitem{dotnetlicense}
+MICROSOFT. \textbf{runtime/LICENSE.TXT}. GitHub. Disponível em: \url{https://github.com/dotnet/runtime/blob/main/LICENSE.TXT}. Acesso em: 12 out. 2026.
+
+\bibitem{csharptypes}
+MICROSOFT. \textbf{The C\# type system}. Disponível em: \url{https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/}. Acesso em: 12 out. 2026.
+
+\bibitem{vscodefaq}
+MICROSOFT. \textbf{Visual Studio Code FAQ}. Disponível em: \url{https://code.visualstudio.com/docs/supporting/faq}. Acesso em: 12 out. 2026.
+
+\bibitem{vscommunity}
+MICROSOFT. \textbf{Visual Studio Community}. Disponível em: \url{https://visualstudio.microsoft.com/vs/community/}. Acesso em: 12 out. 2026.
+
+\bibitem{openjdklicense}
+OPENJDK. \textbf{GNU General Public License, version 2, with the Classpath Exception}. Disponível em: \url{https://openjdk.org/legal/gplv2+ce.html}. Acesso em: 12 out. 2026.
+
+\bibitem{pmi2021}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{A Guide to the Project Management Body of Knowledge (PMBOK Guide)} and The Standard for Project Management. 7. ed. Newtown Square: Project Management Institute, 2021.
+
+\bibitem{pmi2017}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+
+\bibitem{pythonlicense}
+PYTHON SOFTWARE FOUNDATION. \textbf{History and License}. Disponível em: \url{https://docs.python.org/3/license.html}. Acesso em: 12 out. 2026.
+
+\bibitem{pythonversions}
+PYTHON SOFTWARE FOUNDATION. \textbf{Status of Python versions}. Python Developer's Guide. Disponível em: \url{https://devguide.python.org/versions/}. Acesso em: 12 out. 2026.
+
+\bibitem{pythontyping}
+PYTHON SOFTWARE FOUNDATION. \textbf{typing: Support for type hints}. Disponível em: \url{https://docs.python.org/3/library/typing.html}. Acesso em: 12 out. 2026.
+
+\bibitem{saaty}
+SAATY, T. L. \textbf{How to Make a Decision: The Analytic Hierarchy Process}. Texto de palestra de abertura (\textit{keynote address}). [S.l.: s.n.], [s.d.]. Disponível em: \url{https://www.isahp-org.creativedecisions.net/uploads/1-how-to-make-a-decision-the-analytic-hierarchy-process-t-l-saaty.pdf}. Acesso em: 12 out. 2026.
+
+\bibitem{springauthz}
+SPRING. \textbf{Authorize HttpServletRequests}. Spring Security. Disponível em: \url{https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html}. Acesso em: 12 out. 2026.
+
+\bibitem{springbootdb}
+SPRING. \textbf{Database Initialization}. Spring Boot. Disponível em: \url{https://docs.spring.io/spring-boot/how-to/data-initialization.html}. Acesso em: 12 out. 2026.
+
+\bibitem{springjdbc}
+SPRING. \textbf{JDBC Authentication}. Spring Security. Disponível em: \url{https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/jdbc.html}. Acesso em: 12 out. 2026.
+
+\bibitem{springbootlicense}
+SPRING. \textbf{spring-boot/LICENSE.txt}. GitHub. Disponível em: \url{https://github.com/spring-projects/spring-boot/blob/main/LICENSE.txt}. Acesso em: 12 out. 2026.
+
+\bibitem{springdatajpa}
+SPRING. \textbf{Spring Data JPA}. Disponível em: \url{https://docs.spring.io/spring-data/jpa/reference/}. Acesso em: 12 out. 2026.
+
+\bibitem{springsecurity}
+SPRING. \textbf{Spring Security Reference}. Disponível em: \url{https://docs.spring.io/spring-security/reference/index.html}. Acesso em: 12 out. 2026.
+
+\bibitem{springsupport}
+SPRING. \textbf{Support Policy}. Disponível em: \url{https://spring.io/support-policy}. Acesso em: 12 out. 2026.
+
+\bibitem{so2025}
+STACK OVERFLOW. \textbf{2025 Developer Survey: Technology}. Disponível em: \url{https://survey.stackoverflow.co/2025/technology/}. Acesso em: 12 out. 2026.
+
+\bibitem{go1compat}
+THE GO AUTHORS. \textbf{Go~1 and the Future of Go Programs}. Disponível em: \url{https://go.dev/doc/go1compat}. Acesso em: 12 out. 2026.
+
+\bibitem{golicense}
+THE GO AUTHORS. \textbf{Go License}. Disponível em: \url{https://go.dev/LICENSE}. Acesso em: 12 out. 2026.
+
+\bibitem{gorelease}
+THE GO AUTHORS. \textbf{Release History}. Disponível em: \url{https://go.dev/doc/devel/release}. Acesso em: 12 out. 2026.
+
+\bibitem{gospec}
+THE GO AUTHORS. \textbf{The Go Programming Language Specification}. Disponível em: \url{https://go.dev/ref/spec}. Acesso em: 12 out. 2026.
+
+\bibitem{ach2003}
+UNIVERSIDADE DE SÃO PAULO. \textbf{ACH2003 - Computação Orientada a Objetos}. JupiterWeb. Disponível em: \url{https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2003}. Acesso em: 12 out. 2026.
+
+\bibitem{gradesi}
+UNIVERSIDADE DE SÃO PAULO. \textbf{Grade curricular: Bacharelado em Sistemas de Informação}. JupiterWeb. Currículo com início em 1º jan. 2027. Disponível em: \url{https://uspdigital.usp.br/jupiterweb/listarGradeCurricular?codcg=86&codcur=86200&codhab=202&tipo=N}. Acesso em: 12 out. 2026.
+
+\bibitem{uspdiretrizes}
+UNIVERSIDADE DE SÃO PAULO. Coordenadoria de Administração Geral. \textbf{Diretrizes Orçamentárias e Revisão do Planejamento Plurianual 2026}. São Paulo: USP, 2025. Disponível em: \url{https://sites.usp.br/codage/wp-content/uploads/sites/264/2026/01/2026_Diretrizes-Orcamentarias.pdf}. Acesso em: 12 out. 2026.
+
+\bibitem{vargas2010}
+VARGAS, R. V. \textbf{Using the Analytic Hierarchy Process (AHP) to Select and Prioritize Projects in a Portfolio}. Trabalho apresentado no PMI Global Congress 2010 - North America, Washington, DC, 2010. Disponível em: \url{https://ricardo-vargas.com/articles/analytic-hierarchy-process/}. Acesso em: 12 out. 2026.
+
+\end{thebibliography}
+
+\end{document}

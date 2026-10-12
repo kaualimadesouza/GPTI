@@ -17,9 +17,13 @@ overrides this skill: read it and update this file to match.
 
 ## The agent's own use counts
 
-Anything you (Claude, Gemini or any other agent) write or rewrite for a deliverable is AI use and
-gets its own registro entry, in the same table as the group's entries. Add a column per registro
-(`Registro 0N: <tema>`):
+Anything you (Claude, Gemini or any other agent) write or rewrite for a deliverable is AI use, but
+**nothing goes into a Registro without Kauã's explicit permission**. Never add, edit or draft a
+registro entry on your own. When the work is done, list in the reply what was made with AI (text,
+figures, scripts, reviews) and let him decide what is declared.
+
+When he asks for an entry, it goes in the same table as the group's entries, one column per
+registro (`Registro 0N: <tema>`):
 
 | Linha | What goes in it |
 | --- | --- |

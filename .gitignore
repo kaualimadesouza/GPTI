@@ -17,3 +17,6 @@ __pycache__/
 # OS noise
 .DS_Store
 *:Zone.Identifier
+
+# Copyrighted books kept only locally
+docs/*PMBOK*.pdf

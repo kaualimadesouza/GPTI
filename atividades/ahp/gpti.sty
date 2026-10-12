@@ -1,0 +1,90 @@
+% Estilo dos documentos do Grupo 7 em ACH2027. Cada pasta de exercício tem uma cópia idêntica
+% (o Overleaf só enxerga arquivos do próprio projeto): edite uma e copie para as outras.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gpti}[2026/09/28 Grupo 7, ACH2027]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[a4paper, left=1.5cm, right=1.5cm, top=2.54cm, bottom=2.54cm]{geometry}
+\RequirePackage{graphicx, setspace, titlesec, fancyhdr, parskip, indentfirst, caption, cite, xcolor}
+\RequirePackage{url, hyperref, multicol, float}
+\RequirePackage[brazil]{babel}
+\RequirePackage{csquotes}
+\RequirePackage{array, longtable, colortbl, pdflscape}
+\RequirePackage{tikz}
+\usetikzlibrary{babel, calc, positioning, arrows.meta, quotes}
+\hypersetup{hidelinks}
+\addto\captionsbrazil{\renewcommand{\refname}{Referências}}
+
+% Cores da EAP, usadas nas figuras e no cabeçalho das tabelas
+\definecolor{eapA}{HTML}{0B4F7C}
+\definecolor{eapB}{HTML}{1D82C4}
+\definecolor{eapC}{HTML}{E8F2FB}
+
+% Seções em versalete com numeração romana, legendas em versalete
+\titleformat{\section}{\centering\large\scshape}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\itshape}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\itshape}{\thesubsubsection}{1em}{}
+\titlespacing{\section}{0pt}{14pt}{6pt}
+\titlespacing{\subsection}{0pt}{6pt}{6pt}
+\titlespacing{\subsubsection}{0pt}{6pt}{6pt}
+\renewcommand{\thesection}{\Roman{section}.}
+\renewcommand{\thesubsection}{\textit{\Alph{subsection}.}}
+\renewcommand{\thesubsubsection}{\textit{\arabic{subsubsection}.}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\thefigure}{\Roman{figure}}
+\captionsetup{labelfont={small,sc}, textfont={small,sc}}
+\setstretch{1.0}
+\setlength{\parskip}{6pt}
+\date{}
+
+% Cabeçalho completo na primeira página e curto nas outras
+\pagestyle{fancy}
+\fancyhf{}
+\fancypagestyle{firstpage}{
+    \fancyhead[C]{
+        \centering
+        {\fontsize{14pt}{10pt}\selectfont
+        \textbf{Universidade de São Paulo}\\[0.5em]
+        \textbf{ACH2027 - Gestão de Projetos de Tecnologia da Informação}}\\[0.2em]
+        {\fontsize{8pt}{10pt}\selectfont
+        \textbf{Prof. Doutor:} Edmir Parada Vasques Prado \hspace{1cm}
+        \textbf{Ano:} 2º Semestre/2026}
+    }
+}
+\fancyhead[C]{\textbf{Escola de Artes, Ciências e Humanidades - Universidade de São Paulo}}
+
+% \capa: título, cabeçalho da primeira página e integrantes em duas colunas
+\newcommand{\capa}{
+    \maketitle
+    \vspace{-1.5cm}
+    \thispagestyle{firstpage}
+    \begin{multicols}{2}
+        \centering
+
+        \textbf{Gustavo G. França do Nascimento}\\
+        15637551\\
+        T94
+
+        \vspace{0.5cm}
+
+        \textbf{Kauã Lima de Souza}\\
+        15674702\\
+        T94
+
+        \vspace{0.5cm}
+
+        \textbf{Kevin Rodrigues Nunes}\\
+        15676030\\
+        T94
+
+        \vspace{0.5cm}
+
+        \textbf{Victor Yodono}\\
+        13829040\\
+        T94
+    \end{multicols}
+    \vspace{-0.2cm}
+    \singlespacing
+    \setlength{\parskip}{6pt}
+    \setlength{\parindent}{0.5cm}
+}
