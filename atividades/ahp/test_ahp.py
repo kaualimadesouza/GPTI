@@ -1,3 +1,4 @@
+import re
 from fractions import Fraction
 from pathlib import Path
 
@@ -7,6 +8,7 @@ import ahp
 from ahp import ALTERNATIVE_JUDGMENTS, CRITERIA_JUDGMENTS, Comparison, Judgment
 
 LETTERS = ("A", "B", "C", "D")
+HERE = Path(ahp.__file__).parent
 
 
 def comparison(*judgments: Judgment, elements: tuple[str, ...] = LETTERS, title: str = "Teste",
@@ -168,12 +170,12 @@ def test_ranking_table_lists_the_criteria_weights_and_the_ordered_totals() -> No
     assert rows[0] == r"1º & A & 50,0\% & 25,0\% & 9,1\% & 25,0\% & 35,5\% \\"
 
 
-def test_numbers_define_every_macro_the_text_quotes() -> None:
+def test_numbers_write_each_cr_weight_the_top_two_and_the_sensitivity_counts() -> None:
     criteria = ahp.evaluate(CRITERIA_FOR_RANKING)
     matrices = (*ALTERNATIVES_FOR_RANKING[:3], comparison(*VARGAS, title="KD", slug="Kd"))
     alternatives = [ahp.evaluate(c) for c in matrices]
     scores = ahp.rank(criteria, alternatives)
-    text = ahp.numbers(criteria, alternatives, scores)
+    text = ahp.numbers(criteria, alternatives, scores, ahp.Sensitivity(48, ()))
     assert "\\newcommand{\\crCriterios}{0,000}\n" in text
     assert "\\newcommand{\\crKa}{0,000}\n" in text
     assert f"\\newcommand{{\\crKd}}{{{ahp.comma(alternatives[3].consistency_ratio, 3)}}}\n" in text
@@ -183,6 +185,18 @@ def test_numbers_define_every_macro_the_text_quotes() -> None:
     assert "\\newcommand{\\pesoKd}{12,5\\%}\n" in text
     assert f"\\newcommand{{\\primeiroLugar}}{{{scores[0].alternative}}}\n" in text
     assert f"\\newcommand{{\\pontuacaoSegundo}}{{{ahp.percent(scores[1].total)}}}\n" in text
+    assert "\\newcommand{\\mudancasTestadas}{48}\n" in text
+    assert "\\newcommand{\\mudancasQueTrocam}{0}\n" in text
+
+
+def test_numbers_define_exactly_the_macros_the_document_falls_back_on() -> None:
+    tex = (HERE / "ahp_GPTI_2026.tex").read_text()
+    fallback = set(re.findall(r"\\newcommand\{\\(\w+)\}\{\\pendente\}", tex))
+    criteria = ahp.evaluate(CRITERIA_JUDGMENTS)
+    alternatives = [ahp.evaluate(c) for c in ALTERNATIVE_JUDGMENTS]
+    text = ahp.numbers(criteria, alternatives, ahp.rank(criteria, alternatives), ahp.Sensitivity(60, ()))
+    assert set(re.findall(r"\\newcommand\{\\(\w+)\}", text)) == fallback
+    assert len(fallback) == 15
 
 
 def test_run_stops_and_lists_what_is_missing(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -210,12 +224,13 @@ def test_run_writes_every_fragment_when_all_matrices_are_consistent(
     assert ahp.run(CRITERIA_FOR_RANKING, ALTERNATIVES_FOR_RANKING, out_dir) == 0
     assert sorted(p.name for p in out_dir.iterdir()) == [
         "matriz_criterios.tex", "matriz_ka.tex", "matriz_kb.tex", "matriz_kc.tex", "matriz_kd.tex",
-        "numeros.tex", "ranking.tex"]
+        "numeros.tex", "ranking.tex", "sensibilidade.tex"]
     assert (out_dir / "matriz_ka.tex").read_text() == ahp.matrix_table(ahp.evaluate(ALTERNATIVES_FOR_RANKING[0]))
     out = capsys.readouterr().out
     assert "Critérios: CR = 0,000 (consistente)" in out
     assert not [line for line in out.splitlines() if line.startswith("  ")]
     assert "1º A: 35,5%" in out
+    assert "Mudanças de um ponto que trocam o primeiro lugar: 0 de 60" in out
     assert "empatam no primeiro lugar" not in out
 
 
@@ -262,23 +277,63 @@ def test_run_warns_when_the_first_place_is_a_tie(tmp_path: Path, capsys: pytest.
     assert "Atenção: A e B empatam no primeiro lugar" in capsys.readouterr().out
 
 
-def test_the_real_judgments_are_consistent_and_put_java_first_by_a_small_margin() -> None:
+def test_the_real_judgments_are_consistent_and_put_python_first() -> None:
     assert all(ahp.judgment_problems(c) == () for c in (CRITERIA_JUDGMENTS, *ALTERNATIVE_JUDGMENTS))
     criteria = ahp.evaluate(CRITERIA_JUDGMENTS)
     alternatives = [ahp.evaluate(c) for c in ALTERNATIVE_JUDGMENTS]
     assert [ahp.comma(r.consistency_ratio, 3) for r in (criteria, *alternatives)] == [
-        "0,002", "0,000", "0,027", "0,004", "0,005"]
+        "0,002", "0,000", "0,003", "0,004", "0,005"]
     assert [round(w, 3) for w in criteria.weights] == [0.070, 0.368, 0.193, 0.368]
     scores = ahp.rank(criteria, alternatives)
     assert [(s.alternative, round(100 * s.total, 1)) for s in scores] == [
-        ("Java", 34.3), ("Python", 33.6), ("C#", 21.3), ("Go", 10.8)]
+        ("Python", 34.2), ("Java", 31.0), ("C#", 22.8), ("Go", 11.9)]
 
 
-def test_python_passes_java_when_the_deadline_weighs_a_little_more_than_the_workforce() -> None:
-    # pins the sensitivity sentence of section VI, which quotes these two totals by hand
-    pair = ("Prazo de entrega", "Facilidade de mão de obra")
-    judgments = tuple(Judgment(*pair, 2) if (j.preferred, j.over) == pair else j for j in CRITERIA_JUDGMENTS.judgments)
-    criteria = ahp.evaluate(Comparison("Criterios", "Critérios", CRITERIA_JUDGMENTS.elements, judgments))
-    assert criteria.consistent
-    scores = ahp.rank(criteria, [ahp.evaluate(c) for c in ALTERNATIVE_JUDGMENTS])
-    assert [(s.alternative, round(100 * s.total, 1)) for s in scores[:2]] == [("Python", 35.4), ("Java", 32.5)]
+def test_nudges_move_a_judgment_one_step_on_the_scale() -> None:
+    assert ahp.nudges(Judgment("A", "B", 1)) == (Judgment("A", "B", 2), Judgment("B", "A", 2))
+    assert ahp.nudges(Judgment("A", "B", 3)) == (Judgment("A", "B", 2), Judgment("A", "B", 4))
+    assert ahp.nudges(Judgment("A", "B", 9)) == (Judgment("A", "B", 8),)
+
+
+def test_a_cell_is_the_intensity_for_the_preferred_row_and_its_reciprocal_otherwise() -> None:
+    assert ahp.cell(Judgment("A", "B", 3), "A") == 3
+    assert ahp.cell(Judgment("B", "A", 3), "A") == Fraction(1, 3)
+
+
+DOMINATED = (Judgment("A", "B", 9), Judgment("A", "C", 9), Judgment("A", "D", 9),
+             Judgment("B", "C", 1), Judgment("B", "D", 1), Judgment("C", "D", 1))
+
+
+def test_no_single_step_unseats_an_alternative_that_dominates_every_criterion() -> None:
+    criteria = comparison(*[Judgment(f"K{p.preferred}", f"K{p.over}", 1) for p in EQUAL],
+                          elements=("KA", "KB", "KC", "KD"))
+    matrices = [comparison(*DOMINATED, title=k) for k in ("KA", "KB", "KC", "KD")]
+    shaken = ahp.sensitivity(criteria, matrices)
+    assert shaken == ahp.Sensitivity(6 * 2 + 4 * (3 * 1 + 3 * 2), ())
+    assert "Nenhuma mudança de um ponto troca o primeiro lugar" in ahp.sensitivity_table(shaken)
+
+
+def test_the_only_flip_of_the_real_ranking_is_the_deadline_against_the_workforce() -> None:
+    shaken = ahp.sensitivity(CRITERIA_JUDGMENTS, ALTERNATIVE_JUDGMENTS)
+    assert shaken.tried == 60
+    [flip] = shaken.flips
+    assert (flip.matrix, flip.row, flip.column) == ("Critérios", "Prazo de entrega", "Facilidade de mão de obra")
+    assert (flip.before, flip.after) == (Fraction(1), Fraction(1, 2))
+    # recomputed by hand: the workforce slightly above the deadline puts Java first
+    pair = ("Facilidade de mão de obra", "Prazo de entrega")
+    judgments = tuple(Judgment(*pair, 2) if {j.preferred, j.over} == set(pair) else j
+                      for j in CRITERIA_JUDGMENTS.judgments)
+    criteria = Comparison("Criterios", "Critérios", CRITERIA_JUDGMENTS.elements, judgments)
+    assert flip.scores == ahp.standings((criteria, *ALTERNATIVE_JUDGMENTS))
+    assert [(s.alternative, round(100 * s.total, 1)) for s in flip.scores[:2]] == [("Java", 33.0), ("Python", 32.6)]
+    row = ahp.sensitivity_table(shaken).splitlines()[5]
+    assert row == (r"Critérios & Prazo de entrega $\times$ Facilidade de mão de obra & 1 $\rightarrow$ 1/2 & "
+                   r"Java (33,0\%) à frente de Python (32,6\%) \\")
+
+
+def test_committed_tables_are_up_to_date(tmp_path: Path) -> None:
+    """Fails when a judgment changed and ahp.py was not rerun, or a table was edited by hand."""
+    assert ahp.run(CRITERIA_JUDGMENTS, ALTERNATIVE_JUDGMENTS, tmp_path) == 0
+    committed = HERE / "tabelas"
+    assert sorted(p.name for p in committed.iterdir()) == sorted(p.name for p in tmp_path.iterdir())
+    assert all((committed / p.name).read_text() == p.read_text() for p in tmp_path.iterdir())

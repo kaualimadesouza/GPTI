@@ -60,6 +60,22 @@ class Score:
     total: float
 
 
+@dataclass(frozen=True)
+class Flip:
+    matrix: str
+    row: str
+    column: str
+    before: Fraction  # the entry at row x column, as the matrix tables print it
+    after: Fraction
+    scores: tuple[Score, ...]
+
+
+@dataclass(frozen=True)
+class Sensitivity:
+    tried: int
+    flips: tuple[Flip, ...]  # the one-step changes that put another alternative first
+
+
 CRITERIA = ("Custo de desenvolvimento", "Prazo de entrega", "Facilidade de manutenção", "Facilidade de mão de obra")
 ALTERNATIVES = ("Java", "C#", "Python", "Go")
 
@@ -82,9 +98,9 @@ CRITERIA_JUDGMENTS = Comparison("Criterios", "Critérios", CRITERIA, (
 
 ALTERNATIVE_JUDGMENTS = (
     Comparison("Custo", "Custo de desenvolvimento", ALTERNATIVES, (
-        Judgment("Java", "C#", 2, "Visual Studio Community e C# Dev Kit restringem organizações com mais de 250 PCs"),
-        Judgment("Python", "C#", 2, "mesma restrição de licença das ferramentas do C#"),
-        Judgment("Go", "C#", 2, "mesma restrição de licença das ferramentas do C#"),
+        Judgment("Java", "C#", 1, "a extensão C# do VS Code é gratuita sem limite de porte; só o Dev Kit é restrito"),
+        Judgment("Python", "C#", 1, "a extensão C# do VS Code é gratuita sem limite de porte; só o Dev Kit é restrito"),
+        Judgment("Go", "C#", 1, "a extensão C# do VS Code é gratuita sem limite de porte; só o Dev Kit é restrito"),
         Judgment("Java", "Python", 1, "licenças e ferramentas gratuitas nas duas"),
         Judgment("Java", "Go", 1, "licenças e ferramentas gratuitas nas duas"),
         Judgment("Python", "Go", 1, "licenças e ferramentas gratuitas nas duas"),
@@ -92,23 +108,23 @@ ALTERNATIVE_JUDGMENTS = (
     Comparison("Prazo", "Prazo de entrega", ALTERNATIVES, (
         Judgment("Python", "Java", 3, "Django traz o admin pronto para os cadastros, além de login e permissões"),
         Judgment("Python", "C#", 3, "Django traz o admin pronto para os cadastros, além de login e papéis"),
-        Judgment("Python", "Go", 7, "a documentação do Gin não cobre ORM, migrações, usuários e papéis nem admin"),
+        Judgment("Python", "Go", 7, "Django traz admin e usuários com permissões; o Gin não traz nenhum dos dois"),
         Judgment("Java", "C#", 1, "Spring Security e Data JPA equivalem a Identity e EF Core; nenhum traz admin"),
-        Judgment("Java", "Go", 5, "Spring traz autenticação, ORM e migrações que no Gin seriam feitos à mão"),
-        Judgment("C#", "Go", 5, "Identity e EF Core trazem o que no Gin seria feito à mão"),
+        Judgment("Java", "Go", 3, "Spring Security dá usuários e papéis; o Gin só tem BasicAuth e usa o GORM à parte"),
+        Judgment("C#", "Go", 3, "Identity dá usuários e papéis; o Gin só tem BasicAuth e usa o GORM à parte"),
     )),
     Comparison("Manutencao", "Facilidade de manutenção", ALTERNATIVES, (
-        Judgment("Java", "C#", 1, "tipagem estática e versões LTS nas duas"),
-        Judgment("Java", "Python", 3, "o compilador pega erros de tipo; no Python as anotações são opcionais"),
-        Judgment("Java", "Go", 2, "LTS de pelo menos 4 anos; cada versão do Go vale até saírem duas mais novas"),
-        Judgment("C#", "Python", 3, "o compilador pega erros de tipo; no Python as anotações são opcionais"),
-        Judgment("C#", "Go", 2, "LTS de 3 anos no .NET; cada versão do Go vale até saírem duas mais novas"),
-        Judgment("Go", "Python", 2, "a tipagem estática do Go pesa mais que o suporte mais longo do Python"),
+        Judgment("C#", "Java", 2, "os dois têm tipagem estática; LTS de 3 anos no ASP.NET, 13 meses no Spring Boot"),
+        Judgment("Java", "Python", 2, "a tipagem estática pesa mais que o suporte mais longo de Django e Python"),
+        Judgment("Java", "Go", 1, "tipagem estática nos dois; Spring Boot e Go pedem atualizar a cada ano"),
+        Judgment("C#", "Python", 3, "o compilador pega erros de tipo; suporte de 3 anos nos dois frameworks"),
+        Judgment("C#", "Go", 2, "os dois têm tipagem estática; LTS de 3 anos no .NET, cerca de 1 ano no Go"),
+        Judgment("Go", "Python", 2, "a tipagem estática pesa mais que o suporte mais longo de Django e Python"),
     )),
     Comparison("MaoDeObra", "Facilidade de mão de obra", ALTERNATIVES, (
-        Judgment("Java", "C#", 3, "a ACH2003, obrigatória em SI, ensina Java"),
+        Judgment("Java", "C#", 3, "ACH2003, obrigatória em SI, tem bibliografia de Java; C# não aparece na grade"),
         Judgment("Java", "Python", 2, "ACH2003 é obrigatória em SI; Python é a mais usada das quatro na pesquisa"),
-        Judgment("Java", "Go", 5, "ACH2003 é obrigatória em SI; Go tem 17,4% na pesquisa"),
+        Judgment("Java", "Go", 5, "ACH2003 é obrigatória em SI; Go não aparece na grade e tem 17,4% na pesquisa"),
         Judgment("Python", "C#", 2, "Python tem 54,8% na pesquisa, contra 29,9% do C#"),
         Judgment("Python", "Go", 3, "Python tem 54,8% na pesquisa, contra 17,4% do Go"),
         Judgment("C#", "Go", 2, "C# tem 29,9% na pesquisa, contra 17,4% do Go"),
@@ -200,6 +216,38 @@ def rank(criteria: Result, alternatives: Sequence[Result]) -> tuple[Score, ...]:
     return tuple(sorted(scores, key=lambda s: s.total, reverse=True))
 
 
+def standings(matrices: Sequence[Comparison]) -> tuple[Score, ...]:
+    results = [evaluate(c) for c in matrices]
+    return rank(results[0], results[1:])
+
+
+def nudges(j: Judgment) -> tuple[Judgment, ...]:
+    """The judgments one step away on Saaty's scale: 1 becomes 2 for either side, k becomes k-1 or k+1."""
+    if j.intensity == 1:
+        return Judgment(j.preferred, j.over, 2), Judgment(j.over, j.preferred, 2)
+    return tuple(Judgment(j.preferred, j.over, k) for k in (j.intensity - 1, j.intensity + 1) if k <= 9)
+
+
+def cell(j: Judgment, row: str) -> Fraction:
+    return Fraction(j.intensity) if j.preferred == row else Fraction(1, j.intensity)
+
+
+def sensitivity(criteria: Comparison, alternatives: Sequence[Comparison]) -> Sensitivity:
+    matrices = (criteria, *alternatives)
+    leader = standings(matrices)[0].alternative
+    tried, flips = 0, []
+    for i, m in enumerate(matrices):
+        for j in m.judgments:
+            for n in nudges(j):
+                tried += 1
+                changed = Comparison(m.slug, m.title, m.elements, tuple(n if x == j else x for x in m.judgments))
+                scores = standings((*matrices[:i], changed, *matrices[i + 1:]))
+                if scores[0].alternative != leader:
+                    row, column = sorted((j.preferred, j.over), key=m.elements.index)
+                    flips.append(Flip(m.title, row, column, cell(j, row), cell(n, row), scores))
+    return Sensitivity(tried, tuple(flips))
+
+
 def comma(value: float, digits: int) -> str:
     return f"{value:.{digits}f}".replace(".", ",")
 
@@ -243,12 +291,30 @@ def ranking_table(criteria: Result, scores: Sequence[Score]) -> str:
     return "\n".join(lines + [r"\end{tabular}"]) + "\n"
 
 
-def numbers(criteria: Result, alternatives: Sequence[Result], scores: Sequence[Score]) -> str:
+def sensitivity_table(s: Sensitivity) -> str:
+    lines = [(r"\begin{tabular}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{5.4cm}|c|"
+              r">{\raggedright\arraybackslash}p{4.6cm}|}"),
+             r"\hline", r"\rowcolor{eapC}",
+             r"\textbf{Matriz} & \textbf{Linha $\times$ coluna} & \textbf{Valor} & \textbf{Novo ranking} \\", r"\hline"]
+    for f in s.flips:
+        first, second = f.scores[0], f.scores[1]
+        cells = [escape(f.matrix), rf"{escape(f.row)} $\times$ {escape(f.column)}",
+                 rf"{fraction(f.before)} $\rightarrow$ {fraction(f.after)}",
+                 (f"{escape(first.alternative)} ({percent(first.total)}) à frente de "
+                  f"{escape(second.alternative)} ({percent(second.total)})")]
+        lines += [" & ".join(cells) + r" \\", r"\hline"]
+    if not s.flips:
+        lines += [r"\multicolumn{4}{|c|}{Nenhuma mudança de um ponto troca o primeiro lugar} \\", r"\hline"]
+    return "\n".join(lines + [r"\end{tabular}"]) + "\n"
+
+
+def numbers(criteria: Result, alternatives: Sequence[Result], scores: Sequence[Score], s: Sensitivity) -> str:
     """Macros for every figure the text quotes, so the prose cannot drift from the matrices."""
     macros = [(f"cr{r.comparison.slug}", comma(r.consistency_ratio, 3)) for r in (criteria, *alternatives)]
     macros += [(f"peso{r.comparison.slug}", percent(w)) for r, w in zip(alternatives, criteria.weights)]
     macros += [("primeiroLugar", escape(scores[0].alternative)), ("pontuacaoPrimeiro", percent(scores[0].total)),
-               ("segundoLugar", escape(scores[1].alternative)), ("pontuacaoSegundo", percent(scores[1].total))]
+               ("segundoLugar", escape(scores[1].alternative)), ("pontuacaoSegundo", percent(scores[1].total)),
+               ("mudancasTestadas", str(s.tried)), ("mudancasQueTrocam", str(len(s.flips)))]
     return "".join(f"\\newcommand{{\\{name}}}{{{value}}}\n" for name, value in macros)
 
 
@@ -267,13 +333,16 @@ def run(criteria: Comparison, alternatives: Sequence[Comparison], out_dir: Path)
     if not all(r.consistent for r in results):
         return 1
     scores = rank(results[0], results[1:])
+    shaken = sensitivity(criteria, alternatives)
     out_dir.mkdir(exist_ok=True)
     for r in results:
         (out_dir / f"matriz_{r.comparison.slug.lower()}.tex").write_text(matrix_table(r))
     (out_dir / "ranking.tex").write_text(ranking_table(results[0], scores))
-    (out_dir / "numeros.tex").write_text(numbers(results[0], results[1:], scores))
+    (out_dir / "sensibilidade.tex").write_text(sensitivity_table(shaken))
+    (out_dir / "numeros.tex").write_text(numbers(results[0], results[1:], scores, shaken))
     print(*(f"{place}º {s.alternative}: {comma(100 * s.total, 1)}%" for place, s in enumerate(scores, start=1)),
           sep="\n")
+    print(f"Mudanças de um ponto que trocam o primeiro lugar: {len(shaken.flips)} de {shaken.tried}")
     if comma(100 * scores[0].total, 1) == comma(100 * scores[1].total, 1):
         print(f"Atenção: {scores[0].alternative} e {scores[1].alternative} empatam no primeiro lugar")
     return 0
