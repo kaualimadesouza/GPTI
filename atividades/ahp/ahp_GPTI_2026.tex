@@ -152,7 +152,9 @@ em que $w_c$ é o peso do critério $c$ e $p_c(a)$ é a prioridade de $a$ sob $c
 
 \section{Pesos dos critérios}
 
-A Tabela~\ref{tab:criterios} compara os critérios dois a dois quanto à importância para o objetivo. Os pesos ficam em \pesoCusto{} para custo de desenvolvimento, \pesoPrazo{} para prazo de entrega, \pesoManutencao{} para facilidade de manutenção e \pesoMaoDeObra{} para facilidade de mão de obra, com CR de \crCriterios. \textcolor{red}{[PREENCHER: justificativa dos pesos dos critérios]}
+A Tabela~\ref{tab:criterios} compara os critérios dois a dois quanto à importância para o objetivo. Os pesos ficam em \pesoCusto{} para custo de desenvolvimento, \pesoPrazo{} para prazo de entrega, \pesoManutencao{} para facilidade de manutenção e \pesoMaoDeObra{} para facilidade de mão de obra, com CR de \crCriterios.
+
+Prazo de entrega e facilidade de mão de obra empatam como os critérios mais pesados. O caminho crítico do cronograma não tem folga (Exercício 2), e sem bolsistas que conheçam a linguagem não há equipe nos 6 meses de bolsa. A facilidade de manutenção vem em seguida: a manutenção ficou fora do escopo, mas o sistema continua em uso depois da implantação. O custo pesa pouco, porque as quatro linguagens e seus frameworks têm licenças gratuitas e as bolsas são fixas.
 
 \begin{table}[H]
     \centering
@@ -165,7 +167,7 @@ A Tabela~\ref{tab:criterios} compara os critérios dois a dois quanto à import�
 
 \section{Alternativas em cada critério}
 
-Em cada critério, as quatro alternativas são comparadas duas a duas, sempre para a equipe de bolsistas descrita nas premissas. O PMBOK lembra que decisões como a escolha da ferramenta ganham com a participação do grupo, que aumenta o compromisso com o resultado \cite[p.~27--28]{pmi2021}: os julgamentos foram escritos por um integrante e revisados pelo grupo. \textcolor{red}{[CONFERIR depois da revisão do grupo]}
+Em cada critério, as quatro alternativas são comparadas duas a duas, sempre para a equipe de bolsistas descrita nas premissas. O PMBOK lembra que decisões como a escolha da ferramenta ganham com a participação do grupo, que aumenta o compromisso com o resultado \cite[p.~27--28]{pmi2021}: por isso os julgamentos e as justificativas abaixo passaram pela revisão do grupo antes da entrega. \textcolor{red}{[CONFERIR depois da revisão do grupo]}
 
 \subsection{Custo de desenvolvimento}
 
@@ -178,7 +180,7 @@ Em cada critério, as quatro alternativas são comparadas duas a duas, sempre pa
     \label{tab:custo}
 \end{table}
 
-A Tabela~\ref{tab:custo} tem CR de \crCusto. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+A Tabela~\ref{tab:custo} tem CR de \crCusto. As quatro linguagens e seus frameworks são de código aberto. A diferença está nas ferramentas do C\#: o Visual Studio Community e o C\# Dev Kit, em organizações com mais de 250 computadores, só podem ser usados em casos como código aberto, pesquisa acadêmica e sala de aula \cite{vscommunity, csdevkit}, e a USP passa desse limite. Por isso o C\# leva uma pequena desvantagem (2) diante das outras três, que empatam entre si.
 
 \subsection{Prazo de entrega}
 
@@ -191,7 +193,7 @@ A Tabela~\ref{tab:custo} tem CR de \crCusto. \textcolor{red}{[PREENCHER: justifi
     \label{tab:prazo}
 \end{table}
 
-A Tabela~\ref{tab:prazo} tem CR de \crPrazo. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+A Tabela~\ref{tab:prazo} tem CR de \crPrazo. O Django gera um painel administrativo a partir dos modelos, pensado para uso interno, e traz usuários, permissões, grupos e telas de login \cite{djangoadmin, djangoauth}: isso cobre boa parte dos cadastros e da hierarquia de acesso. Spring Boot e ASP.NET Core trazem autenticação, papéis, ORM e migrações \cite{springsecurity, aspnetidentity}, mas não o painel, e empatam entre si. O Gin cuida de rotas e middleware e não traz ORM, migrações, usuários nem papéis \cite{gin}, que o time teria de construir.
 
 \subsection{Facilidade de manutenção}
 
@@ -204,7 +206,7 @@ A Tabela~\ref{tab:prazo} tem CR de \crPrazo. \textcolor{red}{[PREENCHER: justifi
     \label{tab:manutencao}
 \end{table}
 
-A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. Java e C\# têm tipagem estática, verificada pelo compilador, e versões com suporte longo (LTS) \cite{javaroadmap, dotnetsupport}, e empatam. O Go também tem tipagem estática e promete compatibilidade entre as versões do Go 1 \cite{go1compat}, mas o Gin deixa a estrutura do projeto a cargo do time. No Python, as anotações de tipo são opcionais e não são verificadas na execução \cite{pythontyping}, o que torna as mudanças de quem herdar o código mais arriscadas.
 
 \subsection{Facilidade de mão de obra}
 
@@ -217,11 +219,11 @@ A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. \textcolor{red}{[PREENCHE
     \label{tab:maodeobra}
 \end{table}
 
-A Tabela~\ref{tab:maodeobra} tem CR de \crMaoDeObra. \textcolor{red}{[PREENCHER: justificativa dos julgamentos]}
+A Tabela~\ref{tab:maodeobra} tem CR de \crMaoDeObra. Todo aluno de SI da EACH estuda Java na disciplina ACH2003, cuja bibliografia é de Java \cite{ach2003}, o que garante bolsistas que já conhecem a linguagem. Fora da grade, a pesquisa do Stack Overflow de 2025 coloca Python como a linguagem mais usada por desenvolvedores profissionais (54,8\%), à frente de C\# (29,9\%), Java (29,6\%) e Go (17,4\%) \cite{so2025}. A pesquisa mede o mercado mundial, não os alunos da EACH.
 
 \section{Ranking global}
 
-Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da alternativa naquele critério, e o total é a soma ponderada pelos pesos do cabeçalho. Os percentuais têm uma casa decimal e podem não somar exatamente 100\%. A ferramenta escolhida é \primeiroLugar, com pontuação global de \pontuacaoPrimeiro, à frente de \segundoLugar, com \pontuacaoSegundo.
+Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da alternativa naquele critério, e o total é a soma ponderada pelos pesos do cabeçalho. Os percentuais têm uma casa decimal e podem não somar exatamente 100\%. A ferramenta escolhida é \primeiroLugar, com pontuação global de \pontuacaoPrimeiro, à frente de \segundoLugar, com \pontuacaoSegundo. A diferença é pequena: Java vence pela mão de obra e pela manutenção, e Python pelo prazo, graças ao Django. O resultado depende do empate entre prazo e mão de obra na Tabela~\ref{tab:criterios}: com o prazo um pouco mais importante (2 em vez de 1), Python passaria à frente, com 35,4\% contra 32,5\%.
 
 \begin{table}[H]
     \centering
@@ -237,14 +239,53 @@ Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da altern
 \bibitem{arc42iso}
 ARC42. \textbf{Maintainability}. Disponível em: \url{https://quality.arc42.org/qualities/maintainability}. Acesso em: 12 out. 2026. Reproduz a definição da ISO/IEC 25010:2023.
 
-\bibitem{pmi2017}
-PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+\bibitem{djangoadmin}
+DJANGO SOFTWARE FOUNDATION. \textbf{The Django admin site}. Disponível em: \url{https://docs.djangoproject.com/en/stable/ref/contrib/admin/}. Acesso em: 12 out. 2026.
+
+\bibitem{djangoauth}
+DJANGO SOFTWARE FOUNDATION. \textbf{User authentication in Django}. Disponível em: \url{https://docs.djangoproject.com/en/stable/topics/auth/}. Acesso em: 12 out. 2026.
+
+\bibitem{gin}
+GIN. \textbf{Introduction}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/introduction/}. Acesso em: 12 out. 2026.
+
+\bibitem{dotnetsupport}
+MICROSOFT. \textbf{.NET and .NET Core support policy}. Disponível em: \url{https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core}. Acesso em: 12 out. 2026.
+
+\bibitem{csdevkit}
+MICROSOFT. \textbf{C\# Dev Kit}. Visual Studio Marketplace. Disponível em: \url{https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit}. Acesso em: 12 out. 2026.
+
+\bibitem{aspnetidentity}
+MICROSOFT. \textbf{Introduction to Identity on ASP.NET Core}. Disponível em: \url{https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity}. Acesso em: 12 out. 2026.
+
+\bibitem{vscommunity}
+MICROSOFT. \textbf{Visual Studio Community}. Disponível em: \url{https://visualstudio.microsoft.com/vs/community/}. Acesso em: 12 out. 2026.
+
+\bibitem{javaroadmap}
+ORACLE. \textbf{Oracle Java SE Support Roadmap}. Disponível em: \url{https://www.oracle.com/java/technologies/java-se-support-roadmap.html}. Acesso em: 12 out. 2026.
 
 \bibitem{pmi2021}
 PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{A Guide to the Project Management Body of Knowledge (PMBOK Guide)} and The Standard for Project Management. 7. ed. Newtown Square: Project Management Institute, 2021.
 
+\bibitem{pmi2017}
+PMI - PROJECT MANAGEMENT INSTITUTE. \textbf{Um Guia do Conhecimento em Gerenciamento de Projetos (Guia PMBOK)}. 6. ed. Newtown Square: Project Management Institute, 2017.
+
+\bibitem{pythontyping}
+PYTHON SOFTWARE FOUNDATION. \textbf{typing: Support for type hints}. Disponível em: \url{https://docs.python.org/3/library/typing.html}. Acesso em: 12 out. 2026.
+
 \bibitem{saaty}
 SAATY, T. L. \textbf{How to Make a Decision: The Analytic Hierarchy Process}. Texto de palestra de abertura (\textit{keynote address}). [S.l.: s.n.], [s.d.]. Disponível em: \url{https://www.isahp-org.creativedecisions.net/uploads/1-how-to-make-a-decision-the-analytic-hierarchy-process-t-l-saaty.pdf}. Acesso em: 12 out. 2026.
+
+\bibitem{springsecurity}
+SPRING. \textbf{Spring Security Reference}. Disponível em: \url{https://docs.spring.io/spring-security/reference/index.html}. Acesso em: 12 out. 2026.
+
+\bibitem{so2025}
+STACK OVERFLOW. \textbf{2025 Developer Survey: Technology}. Disponível em: \url{https://survey.stackoverflow.co/2025/technology/}. Acesso em: 12 out. 2026.
+
+\bibitem{go1compat}
+THE GO AUTHORS. \textbf{Go 1 and the Future of Go Programs}. Disponível em: \url{https://go.dev/doc/go1compat}. Acesso em: 12 out. 2026.
+
+\bibitem{ach2003}
+UNIVERSIDADE DE SÃO PAULO. \textbf{ACH2003 - Computação Orientada a Objetos}. JupiterWeb. Disponível em: \url{https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2003}. Acesso em: 12 out. 2026.
 
 \bibitem{vargas2010}
 VARGAS, R. V. Using the Analytic Hierarchy Process (AHP) to Select and Prioritize Projects in a Portfolio. In: PMI GLOBAL CONGRESS 2010 - NORTH AMERICA, Washington, DC. \textbf{Anais}. Newtown Square: Project Management Institute, 2010. Disponível em: \url{https://ricardo-vargas.com/articles/analytic-hierarchy-process/}. Acesso em: 12 out. 2026.

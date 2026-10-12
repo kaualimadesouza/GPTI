@@ -66,16 +66,52 @@ ALTERNATIVES = ("Java", "C#", "Python", "Go")
 # Judgment("X", "Y", 5, "motivo") reads "X is strongly preferred to Y" (Saaty scale, integer 1 to 9).
 # To favour Y, swap the names; 1 means equal. Each matrix takes its 6 pairs.
 CRITERIA_JUDGMENTS = Comparison("Criterios", "Critérios", CRITERIA, (
+    Judgment("Prazo de entrega", "Custo de desenvolvimento", 5,
+             "o caminho crítico não tem folga, e as licenças são gratuitas nas quatro"),
+    Judgment("Facilidade de manutenção", "Custo de desenvolvimento", 3,
+             "o sistema vive anos depois da implantação; o custo quase não muda entre as linguagens"),
+    Judgment("Facilidade de mão de obra", "Custo de desenvolvimento", 5,
+             "sem bolsistas que saibam a linguagem não há time; o custo quase não muda"),
+    Judgment("Prazo de entrega", "Facilidade de manutenção", 2,
+             "o prazo de 1 ano é restrição do projeto; a manutenção ficou fora do escopo"),
+    Judgment("Prazo de entrega", "Facilidade de mão de obra", 1,
+             "os dois limitam a entrega nos 6 meses de bolsa"),
+    Judgment("Facilidade de mão de obra", "Facilidade de manutenção", 2,
+             "o time precisa existir durante o projeto; a manutenção vem depois"),
 ))
 
 ALTERNATIVE_JUDGMENTS = (
     Comparison("Custo", "Custo de desenvolvimento", ALTERNATIVES, (
+        Judgment("Java", "C#", 2, "Visual Studio Community e C# Dev Kit restringem organizações com mais de 250 PCs"),
+        Judgment("Python", "C#", 2, "mesma restrição de licença das ferramentas do C#"),
+        Judgment("Go", "C#", 2, "mesma restrição de licença das ferramentas do C#"),
+        Judgment("Java", "Python", 1, "licenças e ferramentas gratuitas nas duas"),
+        Judgment("Java", "Go", 1, "licenças e ferramentas gratuitas nas duas"),
+        Judgment("Python", "Go", 1, "licenças e ferramentas gratuitas nas duas"),
     )),
     Comparison("Prazo", "Prazo de entrega", ALTERNATIVES, (
+        Judgment("Python", "Java", 3, "Django traz o admin pronto para os cadastros, além de login e permissões"),
+        Judgment("Python", "C#", 3, "Django traz o admin pronto para os cadastros, além de login e papéis"),
+        Judgment("Python", "Go", 7, "Gin não traz ORM, migrações, usuários e papéis nem admin"),
+        Judgment("Java", "C#", 1, "Spring Security e Data JPA equivalem a Identity e EF Core; nenhum traz admin"),
+        Judgment("Java", "Go", 5, "Spring traz autenticação, ORM e migrações que no Gin seriam feitos à mão"),
+        Judgment("C#", "Go", 5, "Identity e EF Core trazem o que no Gin seria feito à mão"),
     )),
     Comparison("Manutencao", "Facilidade de manutenção", ALTERNATIVES, (
+        Judgment("Java", "C#", 1, "tipagem estática e versões LTS nas duas"),
+        Judgment("Java", "Python", 3, "o compilador pega erros de tipo; no Python as anotações são opcionais"),
+        Judgment("Java", "Go", 2, "LTS de anos e convenções do Spring; o Gin deixa a estrutura para o time"),
+        Judgment("C#", "Python", 3, "o compilador pega erros de tipo; no Python as anotações são opcionais"),
+        Judgment("C#", "Go", 2, "LTS de 3 anos e convenções do ASP.NET; o Gin deixa a estrutura para o time"),
+        Judgment("Go", "Python", 2, "tipagem estática e a promessa de compatibilidade do Go 1"),
     )),
     Comparison("MaoDeObra", "Facilidade de mão de obra", ALTERNATIVES, (
+        Judgment("Java", "C#", 3, "todo aluno de SI da EACH estuda Java em ACH2003"),
+        Judgment("Java", "Python", 2, "Java está na grade (ACH2003); Python é a linguagem mais usada na pesquisa"),
+        Judgment("Java", "Go", 5, "Java está na grade; Go não aparece na grade e tem 17,4% na pesquisa"),
+        Judgment("Python", "C#", 2, "Python tem 54,8% na pesquisa, contra 29,9% do C#"),
+        Judgment("Python", "Go", 3, "Python tem 54,8% na pesquisa, contra 17,4% do Go"),
+        Judgment("C#", "Go", 2, "C# tem 29,9% na pesquisa, contra 17,4% do Go"),
     )),
 )
 
@@ -198,7 +234,8 @@ def matrix_table(result: Result) -> str:
 def ranking_table(criteria: Result, scores: Sequence[Score]) -> str:
     headers = [rf"\textbf{{{escape(c)}}} ({percent(w)})"
                for c, w in zip(criteria.comparison.elements, criteria.weights)]
-    lines = [r"\begin{tabular}{|c|l|*{4}{>{\centering\arraybackslash\nohyphens}p{2.7cm}|}c|}", r"\hline", r"\rowcolor{eapC}",
+    lines = [r"\begin{tabular}{|c|l|*{4}{>{\centering\arraybackslash\nohyphens}p{2.7cm}|}c|}",
+             r"\hline", r"\rowcolor{eapC}",
              r"\textbf{Posição} & \textbf{Alternativa} & " + " & ".join(headers) + r" & \textbf{Total} \\", r"\hline"]
     for place, s in enumerate(scores, start=1):
         cells = [f"{place}º", escape(s.alternative), *(percent(x) for x in s.by_criterion), percent(s.total)]

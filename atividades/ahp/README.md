@@ -14,7 +14,7 @@ cada matriz (consistente se for menor que 0,10).
 
 | Decisão | Escolha |
 | --- | --- |
-| Quem julga | O Kauã escreve os 30 julgamentos; o grupo revisa e pode mudar |
+| Quem julga | Os 30 julgamentos foram propostos com IA, a pedido do Kauã, a partir da `ficha.md`; o grupo revisa e pode mudar |
 | Time | Bolsistas: 5 a 8 alunos de SI do último ano, com o Analista Sênior |
 | Alternativas | Java/Spring Boot, C#/ASP.NET Core, Python/Django, Go/Gin |
 | Critérios | Cada fator conta em um só critério (definições na `ficha.md`) |

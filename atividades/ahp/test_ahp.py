@@ -260,3 +260,15 @@ def test_run_warns_when_the_first_place_is_a_tie(tmp_path: Path, capsys: pytest.
     tied = tuple(comparison(*EQUAL, title=c.title, slug=c.slug) for c in ALTERNATIVES_FOR_RANKING)
     assert ahp.run(CRITERIA_FOR_RANKING, tied, tmp_path / "tabelas") == 0
     assert "Atenção: A e B empatam no primeiro lugar" in capsys.readouterr().out
+
+
+def test_the_real_judgments_are_consistent_and_put_java_first_by_a_small_margin() -> None:
+    assert all(ahp.judgment_problems(c) == () for c in (CRITERIA_JUDGMENTS, *ALTERNATIVE_JUDGMENTS))
+    criteria = ahp.evaluate(CRITERIA_JUDGMENTS)
+    alternatives = [ahp.evaluate(c) for c in ALTERNATIVE_JUDGMENTS]
+    assert [ahp.comma(r.consistency_ratio, 3) for r in (criteria, *alternatives)] == [
+        "0,002", "0,000", "0,027", "0,004", "0,005"]
+    assert [round(w, 3) for w in criteria.weights] == [0.070, 0.368, 0.193, 0.368]
+    scores = ahp.rank(criteria, alternatives)
+    assert [(s.alternative, round(100 * s.total, 1)) for s in scores] == [
+        ("Java", 34.3), ("Python", 33.6), ("C#", 21.3), ("Go", 10.8)]

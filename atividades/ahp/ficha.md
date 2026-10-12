@@ -5,7 +5,7 @@ ACH2027, Turma T94, Grupo 7. Leitura antes dos 30 julgamentos par a par.
 ## 1. Para que serve esta ficha
 
 Reúne o método, a escala e fatos sobre as quatro alternativas. Informa, não decide: os julgamentos
-são do Kauã, e a ficha não ordena, não pontua nem aponta vencedor. Cada fato traz a fonte lida em
+ficam com o grupo, e a ficha não ordena, não pontua nem aponta vencedor. Cada fato traz a fonte lida em
 12/10/2026; o que não deu para verificar ficou de fora (fim da seção 6). Os fatos foram reunidos com
 ajuda de IA: confira a fonte antes de usar um deles no documento.
 
