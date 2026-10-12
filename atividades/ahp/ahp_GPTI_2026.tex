@@ -1,5 +1,6 @@
 \documentclass[a4paper]{article}
 \usepackage{gpti}
+\usepackage{xurl}
 
 % Tabelas e números gerados por ahp.py em tabelas/: não edite à mão.
 % Sem eles, o documento compila com marcas de pendência no lugar.
@@ -35,7 +36,7 @@
 
 \section{Objetivo e hierarquia}
 
-O objetivo é escolher, com o AHP (Analytic Hierarchy Process), a ferramenta para implementar o trabalho semestral, entre as quatro alternativas e pelos quatro critérios que o professor definiu na atividade de 5 de outubro de 2026: o Sistema de Controle de Acesso da EACH, que controla a entrada e a saída de pessoas e veículos, libera automaticamente a comunidade pelo Nº USP ou CPF, cadastra visitantes, tem hierarquia de acesso por senha, faz o pré-cadastro em lote para grandes eventos, emite relatórios de frequência e se integra às catracas e cancelas. A escolha é o trabalho da atividade K, \enquote{Definir a stack tecnológica} (EAP 1.2.2.1, no pacote Documento de arquitetura), do cronograma do grupo (Exercício 2).
+O objetivo é escolher, com o AHP (Analytic Hierarchy Process), a ferramenta para implementar o trabalho semestral: o Sistema de Controle de Acesso da EACH, que controla a entrada e a saída de pessoas e veículos, libera automaticamente a comunidade pelo Nº USP ou CPF, cadastra visitantes, tem hierarquia de acesso por senha, faz o pré-cadastro em lote para grandes eventos, emite relatórios de frequência e se integra às catracas e cancelas. A escolha é o trabalho da atividade K, \enquote{Definir a stack tecnológica} (EAP 1.2.2.1, no pacote Documento de arquitetura), do cronograma do grupo (Exercício 2). As quatro alternativas e os quatro critérios foram definidos pelo professor, por e-mail, em 5 de outubro de 2026.
 
 O AHP organiza a decisão em uma hierarquia, com o objetivo no topo, os critérios no meio e as alternativas na base (Figura~\ref{fig:hierarquia}) \cite{saaty, vargas2010}. É um caso de análise multicritério ponderada, que o PMBOK cita como exemplo de esquema de priorização \cite[p.~181]{pmi2021}.
 
@@ -182,7 +183,7 @@ Em cada critério, as quatro alternativas são comparadas duas a duas, sempre pa
     \label{tab:custo}
 \end{table}
 
-A Tabela~\ref{tab:custo} tem CR de \crCusto. As quatro linguagens e seus frameworks têm licenças de código aberto: GPL com \textit{Classpath Exception} no OpenJDK, Apache 2.0 no Spring Boot, MIT no .NET, no ASP.NET Core e no Gin, a licença da PSF no Python e licenças no estilo BSD no Django e no Go \cite{openjdklicense, springbootlicense, dotnetlicense, aspnetlicense, ginlicense, pythonlicense, djangolicense, golicense}. A única ressalva está nas ferramentas do C\#. Em organizações com mais de 250 computadores ou mais de US\$~1 milhão de receita anual, o Visual Studio Community e o C\# Dev Kit só podem ser usados em projetos de código aberto, pesquisa acadêmica e sala de aula \cite{vscommunity, csdevkit}, e a USP, com receita prevista de R\$~10,58 bilhões em 2026 \cite{uspdiretrizes}, passa desse porte. Mesmo assim, a extensão C\# do VS Code pode ser usada sozinha \cite{csharpext}, e os seus termos não limitam o porte da organização \cite{csharplicense}; o VS Code é gratuito também para uso comercial \cite{vscodefaq}. Sem o Dev Kit, perdem-se a visão de projeto e o explorador de testes, que vêm com as assinaturas pagas do Visual Studio \cite{csdevkit}, mas o projeto não precisa delas. As fontes consultadas não diferenciam as quatro na hospedagem nem na integração com catracas e cancelas, e esses itens ficaram iguais. Por isso as quatro empatam neste critério.
+A Tabela~\ref{tab:custo} tem CR de \crCusto. As quatro linguagens e seus frameworks têm licenças de código aberto: GPL com \textit{Classpath Exception} no OpenJDK, Apache 2.0 no Spring Boot, MIT no .NET, no ASP.NET Core e no Gin, a licença da PSF no Python e licenças no estilo BSD no Django e no Go \cite{openjdklicense, springbootlicense, dotnetlicense, aspnetlicense, ginlicense, pythonlicense, djangolicense, golicense}. A única ressalva está nas ferramentas do C\#. Em organizações com mais de 250 computadores ou mais de US\$~1 milhão de receita anual, o Visual Studio Community e o C\# Dev Kit só podem ser usados em projetos de código aberto, pesquisa acadêmica e sala de aula \cite{vscommunity, csdevkit}, e a USP, com receita prevista de R\$~10,58 bilhões em 2026 \cite{uspdiretrizes}, passa desse porte. Mesmo assim, a extensão C\# do VS Code pode ser usada sozinha \cite{csharpext}, e os seus termos não limitam o porte da organização \cite{csharplicense}; o VS Code é gratuito também para uso comercial \cite{vscodefaq}. Sem o Dev Kit, perdem-se a visão de projeto e o explorador de testes, que vêm com as assinaturas pagas do Visual Studio \cite{csdevkit}; este trabalho supõe que o time trabalhe sem eles. As fontes consultadas não diferenciam as quatro na hospedagem nem na integração com catracas e cancelas, e esses itens ficaram iguais. Por isso as quatro empatam neste critério.
 
 \subsection{Prazo de entrega}
 
@@ -195,7 +196,7 @@ A Tabela~\ref{tab:custo} tem CR de \crCusto. As quatro linguagens e seus framewo
     \label{tab:prazo}
 \end{table}
 
-A Tabela~\ref{tab:prazo} tem CR de \crPrazo. O Django gera um painel administrativo a partir dos modelos, pensado para uso interno, e traz usuários, permissões, grupos e telas de login \cite{djangoadmin, djangoauth}: isso cobre boa parte dos cadastros e da hierarquia de acesso. Spring Boot e ASP.NET Core trazem autenticação e controle de acesso por papéis \cite{springsecurity, aspnetidentity} e o acesso ao banco pelo Spring Data JPA e pelo EF Core, com migrações do esquema \cite{springdatajpa, springbootdb, efcoremigrations}, mas não o painel, e empatam entre si. A documentação do Gin cobre rotas, middleware, validação e renderização \cite{gin} e mostra o banco com o GORM, uma biblioteca à parte que também faz as migrações \cite{gindatabase}. Para usuários e papéis, porém, o Gin só oferece um middleware de autenticação básica \cite{ginbasicauth}: o cadastro e a hierarquia de acesso ficariam com o time. O Python vence os outros três pelo painel, e o Go perde para Java e C\# pela falta de usuários e papéis.
+A Tabela~\ref{tab:prazo} tem CR de \crPrazo. O Django gera um painel administrativo a partir dos modelos, pensado para uso interno, e traz usuários, permissões, grupos e telas de login \cite{djangoadmin, djangoauth}: isso cobre boa parte dos cadastros e da hierarquia de acesso. O ASP.NET Core Identity cuida de usuários, senhas, papéis e confirmação de e-mail e traz telas de login prontas \cite{aspnetidentity}. O Spring Security traz autenticação, autorização por papéis e uma API para gerenciar usuários \cite{springsecurity, springauthz, springjdbc}, mas não as telas. Os dois fazem o acesso ao banco pelo Spring Data JPA e pelo EF Core, com migrações do esquema \cite{springdatajpa, springbootdb, efcoremigrations}, e nenhum traz o painel. A documentação do Gin cobre rotas, middleware, validação e renderização \cite{gin} e mostra o banco com o GORM, que também faz as migrações \cite{gindatabase}; para usuários, o Gin só oferece um middleware de autenticação básica \cite{ginbasicauth} e sessões por uma biblioteca à parte \cite{ginsessions}, sem papéis, e o cadastro e a hierarquia de acesso ficariam com o time. A ordem fica Python, pelo painel; C\#, pelas telas de login; Java; e Go, pela falta de usuários e papéis.
 
 \subsection{Facilidade de manutenção}
 
@@ -208,7 +209,7 @@ A Tabela~\ref{tab:prazo} tem CR de \crPrazo. O Django gera um painel administrat
     \label{tab:manutencao}
 \end{table}
 
-A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. Dois fatores separam as alternativas. O primeiro é a tipagem: Java, C\# e Go têm tipagem estática \cite{jls, csharptypes, gospec}, e o compilador pega os erros de tipo antes de o código rodar \cite{csharptypes}; no Python, as anotações de tipo são opcionais e o interpretador não as verifica \cite{pythontyping}, e esses erros só aparecem na execução. O segundo é o tempo de suporte das versões, que a norma inclui na manutenção \cite{arc42iso}. O .NET tem versões LTS de três anos, que valem também para o ASP.NET Core \cite{dotnetsupport}; o Django tem versões LTS de três anos \cite{djangodownload}, e o Python mantém cada versão por cinco \cite{pythonversions}. No Java, o JDK tem versões LTS gratuitas de pelo menos quatro anos \cite{adoptium}, mas cada versão menor do Spring Boot tem 13 meses de suporte gratuito \cite{springsupport}; no Go, cada versão só recebe correções até saírem duas mais novas \cite{gorelease}, ainda que a promessa de compatibilidade do Go~1 torne a troca mais simples \cite{go1compat}. O C\# vai bem nos dois fatores e fica à frente. Java e Go empatam, com tipagem estática e atualizações do framework ou da linguagem a cada ano, mais ou menos. O Python tem o suporte mais longo, mas fica atrás, porque a tipagem pesou mais que o suporte.
+A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. Dois fatores separam as alternativas. O primeiro é a tipagem: Java, C\# e Go têm tipagem estática \cite{jls, csharptypes, gospec}, e o compilador pega os erros de tipo antes de o código rodar \cite{jls, csharptypes}; no Python, as anotações de tipo são opcionais e o interpretador não as verifica \cite{pythontyping}, e, sem um verificador externo, esses erros só aparecem na execução. O segundo é o tempo de suporte das versões, que entra na manutenção porque a norma inclui nela a instalação de atualizações \cite{arc42iso}. O .NET tem versões LTS de três anos, que valem também para o ASP.NET Core \cite{dotnetsupport}; o Django tem versões LTS de três anos \cite{djangodownload}, e o Python mantém cada versão por cinco \cite{pythonversions}. No Java, o JDK tem versões LTS gratuitas de pelo menos quatro anos \cite{adoptium}, mas cada versão menor do Spring Boot tem pelo menos 13 meses de suporte gratuito \cite{springsupport}; no Go, cada versão só recebe correções até saírem duas mais novas \cite{gorelease}, ainda que a promessa de compatibilidade do Go~1 torne a troca mais simples \cite{go1compat}. O C\# vai bem nos dois fatores e fica à frente. Java e Go empatam, com tipagem estática e atualizações do framework ou da linguagem a cada ano, mais ou menos. O Python tem o suporte mais longo, mas fica atrás, porque a tipagem pesou mais que o suporte.
 
 \subsection{Facilidade de mão de obra}
 
@@ -221,11 +222,11 @@ A Tabela~\ref{tab:manutencao} tem CR de \crManutencao. Dois fatores separam as a
     \label{tab:maodeobra}
 \end{table}
 
-A Tabela~\ref{tab:maodeobra} tem CR de \crMaoDeObra. A ACH2003 (Computação Orientada a Objetos), cuja bibliografia é de Java \cite{ach2003}, é obrigatória no 3º semestre da grade de SI publicada no JupiterWeb, que vale a partir de 2027; nas ementas dessa grade, o Python só aparece em duas optativas de computação sônica, e C\# e Go não aparecem \cite{gradesi}. A versão atual da ACH2003 vale desde 2021 \cite{ach2003}, mas a grade em que entraram os bolsistas de hoje não foi consultada. Fora da EACH, a pesquisa do Stack Overflow de 2025 põe o Python à frente das outras três, tanto entre desenvolvedores profissionais (54,8\%, contra 29,9\% do C\#, 29,6\% do Java e 17,4\% do Go) quanto entre quem está aprendendo a programar (71,8\%, contra 40,8\% do Java, 23,1\% do C\# e 13,1\% do Go) \cite{so2025}. A pesquisa mede o mundo todo, não os alunos da EACH. O Java fica à frente pela disciplina obrigatória, e o Python, em segundo, pela pesquisa. As fontes não medem a curva de aprendizado de cada linguagem, e a reposição de quem sair depende do mesmo fator: achar quem já conhece a linguagem.
+A Tabela~\ref{tab:maodeobra} tem CR de \crMaoDeObra. A ACH2003 (Computação Orientada a Objetos), cuja bibliografia é de Java \cite{ach2003}, é obrigatória no 3º semestre da grade de SI publicada no JupiterWeb, que vale a partir de 2027; nas ementas dessa grade, o Python só aparece em duas optativas de computação sônica, e C\# e Go não aparecem \cite{gradesi}. A versão atual da ACH2003 vale desde 2021 \cite{ach2003}, mas a grade em que entraram os bolsistas de hoje não foi consultada. Fora da EACH, a pesquisa do Stack Overflow de 2025 põe o Python à frente das outras três, tanto entre desenvolvedores profissionais (54,8\%, contra 29,9\% do C\#, 29,6\% do Java e 17,4\% do Go) quanto entre quem está aprendendo a programar (71,8\%, contra 40,8\% do Java, 23,1\% do C\# e 13,1\% do Go) \cite{so2025}. A pesquisa mede o mundo todo, não os alunos da EACH, e as intensidades entre Python, C\# e Go seguem a aba de profissionais, onde as diferenças são menores. O Java fica à frente pela disciplina obrigatória, e o Python, em segundo, pela pesquisa. As fontes não medem a curva de aprendizado de cada linguagem, e a reposição de quem sair depende do mesmo fator: achar quem já conhece a linguagem.
 
 \section{Ranking global}
 
-Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da alternativa naquele critério, e o total é a soma ponderada pelos pesos do cabeçalho. Os percentuais têm uma casa decimal e podem não somar exatamente 100\%. A ferramenta escolhida é \primeiroLugar, com pontuação global de \pontuacaoPrimeiro, à frente de \segundoLugar, com \pontuacaoSegundo. O Python vence pelo prazo, graças ao Django, e o Java fica em segundo pela mão de obra; o C\#, à frente na manutenção, perde nos dois critérios mais pesados.
+Na Tabela~\ref{tab:ranking}, cada célula de critério é a prioridade da alternativa naquele critério, e o total é a soma ponderada pelos pesos do cabeçalho. Os percentuais têm uma casa decimal e podem não somar exatamente 100\%. A ferramenta escolhida é \primeiroLugar, com pontuação global de \pontuacaoPrimeiro, à frente de \segundoLugar, com \pontuacaoSegundo. O Python vence pelo prazo, graças ao Django, e o Java fica em segundo pela mão de obra; o C\#, à frente na manutenção, fica atrás do Python no prazo e dos dois na mão de obra.
 
 \begin{table}[H]
     \centering
@@ -275,6 +276,9 @@ GIN. \textbf{gin/LICENSE}. GitHub. Disponível em: \url{https://github.com/gin-g
 
 \bibitem{gin}
 GIN. \textbf{Introduction}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/introduction/}. Acesso em: 12 out. 2026.
+
+\bibitem{ginsessions}
+GIN. \textbf{Session Management}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/middleware/session-management/}. Acesso em: 12 out. 2026.
 
 \bibitem{ginbasicauth}
 GIN. \textbf{Using BasicAuth middleware}. Gin Web Framework. Disponível em: \url{https://gin-gonic.com/en/docs/middleware/using-basicauth-middleware/}. Acesso em: 12 out. 2026.
@@ -336,8 +340,14 @@ PYTHON SOFTWARE FOUNDATION. \textbf{typing: Support for type hints}. Disponível
 \bibitem{saaty}
 SAATY, T. L. \textbf{How to Make a Decision: The Analytic Hierarchy Process}. Texto de palestra de abertura (\textit{keynote address}). [S.l.: s.n.], [s.d.]. Disponível em: \url{https://www.isahp-org.creativedecisions.net/uploads/1-how-to-make-a-decision-the-analytic-hierarchy-process-t-l-saaty.pdf}. Acesso em: 12 out. 2026.
 
+\bibitem{springauthz}
+SPRING. \textbf{Authorize HttpServletRequests}. Spring Security. Disponível em: \url{https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html}. Acesso em: 12 out. 2026.
+
 \bibitem{springbootdb}
 SPRING. \textbf{Database Initialization}. Spring Boot. Disponível em: \url{https://docs.spring.io/spring-boot/how-to/data-initialization.html}. Acesso em: 12 out. 2026.
+
+\bibitem{springjdbc}
+SPRING. \textbf{JDBC Authentication}. Spring Security. Disponível em: \url{https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/jdbc.html}. Acesso em: 12 out. 2026.
 
 \bibitem{springbootlicense}
 SPRING. \textbf{spring-boot/LICENSE.txt}. GitHub. Disponível em: \url{https://github.com/spring-projects/spring-boot/blob/main/LICENSE.txt}. Acesso em: 12 out. 2026.

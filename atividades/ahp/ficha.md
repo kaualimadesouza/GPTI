@@ -99,10 +99,10 @@ de acesso da Control iD é REST sobre TCP/IP (Ethernet), com login e sessão
 
 | Alternativa | Fatos |
 | --- | --- |
-| Java / Spring Boot | Spring Security: autenticação, autorização e proteção contra ataques comuns ([docs.spring.io](https://docs.spring.io/spring-security/reference/index.html)). Spring Data JPA: repositórios com paginação, consultas dinâmicas e auditoria ([spring.io](https://spring.io/projects/spring-data-jpa)). Migrações via Flyway ou Liquibase ([docs.spring.io](https://docs.spring.io/spring-boot/how-to/data-initialization.html)). |
-| C# / ASP.NET Core | Identity: login, usuários, senhas, perfil, papéis (*roles*), *claims*, tokens, confirmação de e-mail ([learn.microsoft.com](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity)). EF Core: migrações que mudam o esquema aos poucos, preservando os dados ([learn.microsoft.com](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/)). |
+| Java / Spring Boot | Spring Security: autenticação, autorização e proteção contra ataques comuns ([docs.spring.io](https://docs.spring.io/spring-security/reference/index.html)); autorização por papéis com `hasRole` ([authorize](https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html)); `JdbcUserDetailsManager` cria e gerencia usuários, sem telas ([jdbc](https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/jdbc.html)). Spring Data JPA: repositórios com paginação, consultas dinâmicas e auditoria ([spring.io](https://spring.io/projects/spring-data-jpa)). Migrações via Flyway ou Liquibase ([docs.spring.io](https://docs.spring.io/spring-boot/how-to/data-initialization.html)). |
+| C# / ASP.NET Core | Identity: login, usuários, senhas, perfil, papéis (*roles*), *claims*, tokens, confirmação de e-mail; "supports user interface (UI) login functionality", com as telas numa Razor class library ([learn.microsoft.com](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity)). EF Core: migrações que mudam o esquema aos poucos, preservando os dados ([learn.microsoft.com](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/)). |
 | Python / Django | Admin automático a partir dos *models*, pensado para uso interno da organização ([admin](https://docs.djangoproject.com/en/stable/ref/contrib/admin/)). Usuários, permissões, grupos e telas de login ([auth](https://docs.djangoproject.com/en/stable/topics/auth/)). ORM e migrações ([models](https://docs.djangoproject.com/en/stable/topics/db/models/), [migrations](https://docs.djangoproject.com/en/stable/topics/migrations/)). |
-| Go / Gin | Roteamento, middleware em cadeia, validação de JSON, grupos de rotas, renderização JSON/XML/HTML. A introdução não cita ORM, migrações, usuários e papéis nem painel admin; o menu tem páginas sobre banco, sessões e middleware BasicAuth ([gin-gonic.com](https://gin-gonic.com/en/docs/introduction/)). A página de banco mostra o GORM, biblioteca à parte que "adds migrations, associations, and a query builder" ([database](https://gin-gonic.com/en/docs/server-config/database/)); para autenticação, há o middleware BasicAuth ([basicauth](https://gin-gonic.com/en/docs/middleware/using-basicauth-middleware/)). |
+| Go / Gin | Roteamento, middleware em cadeia, validação de JSON, grupos de rotas, renderização JSON/XML/HTML. A introdução não cita ORM, migrações, usuários e papéis nem painel admin; o menu tem páginas sobre banco, sessões e middleware BasicAuth ([gin-gonic.com](https://gin-gonic.com/en/docs/introduction/)). A página de banco mostra o GORM, biblioteca à parte que "adds migrations, associations, and a query builder" ([database](https://gin-gonic.com/en/docs/server-config/database/)); para autenticação, há o middleware BasicAuth ([basicauth](https://gin-gonic.com/en/docs/middleware/using-basicauth-middleware/)) e sessões com o gin-contrib/sessions ([sessions](https://gin-gonic.com/en/docs/middleware/session-management/)); papéis não aparecem. |
 
 As páginas lidas do Spring e do ASP.NET Core não falam de painel administrativo.
 
@@ -122,8 +122,8 @@ Para todas: na EACH, ACH2001 Introdução à Programação usa bibliografia em C
 Inteligência Artificial não nomeia linguagem ([JupiterWeb](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=ACH2016)).
 Na grade de SI com início em 2027 ([grade](https://uspdigital.usp.br/jupiterweb/listarGradeCurricular?codcg=86&codcur=86200&codhab=202&tipo=N)),
 todas as ementas foram abertas: Python só aparece em ACH2167 e ACH2207, optativas de computação sônica;
-C# e Go não aparecem; Java está na bibliografia de ACH2003 e, como complementar, de ACH2002, ACH2107
-e ACH2108. A grade anterior, a dos bolsistas de hoje, não foi aberta. Você conhece a grade e os
+C# e Go não aparecem; Java está na bibliografia de ACH2003 e, como complementar, de ACH2002, ACH2107,
+ACH2108 e ACH2128. A grade anterior, a dos bolsistas de hoje, não foi aberta. Você conhece a grade e os
 colegas melhor que esta busca.
 
 | Alternativa | Fatos |
@@ -168,7 +168,10 @@ Acessadas em 12/10/2026.
   https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/; https://docs.djangoproject.com/en/stable/ref/contrib/admin/;
   https://docs.djangoproject.com/en/stable/topics/auth/; https://docs.djangoproject.com/en/stable/topics/db/models/;
   https://docs.djangoproject.com/en/stable/topics/migrations/; https://gin-gonic.com/en/docs/introduction/;
-  https://gin-gonic.com/en/docs/server-config/database/; https://gin-gonic.com/en/docs/middleware/using-basicauth-middleware/
+  https://gin-gonic.com/en/docs/server-config/database/; https://gin-gonic.com/en/docs/middleware/using-basicauth-middleware/;
+  https://gin-gonic.com/en/docs/middleware/session-management/;
+  https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html;
+  https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/jdbc.html
 - Tipagem e suporte: https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html;
   https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/; https://docs.python.org/3/library/typing.html;
   https://go.dev/ref/spec; https://www.oracle.com/java/technologies/java-se-support-roadmap.html; https://adoptium.net/support/;

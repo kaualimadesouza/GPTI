@@ -282,11 +282,11 @@ def test_the_real_judgments_are_consistent_and_put_python_first() -> None:
     criteria = ahp.evaluate(CRITERIA_JUDGMENTS)
     alternatives = [ahp.evaluate(c) for c in ALTERNATIVE_JUDGMENTS]
     assert [ahp.comma(r.consistency_ratio, 3) for r in (criteria, *alternatives)] == [
-        "0,002", "0,000", "0,003", "0,004", "0,005"]
+        "0,002", "0,000", "0,007", "0,004", "0,005"]
     assert [round(w, 3) for w in criteria.weights] == [0.070, 0.368, 0.193, 0.368]
     scores = ahp.rank(criteria, alternatives)
     assert [(s.alternative, round(100 * s.total, 1)) for s in scores] == [
-        ("Python", 34.2), ("Java", 31.0), ("C#", 22.8), ("Go", 11.9)]
+        ("Python", 32.2), ("Java", 29.9), ("C#", 26.3), ("Go", 11.6)]
 
 
 def test_nudges_move_a_judgment_one_step_on_the_scale() -> None:
@@ -313,22 +313,52 @@ def test_no_single_step_unseats_an_alternative_that_dominates_every_criterion() 
     assert "Nenhuma mudança de um ponto troca o primeiro lugar" in ahp.sensitivity_table(shaken)
 
 
-def test_the_only_flip_of_the_real_ranking_is_the_deadline_against_the_workforce() -> None:
+def test_the_real_ranking_flips_when_the_workforce_weighs_a_little_more_than_the_deadline() -> None:
     shaken = ahp.sensitivity(CRITERIA_JUDGMENTS, ALTERNATIVE_JUDGMENTS)
     assert shaken.tried == 60
-    [flip] = shaken.flips
-    assert (flip.matrix, flip.row, flip.column) == ("Critérios", "Prazo de entrega", "Facilidade de mão de obra")
-    assert (flip.before, flip.after) == (Fraction(1), Fraction(1, 2))
-    # recomputed by hand: the workforce slightly above the deadline puts Java first
+    assert [(f.matrix, f.row, f.column, f.before, f.after) for f in shaken.flips] == [
+        ("Critérios", "Prazo de entrega", "Facilidade de mão de obra", Fraction(1), Fraction(1, 2)),
+        ("Prazo de entrega", "C#", "Python", Fraction(1, 2), Fraction(1)),
+        ("Facilidade de mão de obra", "Java", "Python", Fraction(2), Fraction(3))]
+    # rebuilt from the judgments: the workforce slightly above the deadline puts Java first
     pair = ("Facilidade de mão de obra", "Prazo de entrega")
     judgments = tuple(Judgment(*pair, 2) if {j.preferred, j.over} == set(pair) else j
                       for j in CRITERIA_JUDGMENTS.judgments)
     criteria = Comparison("Criterios", "Critérios", CRITERIA_JUDGMENTS.elements, judgments)
-    assert flip.scores == ahp.standings((criteria, *ALTERNATIVE_JUDGMENTS))
-    assert [(s.alternative, round(100 * s.total, 1)) for s in flip.scores[:2]] == [("Java", 33.0), ("Python", 32.6)]
+    assert shaken.flips[0].scores == ahp.standings((criteria, *ALTERNATIVE_JUDGMENTS))
+    assert [(s.alternative, round(100 * s.total, 1)) for s in shaken.flips[0].scores[:2]] == [
+        ("Java", 32.0), ("Python", 30.9)]
     row = ahp.sensitivity_table(shaken).splitlines()[5]
     assert row == (r"Critérios & Prazo de entrega $\times$ Facilidade de mão de obra & 1 $\rightarrow$ 1/2 & "
-                   r"Java (33,0\%) à frente de Python (32,6\%) \\")
+                   r"Java (32,0\%) à frente de Python (30,9\%) \\")
+
+
+ONE_SIDED_CRITERIA = comparison(*[Judgment(f"K{p.preferred}", f"K{p.over}", 1) for p in EQUAL],
+                                elements=("KA", "KB", "KC", "KD"), title="Critérios", slug="Criterios")
+EQUAL_BUT_KA = tuple(comparison(*EQUAL, title=k, slug=k.title()) for k in ("KB", "KC", "KD"))
+
+
+def test_a_change_that_makes_its_matrix_inconsistent_never_counts_as_a_flip() -> None:
+    almost = (Judgment("B", "A", 1), Judgment("A", "C", 1), Judgment("C", "B", 3),
+              Judgment("A", "D", 1), Judgment("B", "D", 1), Judgment("C", "D", 1))
+    ka = comparison(*almost, title="KA", slug="Ka")
+    assert ahp.standings((ONE_SIDED_CRITERIA, ka, *EQUAL_BUT_KA))[0].alternative == "C"
+    nudged = comparison(*(Judgment("A", "C", 2) if j.over == "C" and j.preferred == "A" else j for j in almost),
+                        title="KA", slug="Ka")
+    assert not ahp.evaluate(nudged).consistent
+    assert ahp.standings((ONE_SIDED_CRITERIA, nudged, *EQUAL_BUT_KA))[0].alternative == "A"
+    assert ahp.sensitivity(ONE_SIDED_CRITERIA, (ka, *EQUAL_BUT_KA)).flips == ()
+
+
+def test_a_tie_at_the_printed_decimals_is_not_a_flip() -> None:
+    leaning = (Judgment("B", "A", 2), *EQUAL[1:])
+    ka = comparison(*leaning, title="KA", slug="Ka")
+    assert ahp.standings((ONE_SIDED_CRITERIA, ka, *EQUAL_BUT_KA))[0].alternative == "B"
+    # back to all equal, the stable sort puts A first with the same 25,0% as B
+    level = ahp.standings((ONE_SIDED_CRITERIA, comparison(*EQUAL, title="KA", slug="Ka"), *EQUAL_BUT_KA))
+    assert level[0].alternative == "A" and ahp.percent(level[0].total) == ahp.percent(level[1].total)
+    flips = ahp.sensitivity(ONE_SIDED_CRITERIA, (ka, *EQUAL_BUT_KA)).flips
+    assert flips and ("KA", "A", "B") not in [(f.matrix, f.row, f.column) for f in flips]
 
 
 def test_committed_tables_are_up_to_date(tmp_path: Path) -> None:

@@ -73,7 +73,7 @@ class Flip:
 @dataclass(frozen=True)
 class Sensitivity:
     tried: int
-    flips: tuple[Flip, ...]  # the one-step changes that put another alternative first
+    flips: tuple[Flip, ...]  # the consistent one-step changes that put another alternative first
 
 
 CRITERIA = ("Custo de desenvolvimento", "Prazo de entrega", "Facilidade de manutenção", "Facilidade de mão de obra")
@@ -107,11 +107,11 @@ ALTERNATIVE_JUDGMENTS = (
     )),
     Comparison("Prazo", "Prazo de entrega", ALTERNATIVES, (
         Judgment("Python", "Java", 3, "Django traz o admin pronto para os cadastros, além de login e permissões"),
-        Judgment("Python", "C#", 3, "Django traz o admin pronto para os cadastros, além de login e papéis"),
+        Judgment("Python", "C#", 2, "o admin do Django cobre todos os cadastros; o Identity, só login e usuários"),
         Judgment("Python", "Go", 7, "Django traz admin e usuários com permissões; o Gin não traz nenhum dos dois"),
-        Judgment("Java", "C#", 1, "Spring Security e Data JPA equivalem a Identity e EF Core; nenhum traz admin"),
-        Judgment("Java", "Go", 3, "Spring Security dá usuários e papéis; o Gin só tem BasicAuth e usa o GORM à parte"),
-        Judgment("C#", "Go", 3, "Identity dá usuários e papéis; o Gin só tem BasicAuth e usa o GORM à parte"),
+        Judgment("C#", "Java", 2, "o Identity traz telas de login e cadastro de usuários prontas; o Spring, não"),
+        Judgment("Java", "Go", 3, "Spring Security traz usuários, papéis e autorização; o Gin só tem BasicAuth"),
+        Judgment("C#", "Go", 5, "Identity traz usuários, papéis e telas de login; o Gin só tem BasicAuth"),
     )),
     Comparison("Manutencao", "Facilidade de manutenção", ALTERNATIVES, (
         Judgment("C#", "Java", 2, "os dois têm tipagem estática; LTS de 3 anos no ASP.NET, 13 meses no Spring Boot"),
@@ -241,8 +241,11 @@ def sensitivity(criteria: Comparison, alternatives: Sequence[Comparison]) -> Sen
             for n in nudges(j):
                 tried += 1
                 changed = Comparison(m.slug, m.title, m.elements, tuple(n if x == j else x for x in m.judgments))
+                if not evaluate(changed).consistent:
+                    continue  # not a judgment set the group could adopt, so it cannot flip anything
                 scores = standings((*matrices[:i], changed, *matrices[i + 1:]))
-                if scores[0].alternative != leader:
+                # a tie at the printed decimals is not a flip, whatever order the stable sort left it in
+                if percent(scores[0].total) != percent(next(x.total for x in scores if x.alternative == leader)):
                     row, column = sorted((j.preferred, j.over), key=m.elements.index)
                     flips.append(Flip(m.title, row, column, cell(j, row), cell(n, row), scores))
     return Sensitivity(tried, tuple(flips))
