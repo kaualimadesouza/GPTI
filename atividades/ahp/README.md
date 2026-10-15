@@ -58,7 +58,9 @@ quebram se as tabelas commitadas não baterem com os julgamentos e fixam o ranki
 - [ ] O grupo revisa os 30 julgamentos e os parágrafos; o que mudar no Overleaf volta para o `ahp.py`
 - [ ] Conferir se a ACH2003 é obrigatória na grade em que vocês entraram (o texto cita só a de 2027)
 - [ ] Conferir no PMBOK 6ª ed. a seção 9.3 citada na Tabela I (o livro não está em `docs/`)
-- [ ] O Kauã decide o que entra no Registro de Uso de IA (o PDF ainda não tem a seção)
+- [x] O Kauã decide o que entra no Registro de Uso de IA: três registros (referências, LaTeX e PDF,
+  vantagens e desvantagens de cada linguagem)
+- [ ] O grupo escreve a linha "Revisão dos resultados" dos três registros (em vermelho no PDF)
 - [ ] Mandar o PDF no grupo antes de enviar
 - [ ] Enviar para eprado@usp.br até 15/10 às 14:00
 
